@@ -44,5 +44,10 @@ public final class ApplicationConstants {
     // Colors Available
     public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
 
+    // Header Sections
+    public static final String CONTINENTS = "[continents]";
+    public static final String COUNTRIES = "[countries]";
+    public static final String BORDERS = "[borders]";
+
 
 }
