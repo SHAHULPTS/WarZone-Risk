@@ -79,4 +79,45 @@ public class MapService {
         }
         return l_continents;
     }
+    public List<Country> parseCountriesMetaData(List<String> p_countriesList) {
+
+        LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+        List<Country> l_countriesList = new ArrayList<Country>();
+        for (String country : p_countriesList) {
+            String[] l_metaDataCountries = country.split(" ");
+            l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), l_metaDataCountries[1], Integer.parseInt(l_metaDataCountries[2])));
+        }
+        return l_countriesList;
+    }
+    public List<Country> parseBorderMetaData(List<Country> p_countriesList, List<String> p_bordersList) {
+        LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+
+        for (String l_border : p_bordersList) {
+            if (null != l_border && !l_border.isEmpty()) {
+                ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
+                String[] l_splitString = l_border.split(" ");
+                for (int i = 1; i <= l_splitString.length - 1; i++)
+                {
+                    l_neighbours.add(Integer.parseInt(l_splitString[i]));
+
+                }
+                l_countryNeighbors.put(Integer.parseInt(l_splitString[0]), l_neighbours);
+            }
+        }
+        for (Country c : p_countriesList) {
+            List<Integer> l_adjacentCountries = l_countryNeighbors.get(c.getD_countryId());
+            c.setD_adjacentCountryIds(l_adjacentCountries);
+        }
+        return p_countriesList;
+    }
+    public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
+        for (Country c : p_countries) {
+            for (Continent cont : p_continents) {
+                if (cont.getD_continentID().equals(c.getD_continentId())) {
+                    cont.addCountry(c);
+                }
+            }
+        }
+        return p_continents;
+    }
 }
