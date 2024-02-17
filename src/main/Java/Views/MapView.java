@@ -11,6 +11,7 @@ import Models.Continent;
 import Models.Country;
 import Models.Player;
 import Utils.CommonUtil;
+import Models.Map;
 
 public class MapView {
     List<Player> d_players;
