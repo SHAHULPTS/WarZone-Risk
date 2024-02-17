@@ -78,4 +78,128 @@ public class PlayerService {
             System.out.println("Player : " + p_enteredPlayerName + " has been added to the list successfully.");
         }
     }
-}
+    public boolean checkPlayersAvailability(GameState p_gameState)
+    {
+        if (p_gameState.getD_players() == null || p_gameState.getD_players().isEmpty()) {
+            System.out.println("Please ensure players are added prior to assigning countries.");
+            return false;
+        }
+        return true;
+    }
+
+    public void assignColors(GameState p_gameState)
+    {
+        if (!checkPlayersAvailability(p_gameState)) return;
+
+        List<Player> l_players = p_gameState.getD_players();
+
+        for(int i = 0; i< l_players.size(); i++)
+            {
+            l_players.get(i).setD_color(ApplicationConstants.COLORS.get(i));
+        }
+    }
+    public void assignCountries(GameState p_gameState)
+    {
+        if (!checkPlayersAvailability(p_gameState))
+            return;
+
+        List<Country> l_countries = p_gameState.getD_map().getD_countries();
+        int l_countriesPerPlayer = Math.floorDiv(l_countries.size(), p_gameState.getD_players().size());
+
+        this.performRandomCountryAssignment(l_countriesPerPlayer, l_countries, p_gameState.getD_players());
+        this.performContinentAssignment(p_gameState.getD_players(), p_gameState.getD_map().getD_continents());
+        System.out.println("Countries have been assigned to Players.");
+
+    }
+    private void performRandomCountryAssignment(int p_countriesPerPlayer, List<Country> p_countries, List<Player> p_players)
+    {
+        List<Country> l_unassignedCountries = new ArrayList<>(p_countries);
+        for (Player l_pl : p_players) {
+            if (l_unassignedCountries.isEmpty())
+                break;
+            for (int i = 0; i < p_countriesPerPlayer; i++)
+            {
+                Random l_random = new Random();
+                int l_randomIndex = l_random.nextInt(l_unassignedCountries.size());
+                Country l_randomCountry = l_unassignedCountries.get(l_randomIndex);
+
+                if (l_pl.getD_coutriesOwned() == null)
+                    l_pl.setD_coutriesOwned(new ArrayList<>());
+                l_pl.getD_coutriesOwned().add(l_randomCountry);
+                System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with Country : " + l_randomCountry.getD_countryName());
+                l_unassignedCountries.remove(l_randomCountry);
+            }
+        }
+        if (!l_unassignedCountries.isEmpty())
+        {
+            performRandomCountryAssignment(1, l_unassignedCountries, p_players);
+        }
+    }
+    private void performContinentAssignment(List<Player> p_players, List<Continent> p_continents)
+    {
+        for (Player l_pl : p_players)
+        {
+            List<String> l_countriesOwned = new ArrayList<>();
+            if (!CommonUtil.isCollectionEmpty(l_pl.getD_coutriesOwned()))
+            {
+                l_pl.getD_coutriesOwned().forEach(l_country -> l_countriesOwned.add(l_country.getD_countryName()));
+
+                for (Continent l_cont : p_continents)
+                {
+                    List<String> l_countriesOfContinent = new ArrayList<>();
+                    l_cont.getD_countries().forEach(l_count -> l_countriesOfContinent.add(l_count.getD_countryName()));
+                    if (l_countriesOwned.containsAll(l_countriesOfContinent))
+                    {
+                        if (l_pl.getD_continentsOwned() == null)
+                            l_pl.setD_continentsOwned(new ArrayList<>());
+
+                        l_pl.getD_continentsOwned().add(l_cont);
+                        System.out.println("Player : " + l_pl.getPlayerName() + " is assigned with Continent : "
+                                + l_cont.getD_continentName());
+                    }
+                }
+            }
+        }
+    }
+    public void createDeployOrder(String p_commandEntered, Player p_player)
+    {
+        List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
+                : p_player.getD_ordersToExecute();
+        String l_countryName = p_commandEntered.split(" ")[1];
+        String l_noOfArmies = p_commandEntered.split(" ")[2];
+        if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
+            System.out.println(
+                    "Unable to execute the provided deployment order as the number of armies it involves is greater than the player’s remaining, unallocated armies.");
+        } else {
+            Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
+                    Integer.parseInt(l_noOfArmies));
+            l_orders.add(l_orderObject);
+            p_player.setD_ordersToExecute(l_orders);
+            Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
+            p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
+            System.out.println("The order has been placed in the queue and is awaiting execution.");
+        }
+    }
+    public boolean validateDeployOrderArmies(Player p_player, String p_noOfArmies)
+    {
+        return p_player.getD_noOfUnallocatedArmies() < Integer.parseInt(p_noOfArmies) ? true : false;
+    }
+    public int calculateArmiesForPlayer(Player p_player)
+    {
+        int l_armies = 0;
+        if (!CommonUtil.isCollectionEmpty(p_player.getD_coutriesOwned()))
+        {
+            l_armies = Math.max(3, Math.round((p_player.getD_coutriesOwned().size()) / 3));
+        }
+        if (!CommonUtil.isCollectionEmpty(p_player.getD_continentsOwned()))
+        {
+            int l_continentCtrlValue = 0;
+            for (Continent l_continent : p_player.getD_continentsOwned())
+            {
+                l_continentCtrlValue = l_continentCtrlValue + l_continent.getD_continentValue();
+            }
+            l_armies = l_armies + l_continentCtrlValue;
+        }
+        return l_armies;
+    }
+    }
