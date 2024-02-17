@@ -52,6 +52,11 @@ public class Command {
         return l_operationMap;
     }
 
+    public boolean isKeyPresent(String key, Map<String, String> inputMap) {
+        return inputMap.containsKey(key) && !inputMap.get(key).isEmpty();
+    }
+
+
 
     }
 
