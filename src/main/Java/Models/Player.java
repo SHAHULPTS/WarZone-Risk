@@ -9,7 +9,7 @@ import Constants.ApplicationConstants;
 import Utils.Command;
 import Utils.CommonUtil;
 
-public class Player{
+public class Player {
     private String d_color;
     private String d_name;
     List<Country> d_coutriesOwned = new ArrayList<>(); // Initialize lists to avoid null pointer exceptions
@@ -60,6 +60,5 @@ public class Player{
         }
 
 
-    
-
+    }
 }
