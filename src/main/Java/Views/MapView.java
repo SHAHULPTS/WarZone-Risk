@@ -14,7 +14,6 @@ import Utils.CommonUtil;
 
 public class MapView {
     List<Player> d_players;
-    //GameState d_gameState;
     Map d_map;
     List<Country> d_countries;
     List<Continent> d_continents;
