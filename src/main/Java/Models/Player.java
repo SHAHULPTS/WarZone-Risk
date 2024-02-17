@@ -36,13 +36,63 @@ public class Player {
     public void setD_color(String p_color) {
         d_color = p_color;
     }
+    public List<Country> getD_coutriesOwned() {
+        return d_coutriesOwned;
+    }
+
+
+    public void setD_coutriesOwned(List<Country> p_coutriesOwned) {
+        this.d_coutriesOwned = p_coutriesOwned;
+    }
+
+
+    public List<Continent> getD_continentsOwned() {
+        return d_continentsOwned;
+    }
+
+
+    public void setD_continentsOwned(List<Continent> p_continentsOwned) {
+        this.d_continentsOwned = p_continentsOwned;
+    }
+
+
+    //public List<Order> getD_ordersToExecute() {
+     //   return d_ordersToExecute;
+    //}
+
+
+    //public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
+    //    this.d_ordersToExecute = p_ordersToExecute;
+    //}
+
+
+    public Integer getD_noOfUnallocatedArmies() {
+        return d_noOfUnallocatedArmies;
+    }
+
+
+    public void setD_noOfUnallocatedArmies(Integer p_numberOfArmies) {
+        this.d_noOfUnallocatedArmies = p_numberOfArmies;
+    }
+
 
     public List<String> getCountryNames() {
-        List<String> countryNames = new ArrayList<>();
+        List<String> l_countryNames = new ArrayList<>();
         for (Country country : d_coutriesOwned) {
-            countryNames.add(country.getD_countryName());
+            l_countryNames.add(country.getD_countryName());
         }
-        return countryNames;
+        return l_countryNames;
+    }
+
+    public List<String> getContinentNames(){
+        List<String> l_continentNames = new ArrayList<String>();
+        if (d_continentsOwned != null) {
+            for(Continent c: d_continentsOwned){
+                l_continentNames.add(c.getD_continentName());
+            }
+            return l_continentNames;
+        }
+        return null;
     }
 
 
@@ -53,12 +103,13 @@ public class Player {
             Command command = new Command(commandEntered);
 
             if ("deploy".equalsIgnoreCase(command.getRootCommand()) && commandEntered.split(" ").length == 3) {
-                new PlayerService().createDeployOrder(commandEntered, this);
+                //new PlayerService().createDeployOrder(commandEntered, this);
             } else {
                 System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
             }
         }
-
-
     }
+   // public Order next_order() {
+     //   return d_ordersToExecute.isEmpty() ? null : d_ordersToExecute.remove(0);
+    //}
 }
