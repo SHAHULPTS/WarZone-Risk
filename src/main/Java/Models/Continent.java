@@ -6,9 +6,7 @@ import java.util.List;
 public class Continent {
 
     Integer d_continentID;
-
     String d_continentName;
-
     Integer d_continentValue;
 
     public Continent(Integer p_continentID, String p_continentName, int p_continentValue) {
