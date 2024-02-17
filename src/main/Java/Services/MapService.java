@@ -208,4 +208,92 @@ public class MapService {
 
 
     }
+
+    public Map addRemoveNeighbour(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
+        if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
+            p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+        } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 2) {
+            p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+        } else {
+            System.out.println("Your changes could not be saved.");
+        }
+        return p_mapToBeUpdated;
+    }
+
+    public boolean saveMap(GameState p_gameState, String p_fileName) throws InvalidMap {
+        try {
+            if (!p_fileName.equalsIgnoreCase(p_gameState.getD_map().getD_mapFile())) {
+                p_gameState.setError("Please ensure the filename used for save matches the one used for edit");
+                return false;
+            } else {
+                if (null != p_gameState.getD_map()) {
+                    Models.Map l_currentMap = p_gameState.getD_map();
+                    System.out.println("Authenticating Map......");
+                    boolean l_mapValidationStatus = l_currentMap.Validate();
+                    if (l_mapValidationStatus) {
+                        Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
+                        FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
+
+                        if (null != p_gameState.getD_map().getD_continents() && !p_gameState.getD_map().getD_continents().isEmpty()) {
+                            writeContinentMetadata(p_gameState, l_writer);
+                        }
+                        if (null != p_gameState.getD_map().getD_countries() && !p_gameState.getD_map().getD_countries().isEmpty()) {
+                            writeCountryAndBoarderMetaData(p_gameState, l_writer);
+                        }
+                        l_writer.close();
+                    }
+                } else {
+                    p_gameState.setError("Failed to Authenticate the Map");
+                    return false;
+                }
+            }
+            return true;
+        } catch (IOException l_e) {
+            l_e.printStackTrace();
+            p_gameState.setError("There was a problem saving the map file.");
+            return false;
+        }
+    }
+
+    private void writeCountryAndBoarderMetaData(GameState p_gameState, FileWriter p_writer) throws IOException {
+        String l_countryMetaData = new String();
+        String l_bordersMetaData = new String();
+        List<String> l_bordersList = new ArrayList<>();
+
+        p_writer.write(System.lineSeparator() + ApplicationConstants.COUNTRIES + System.lineSeparator());
+        for (Country l_country : p_gameState.getD_map().getD_countries()) {
+            l_countryMetaData = new String();
+            l_countryMetaData = l_country.getD_countryId().toString().concat(" ").concat(l_country.getD_countryName()).concat(" ").concat(l_country.getD_continentId().toString());
+            p_writer.write(l_countryMetaData + System.lineSeparator());
+
+            if (null != l_country.getD_adjacentCountryIds() && !l_country.getD_adjacentCountryIds().isEmpty()) {
+                l_bordersMetaData = new String();
+                l_bordersMetaData = l_country.getD_countryId().toString();
+                for (Integer l_adjCountry : l_country.getD_adjacentCountryIds()) {
+                    l_bordersMetaData = l_bordersMetaData.concat(" ").concat(l_adjCountry.toString());
+                }
+                l_bordersList.add(l_bordersMetaData);
+            }
+        }
+        if (null != l_bordersList && !l_bordersList.isEmpty()) {
+            p_writer.write(System.lineSeparator() + ApplicationConstants.BORDERS + System.lineSeparator());
+            for (String l_borderStr : l_bordersList) {
+                p_writer.write(l_borderStr + System.lineSeparator());
+            }
+        }
+    }
+
+    private void writeContinentMetadata(GameState p_gameState, FileWriter p_writer) throws IOException {
+        p_writer.write(System.lineSeparator() + ApplicationConstants.CONTINENTS + System.lineSeparator());
+        for (Continent l_continent : p_gameState.getD_map().getD_continents()) {
+            p_writer.write(l_continent.getD_continentName().concat(" ").concat(l_continent.getD_continentValue().toString()) + System.lineSeparator());
+        }
+    }
+
+    public void resetMap(GameState p_gameState) {
+        System.out.println("The system failed to load the map because it is invalid. We kindly request a valid map.");
+        p_gameState.setD_map(new Models.Map());
+    }
 }
+
+
