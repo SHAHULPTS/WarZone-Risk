@@ -45,5 +45,7 @@ public class MapView {
     }
 
 
+    public void showMap() {
+    }
 }
 
