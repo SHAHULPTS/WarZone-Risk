@@ -69,4 +69,14 @@ public class MapService {
                 return null;
         }
     }
+    public List<Continent> parseContinentsMetaData(List<String> p_continentList) {
+        int l_continentId = 1;
+        List<Continent> l_continents = new ArrayList<Continent>();
+        for (String cont : p_continentList) {
+            String[] l_metaData = cont.split(" ");
+            l_continents.add(new Continent(l_continentId, l_metaData[0], Integer.parseInt(l_metaData[1])));
+            l_continentId++;
+        }
+        return l_continents;
+    }
 }
