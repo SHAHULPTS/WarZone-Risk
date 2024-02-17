@@ -18,4 +18,11 @@ public final class ApplicationConstants {
     public static final String INVALID_COMMAND_ERROR_DEPLOY_ORDER = "Invalid command. Please provide the command in the following format: deploy countryID <CountryName> <num> (until all reinforcements have been placed).";
     public static final String VALID_MAP = "The loaded map is valid!";
 
+    // Key Constants
+    public static final String ARGUMENTS = "arguments";
+    public static final String OPERATION = "operation";
+
+    // File Extension
+    public static final String MAPFILEEXTENSION = ".map";
+
 }

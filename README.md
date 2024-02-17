@@ -1,2 +1,15 @@
+# Advance Programming Practices(APP) 
+### Repository for Code Maintenance of our Team:10 - Advance Programming Practices (SOEN-6441) Project for Winter 2024 Term.
+
+# Technology
+### Java
+
+# Authors (GitHub Username and Email ID)
+* **Jayasurya Pazhani:** Sparky1505 (jsurya733@gmail.com)
+* **Jayanth Apagundi:** JayanthApagundi (apagundijayanth1999@mail.concordia.ca)
+* **Shuvanidhi Suresh:** Shuvanidhi (shuvanidhi21@gmail.com)
+* **Shahul Hameed:** ShahulPTS (ptsshahul@gmail.com)
+
 <h2> WarZone- Risk</h2>
-This is a Java-based Command-Line implementation of the popular game "Warzone" which is developing as Project for Advance Programming Practice - Winter 2024
+This is a Java-based Command-Line implementation of the popular game "WarZone" which is developing as Project for Advance Programming Practice - Winter 2024
+<h6> - in progress </h6>
