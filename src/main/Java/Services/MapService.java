@@ -120,4 +120,22 @@ public class MapService {
         }
         return p_continents;
     }
+    public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
+
+
+
+
+    }
+
+    public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap {
+
+
+
+    }
+
+    public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
+
+
+
+    }
 }
