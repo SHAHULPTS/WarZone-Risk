@@ -103,12 +103,13 @@ public class Player {
             Command command = new Command(commandEntered);
 
             if ("deploy".equalsIgnoreCase(command.getRootCommand()) && commandEntered.split(" ").length == 3) {
-                new PlayerService().createDeployOrder(commandEntered, this);
+                //new PlayerService().createDeployOrder(commandEntered, this);
             } else {
                 System.out.println(ApplicationConstants.INVALID_COMMAND_ERROR_DEPLOY_ORDER);
             }
         }
-
-
     }
+   // public Order next_order() {
+     //   return d_ordersToExecute.isEmpty() ? null : d_ordersToExecute.remove(0);
+    //}
 }
