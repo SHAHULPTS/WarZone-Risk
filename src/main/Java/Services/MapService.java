@@ -22,12 +22,9 @@ import Utils.CommonUtil;
 
 
 public class MapService {
-
-
     public Map loadMap(GameState p_gameState, String p_loadFileName) {
         Map l_map = new Map();
         List<String> l_linesOfFile = loadFile(p_loadFileName);
-
         if (null != l_linesOfFile && !l_linesOfFile.isEmpty()) {
             List<String> l_continentData = getMetaData(l_linesOfFile, "Continent");
             List<Continent> l_continentObjects = parseContinentsMetaData(l_continentData);
@@ -48,12 +45,28 @@ public class MapService {
         String l_filePath = CommonUtil.getMapFilePath(p_loadFileName);
         List<String> l_lineList = new ArrayList<>();
 
-        try (BufferedReader l_reader = new BufferedReader(new FileReader(l_filePath))) {
+        try (BufferedReader l_reader = new BufferedReader(new FileReader(l_filePath)))
+        {
             l_lineList = l_reader.lines().collect(Collectors.toList());
-        } catch (IOException l_e1) {
-            System.out.println("File not Found!");
+        } catch (IOException l_e1)
+        {
+            System.out.println("Unable to locate the file entered. Please try again");
         }
         return l_lineList;
     }
-
+    public List<String> getMetaData(List<String> p_fileLines, String p_switchParameter) {
+        switch (p_switchParameter) {
+            case "Continent":
+                List<String> l_continentLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.CONTINENTS) + 1, p_fileLines.indexOf(ApplicationConstants.COUNTRIES) - 1);
+                return l_continentLines;
+            case "Country":
+                List<String> l_countryLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.COUNTRIES) + 1, p_fileLines.indexOf(ApplicationConstants.BORDERS) - 1);
+                return l_countryLines;
+            case "Border":
+                List<String> l_bordersLines = p_fileLines.subList(p_fileLines.indexOf(ApplicationConstants.BORDERS) + 1, p_fileLines.size());
+                return l_bordersLines;
+            default:
+                return null;
+        }
+    }
 }
