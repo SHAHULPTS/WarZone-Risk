@@ -44,7 +44,6 @@ public class Player{
         }
         return countryNames;
     }
-
     public void issue_order() throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("\nEnter command for deploying armies for player: " + getPlayerName());
