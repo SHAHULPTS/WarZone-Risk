@@ -55,6 +55,7 @@ public class Order {
         } else {
             System.out.println("\nOrder not executed. Invalid command or target country does not belong to player: " + p_player.getPlayerName());
         }
+
     }
 
 
