@@ -120,22 +120,98 @@ public class MapService {
         }
         return p_continents;
     }
-    public void editMap(GameState p_gameState, String p_editFilePath) throws IOException {
+    public void editMap(GameState p_gameState, String p_editFilePath) throws IOException
+    {
 
+        String l_filePath = CommonUtil.getMapFilePath(p_editFilePath);
+        File l_fileToBeEdited = new File(l_filePath);
 
+        if (l_fileToBeEdited.createNewFile())
+        {
+            System.out.println("The file has been successfully generated.");
+            Map l_map = new Map();
+            l_map.setD_mapFile(p_editFilePath);
+            p_gameState.setD_map(l_map);
+        }
+        else
+        {
+            System.out.println("File has already been generated");
+            this.loadMap(p_gameState, p_editFilePath);
+            if (null == p_gameState.getD_map())
+            {
+                p_gameState.setD_map(new Map());
+            }
+            p_gameState.getD_map().setD_mapFile(p_editFilePath);
+        }
 
 
     }
 
-    public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap {
+    public void editContinent(GameState p_gameState, String p_argument, String p_operation) throws IOException, InvalidMap
+    {
 
+        String l_mapFileName = p_gameState.getD_map().getD_mapFile();
+        Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents()) && CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName) : p_gameState.getD_map();
 
+        if(!CommonUtil.isNull(l_mapToBeUpdated))
+        {
+            Map l_updatedMap = addRemoveContinents(l_mapToBeUpdated, p_operation, p_argument);
+            p_gameState.setD_map(l_updatedMap);
+            p_gameState.getD_map().setD_mapFile(l_mapFileName);
+        }
 
     }
 
     public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
 
+        if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2) {
+            p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
+        } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length==1) {
+            p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
+        } else {
+            System.out.println("The attempt to add/remove the continent was unsuccessful.The system remains unchanged.");
+        }
 
+        return p_mapToBeUpdated;
 
+    }
+    public void editCountry(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap
+    {
+        String l_mapFileName= p_gameState.getD_map().getD_mapFile();
+        Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents()) && CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName) : p_gameState.getD_map();
+
+        if(!CommonUtil.isNull(l_mapToBeUpdated))
+        {
+            Map l_updatedMap = addRemoveCountry(l_mapToBeUpdated, p_operation, p_argument);
+            p_gameState.setD_map(l_updatedMap);
+            p_gameState.getD_map().setD_mapFile(l_mapFileName);
+        }
+    }
+    public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap
+    {
+        if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length==2)
+        {
+            p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+        }else if(p_operation.equalsIgnoreCase("remove")&& p_argument.split(" ").length==1)
+        {
+            p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
+        }
+        else
+        {
+            System.out.println("Your changes could not be saved.");
+        }
+        return p_mapToBeUpdated;
+    }
+    public void editNeighbour(GameState p_gameState, String p_operation, String p_argument) throws InvalidMap
+    {
+        String l_mapFileName= p_gameState.getD_map().getD_mapFile();
+        Map l_mapToBeUpdated = (CommonUtil.isNull(p_gameState.getD_map().getD_continents()) && CommonUtil.isNull(p_gameState.getD_map().getD_countries())) ? this.loadMap(p_gameState, l_mapFileName) : p_gameState.getD_map();
+
+        if(!CommonUtil.isNull(l_mapToBeUpdated))
+        {
+            Map l_updatedMap = addRemoveNeighbour(l_mapToBeUpdated, p_operation, p_argument);
+            p_gameState.setD_map(l_updatedMap);
+            p_gameState.getD_map().setD_mapFile(l_mapFileName);
+        }
     }
 }
