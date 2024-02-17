@@ -14,7 +14,7 @@ public class Player {
     private String d_name;
     List<Country> d_coutriesOwned = new ArrayList<>(); // Initialize lists to avoid null pointer exceptions
     List<Continent> d_continentsOwned = new ArrayList<>();
-    //List<Order> d_ordersToExecute = new ArrayList<>();
+    List<Order> d_ordersToExecute = new ArrayList<>();
     Integer d_noOfUnallocatedArmies = 0;
 
     public Player(String p_playerName) {
@@ -56,14 +56,14 @@ public class Player {
     }
 
 
-    //public List<Order> getD_ordersToExecute() {
-     //   return d_ordersToExecute;
-    //}
+    public List<Order> getD_ordersToExecute() {
+        return d_ordersToExecute;
+    }
 
 
-    //public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
-    //    this.d_ordersToExecute = p_ordersToExecute;
-    //}
+    public void setD_ordersToExecute(List<Order> p_ordersToExecute) {
+        this.d_ordersToExecute = p_ordersToExecute;
+    }
 
 
     public Integer getD_noOfUnallocatedArmies() {
@@ -109,7 +109,7 @@ public class Player {
             }
         }
     }
-   // public Order next_order() {
-     //   return d_ordersToExecute.isEmpty() ? null : d_ordersToExecute.remove(0);
-    //}
+    public Order next_order() {
+        return d_ordersToExecute.isEmpty() ? null : d_ordersToExecute.remove(0);
+    }
 }
