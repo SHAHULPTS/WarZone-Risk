@@ -58,6 +58,18 @@ public class Order {
 
     }
 
+    public boolean validateDeployOrderCountry(Player p_player) {
+        return p_player.getD_coutriesOwned().stream().anyMatch(c -> c.getD_countryName().equalsIgnoreCase(this.d_targetCountryName));
+    }
+    private void executeDeployOrder(Order p_order, GameState p_gameState, Player p_player) {
+        for (Country l_country : p_gameState.getD_map().getD_countries()) {
+            if (l_country.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())) {
+                Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
+                        : l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
+                l_country.setD_armies(l_armiesToUpdate);
+            }
+        }
+    }
 
 
 }
