@@ -11,15 +11,19 @@ import java.io.InputStreamReader;
 
 public class GameEngineController {
 
+    private Object d_gameState;
+
     public static void main(String[] p_args) {
         GameEngineController l_game = new GameEngineController();
         l_game.initGamePlay();
 
-        /**
-         * This method starts the Command Line Interface to receive commands from the user and associates them with their respective action handlers.
-         */
+
+        //This method starts the Command Line Interface to receive commands from the user and associates them with their respective action handlers.
+
+
+
     private void initGamePlay() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
                 try {
                     System.out.println("Enter Game Commands or type 'exit' for quitting");
@@ -32,8 +36,7 @@ public class GameEngineController {
                 }
             }
         }
-
-    }
+        }
 
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
         Command l_command = new Command(p_enteredCommand);
@@ -119,4 +122,32 @@ public class GameEngineController {
         }
     }
 
+    private void performLoadMap(Command lCommand) {
+    }
+
+    private void performEditContinent(Command lCommand) {
+    }
+
+    private void performSaveMap(Command lCommand) {
+    }
+
+    private void performValidateMap(Command lCommand) {
+    }
+
+    private void performEditCountry(Command lCommand) {
+    }
+
+    private void performEditNeighbour(Command lCommand) {
+    }
+
+    private void createPlayers(Command lCommand) {
+    }
+
+    private void assignCountries(Command lCommand) {
+    }
+
+    private void performMapEdit(Command lCommand) {
+    }
 }
+
+    }
