@@ -202,4 +202,40 @@ public class PlayerService {
         }
         return l_armies;
     }
+    public void assignArmies(GameState p_gameState) {
+        for (Player l_pl : p_gameState.getD_players()) {
+            Integer l_armies = this.calculateArmiesForPlayer(l_pl);
+            System.out.println("Player : " + l_pl.getPlayerName() + " has been assigned with " + l_armies + " armies");
+
+            l_pl.setD_noOfUnallocatedArmies(l_armies);
+        }
     }
+    public boolean unexecutedOrdersExists(List<Player> p_playersList) {
+        int l_totalUnexecutedOrders = 0;
+        for (Player l_player : p_playersList) {
+            l_totalUnexecutedOrders = l_totalUnexecutedOrders + l_player.getD_ordersToExecute().size();
+        }
+        return l_totalUnexecutedOrders != 0;
+    }
+    public boolean unassignedArmiesExists(List<Player> p_playersList) {
+        int l_unassignedArmies = 0;
+        for (Player l_player : p_playersList) {
+            l_unassignedArmies = l_unassignedArmies + l_player.getD_noOfUnallocatedArmies();
+        }
+        return l_unassignedArmies != 0;
+    }
+    public void updatePlayers(GameState p_gameState, String p_operation, String p_argument) {
+        if (!isMapLoaded(p_gameState)) {
+            System.out.println("Please ensure the map is loaded prior to adding a player : " + p_argument);
+            return;
+        }
+        List<Player> l_updatedPlayers = this.addRemovePlayers(p_gameState.getD_players(), p_operation, p_argument);
+
+        if (!CommonUtil.isNull(l_updatedPlayers)) {
+            p_gameState.setD_players(l_updatedPlayers);
+        }
+    }
+    public boolean isMapLoaded(GameState p_gameState) {
+        return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
+    }
+}
