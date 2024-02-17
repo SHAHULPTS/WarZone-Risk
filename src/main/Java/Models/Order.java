@@ -50,7 +50,7 @@ public class Order {
 
     public void execute(GameState p_gameState, Player p_player) {
         if ("deploy".equals(this.d_orderAction) && validateDeployOrderCountry(p_player)) {
-            executeDeployOrder(p_gameState, p_player);
+            executeDeployOrder(this,p_gameState, p_player);
             System.out.println("\nOrder executed successfully. " + this.d_numberOfArmiesToPlace + " armies deployed to " + this.d_targetCountryName);
         } else {
             System.out.println("\nOrder not executed. Invalid command or target country does not belong to player: " + p_player.getPlayerName());

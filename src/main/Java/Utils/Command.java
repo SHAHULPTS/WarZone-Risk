@@ -42,7 +42,7 @@ public class Command {
         return l_operationsList;
     }
 
-    private Map<String, String> parseOperation(String p_operation) {
+    private Map<String, String> getOperationAndArgumentsMap(String p_operation) {
         Map<String, String> l_operationMap = new HashMap<>();
         String[] l_parts = p_operation.trim().split(" ", 2);
 
@@ -52,7 +52,7 @@ public class Command {
         return l_operationMap;
     }
 
-    public boolean isKeyPresent(String key, Map<String, String> inputMap) {
+    public boolean checkRequiredKeysPresent(String key, Map<String, String> inputMap) {
         return inputMap.containsKey(key) && !inputMap.get(key).isEmpty();
     }
 

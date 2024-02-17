@@ -13,5 +13,36 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub davidmoten Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/davidmoten/word-wrap</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.github.davidmoten/word-wrap -->
+        <dependency>
+            <groupId>com.github.davidmoten</groupId>
+            <artifactId>word-wrap</artifactId>
+            <version>0.1.11</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
