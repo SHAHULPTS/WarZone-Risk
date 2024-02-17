@@ -25,4 +25,11 @@ public final class ApplicationConstants {
     // File Extension
     public static final String MAPFILEEXTENSION = ".map";
 
+    // Important Constants
+    public static final String ARMIES = "Armies";
+    public static final String CONTROL_VALUE = "Control Value";
+    public static final String CONNECTIVITY = "Connections";
+    public static final String SRC_MAIN_RESOURCES = "src/main/resources";
+    public static final int CONSOLE_WIDTH = 80;
+
 }
