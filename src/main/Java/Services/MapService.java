@@ -83,11 +83,9 @@ public class MapService {
 
         LinkedHashMap<Integer, List<Integer>> l_countryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
         List<Country> l_countriesList = new ArrayList<Country>();
-
         for (String country : p_countriesList) {
             String[] l_metaDataCountries = country.split(" ");
-            l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), l_metaDataCountries[1],
-                    Integer.parseInt(l_metaDataCountries[2])));
+            l_countriesList.add(new Country(Integer.parseInt(l_metaDataCountries[0]), l_metaDataCountries[1], Integer.parseInt(l_metaDataCountries[2])));
         }
         return l_countriesList;
     }
@@ -98,7 +96,8 @@ public class MapService {
             if (null != l_border && !l_border.isEmpty()) {
                 ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
                 String[] l_splitString = l_border.split(" ");
-                for (int i = 1; i <= l_splitString.length - 1; i++) {
+                for (int i = 1; i <= l_splitString.length - 1; i++)
+                {
                     l_neighbours.add(Integer.parseInt(l_splitString[i]));
 
                 }
@@ -110,5 +109,15 @@ public class MapService {
             c.setD_adjacentCountryIds(l_adjacentCountries);
         }
         return p_countriesList;
+    }
+    public List<Continent> linkCountryContinents(List<Country> p_countries, List<Continent> p_continents) {
+        for (Country c : p_countries) {
+            for (Continent cont : p_continents) {
+                if (cont.getD_continentID().equals(c.getD_continentId())) {
+                    cont.addCountry(c);
+                }
+            }
+        }
+        return p_continents;
     }
 }
