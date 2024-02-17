@@ -36,7 +36,7 @@ public class Command {
         String[] l_operations = l_operationsString.split("-");
 
         Arrays.stream(l_operations).filter(operation -> operation.length() > 1).forEach(operation -> {
-            l_operationsList.add(parseOperation(operation));
+            l_operationsList.add(getOperationAndArgumentsMap(operation));
         });
 
         return l_operationsList;

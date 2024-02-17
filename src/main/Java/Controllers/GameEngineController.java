@@ -1,5 +1,6 @@
 package Controllers;
 
+import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.Player;
@@ -7,7 +8,8 @@ import Services.MapService;
 import Utils.Command;
 import Utils.CommonUtil;
 import Views.MapView;
-import Constants.ApplicationConstants;
+import Models.GameState;
+import Services.PlayerService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,19 +25,17 @@ public class GameEngineController {
     GameState d_gameState = new GameState();
 
     /**
-     * d_mapService instance is used to handle load, read, parse, edit, and save map file.
+     * d_mapService
      */
     MapService d_mapService = new MapService();
 
     /**
-     * Player Service instance to edit players and issue orders.
+     * Player Service
      */
     PlayerService d_playerService = new PlayerService();
 
     /**
-     * getD_gameState is a getter method to get current game state.
-     *
-     * @return the current game state
+     * getD_gameState
      */
     public GameState getD_gameState() {
         return d_gameState;
@@ -147,13 +147,88 @@ public class GameEngineController {
         }
     }
 
-    private void performLoadMap(Command lCommand) {
+    /**
+     *
+     * @param p_command
+     * @throws InvalidCommand
+     */
+    private void performLoadMap(Command p_command) throws InvalidCommand {
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        if (null == l_operations_list || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                    try {
+
+                        // Loads the map if it is valid or resets the game state
+                        Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
+                                l_map.get(ApplicationConstants.ARGUMENTS));
+                        if (l_mapToLoad.Validate()) {
+                            System.out.println("Map has been loaded successfully. \n");
+                        } else {
+                            d_mapService.resetMap(d_gameState);
+                        }
+                    } catch (InvalidMap l_e) {
+                        d_mapService.resetMap(d_gameState);
+                    }
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+                }
+            }
+        }
     }
 
-    private void performEditContinent(Command lCommand) {
+    /**
+     *
+     * @param p_command
+     * @throws IOException
+     * @throws InvalidCommand
+     * @throws InvalidMap
+     */
+    public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+                    d_mapService.editContinent(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
+                            l_map.get(ApplicationConstants.OPERATION));
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+                }
+            }
+        }
     }
 
-    private void performSaveMap(Command lCommand) {
+    /**
+     *
+     * @param p_command
+     * @throws InvalidCommand
+     * @throws InvalidMap
+     */
+    public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        if (null == l_operations_list || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                    boolean l_fileUpdateStatus = d_mapService.saveMap(d_gameState,l_map.get(ApplicationConstants.ARGUMENTS));
+                    if (l_fileUpdateStatus)
+                        System.out.println("Required changes has been done in map file");
+                    else
+                        System.out.println(d_gameState.getError());
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEMAP);
+                }
+            }
+        }
     }
 
     /**
