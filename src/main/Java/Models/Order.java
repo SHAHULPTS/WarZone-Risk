@@ -49,7 +49,7 @@ public class Order {
     }
 
     public void execute(GameState p_gameState, Player p_player) {
-        if ("deploy".equals(this.d_orderAction) && validateDeployOrderCountry(p_player)) {
+        if ("deploy".equals(this.d_orderAction) && validateDeployOrderCountry(p_player, this)) {
             executeDeployOrder(this,p_gameState, p_player);
             System.out.println("\nOrder executed successfully. " + this.d_numberOfArmiesToPlace + " armies deployed to " + this.d_targetCountryName);
         } else {
@@ -58,7 +58,7 @@ public class Order {
 
     }
 
-    public boolean validateDeployOrderCountry(Player p_player) {
+    public boolean validateDeployOrderCountry(Player p_player, Order d_orderDetails) {
         return p_player.getD_coutriesOwned().stream().anyMatch(c -> c.getD_countryName().equalsIgnoreCase(this.d_targetCountryName));
     }
     private void executeDeployOrder(Order p_order, GameState p_gameState, Player p_player) {
