@@ -3,11 +3,9 @@ package Utils;
 import java.io.File;
 import java.util.Collection;
 import java.util.Map;
-
 import Constants.ApplicationConstants;
 
 public class CommonUtil {
-
     public static boolean isEmpty(String p_str) {
         return (p_str == null || p_str.trim().isEmpty());
     }
