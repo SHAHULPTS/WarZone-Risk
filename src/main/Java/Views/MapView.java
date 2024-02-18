@@ -13,7 +13,7 @@ import Models.Player;
 import Utils.CommonUtil;
 import Models.Map;
 import Models.GameState;
-//import org.davidmoten.text.utils.WordWrap;
+import org.davidmoten.text.utils.WordWrap;
 
 public class MapView {
     List<Player> d_players;
@@ -92,8 +92,8 @@ public class MapView {
             if(i<p_adjCountries.size()-1)
                 l_commaSeparatedCountries.append(", ");
         }
-        //String l_adjacentCountry = ApplicationConstants.CONNECTIVITY+" : "+ WordWrap.from(l_commaSeparatedCountries.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap();
-        //System.out.println(getColorizedString(getCountryColor(p_countryName),l_adjacentCountry));
+        String l_adjacentCountry = ApplicationConstants.CONNECTIVITY+" : "+ WordWrap.from(l_commaSeparatedCountries.toString()).maxWidth(ApplicationConstants.CONSOLE_WIDTH).wrap();
+        System.out.println(getColorizedString(getCountryColor(p_countryName),l_adjacentCountry));
         System.out.println();
     }
 

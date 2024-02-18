@@ -20,24 +20,12 @@ import java.util.Map;
 
 public class GameEngineController {
 
-    /**
-     * d_gameState
-     */
     GameState d_gameState = new GameState();
 
-    /**
-     * d_mapService
-     */
     MapService d_mapService = new MapService();
 
-    /**
-     * Player Service
-     */
     PlayerService d_playerService = new PlayerService();
 
-    /**
-     * getD_gameState
-     */
     public GameState getD_gameState() {
         return d_gameState;
     }
@@ -50,18 +38,18 @@ public class GameEngineController {
     //This method starts the Command Line Interface to receive commands from the user and associates them with their respective action handlers.
 
     private void initGamePlay() {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            while (true) {
-                try {
-                    System.out.println("Enter Game Commands or type 'exit' for quitting");
-                    String l_commandEntered = reader.readLine();
-                    handleCommand(l_commandEntered);
-                } catch (InvalidCommand | InvalidMap l_exception) {
-                    System.out.println(l_exception.getMessage());
-                } catch (IOException l_ioException) {
-                    l_ioException.printStackTrace();
-                }
+        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            try {
+                System.out.println("Enter Game Commands or type 'exit' for quitting");
+                String l_commandEntered = l_reader.readLine();
+                handleCommand(l_commandEntered);
+            } catch (InvalidCommand | InvalidMap l_exception) {
+                System.out.println(l_exception.getMessage());
+            } catch (IOException l_ioException) {
+                l_ioException.printStackTrace();
             }
+        }
     }
 
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
@@ -148,11 +136,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     */
     private void performLoadMap(Command p_command) throws InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -181,13 +164,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws IOException
-     * @throws InvalidCommand
-     * @throws InvalidMap
-     */
     public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -206,12 +182,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     * @throws InvalidMap
-     */
     public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -232,12 +202,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidMap
-     * @throws InvalidCommand
-     */
     private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -256,13 +220,6 @@ public class GameEngineController {
         }
     }
 
-
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     * @throws InvalidMap
-     */
     public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -280,12 +237,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     * @throws InvalidMap
-     */
     public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -303,11 +254,6 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     */
     private void createPlayers(Command p_command) throws InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
@@ -325,64 +271,52 @@ public class GameEngineController {
         }
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws InvalidCommand
-     * @throws IOException
-     */
     private void assignCountries(Command p_command) throws InvalidCommand, IOException {
-            List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-            if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-                d_playerService.assignCountries(d_gameState);
-                d_playerService.assignColors(d_gameState);
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+        if (CommonUtil.isCollectionEmpty(l_operations_list)) {
+            d_playerService.assignCountries(d_gameState);
+            d_playerService.assignColors(d_gameState);
 
-                while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
-                    System.out.println("\n********Starting Main Game Loop***********\n");
-
-
-                    d_playerService.assignArmies(d_gameState); // assigning armies to players
+            while (!CommonUtil.isCollectionEmpty(d_gameState.getD_players())) {
+                System.out.println("\n********Starting Main Game Loop***********\n");
 
 
-                    while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
-                        for (Player l_player : d_gameState.getD_players()) {
-                            if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0) {
-                                l_player.issue_order();
-                            }
+                d_playerService.assignArmies(d_gameState); // assigning armies to players
+
+
+                while (d_playerService.unassignedArmiesExists(d_gameState.getD_players())) {
+                    for (Player l_player : d_gameState.getD_players()) {
+                        if (l_player.getD_noOfUnallocatedArmies() != null && l_player.getD_noOfUnallocatedArmies() != 0) {
+                            l_player.issue_order();
                         }
                     }
-
-                    // Executing the orders
-                    while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
-                        for (Player l_player : d_gameState.getD_players()) {
-                            Order l_order = l_player.next_order();
-                            if (l_order != null) {
-                                l_order.execute(d_gameState, l_player);
-                            }
-                        }
-                    }
-
-                    MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
-                    l_map_view.showMap();
-
-                    System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
-                    BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-                    String l_continue = l_reader.readLine();
-                    if (l_continue.equalsIgnoreCase("N"))
-                        break;
                 }
-            } else {
-                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+
+                // Executing the orders
+                while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
+                    for (Player l_player : d_gameState.getD_players()) {
+                        Order l_order = l_player.next_order();
+                        if (l_order != null) {
+                            l_order.execute(d_gameState, l_player);
+                        }
+                    }
+                }
+
+                MapView l_map_view = new MapView(d_gameState, d_gameState.getD_players());
+                l_map_view.showMap();
+
+                System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
+                BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
+                String l_continue = l_reader.readLine();
+                if (l_continue.equalsIgnoreCase("N"))
+                    break;
             }
+        } else {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+        }
 
     }
 
-    /**
-     *
-     * @param p_command
-     * @throws IOException
-     * @throws InvalidCommand
-     */
     public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -400,4 +334,3 @@ public class GameEngineController {
     }
 
 }
-
