@@ -6,7 +6,7 @@
 
 # Authors (GitHub Username and Email ID)
 * **Jayasurya Pazhani:** Sparky1505 (jsurya733@gmail.com)
-* **Jayanth Apagundi:** JayanthApagundi (apagundijayanth1999@mail.concordia.ca)
+* **Jayanth Apagundi:** JayanthApagundi (apagundijayanth1999@gmail.com)
 * **Shuvanidhi Suresh:** Shuvanidhi (shuvanidhi21@gmail.com)
 * **Shahul Hameed:** ShahulPTS (ptsshahul@gmail.com)
 * **Vinisha Kora Venkatesalu:** Vinishakv (vinisha0909vini@gmail.com)
