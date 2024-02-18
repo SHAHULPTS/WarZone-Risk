@@ -2,6 +2,10 @@ package Constants;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The ApplicationConstants class provides a set of constant values used throughout the application.
+ *
+ */
 public final class ApplicationConstants {
     // Error messages for invalid commands
     public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Please provide the command in the following format: editmap filename";
