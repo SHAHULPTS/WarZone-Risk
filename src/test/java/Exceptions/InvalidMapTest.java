@@ -1,6 +1,8 @@
 package Exceptions;
 
-import static org.junit.jupiter.api.Assertions.*;
+/**
+ * This class is used to test InvalidMap class functions.
+ */
 
 class InvalidMapTest {
 

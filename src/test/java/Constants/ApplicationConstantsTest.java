@@ -1,7 +1,8 @@
 package Constants;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class is used to test ApplicationConstants class functions.
+ */
 class ApplicationConstantsTest {
 
 }
