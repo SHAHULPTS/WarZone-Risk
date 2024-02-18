@@ -209,6 +209,7 @@ public class Player {
      * Returns the next order to be executed by the player.
      * @return The next order, or null if no orders are pending.
      */
+
     public Order next_order() {
         if (CommonUtil.isCollectionEmpty(this.d_ordersToExecute)) {
             return null;
