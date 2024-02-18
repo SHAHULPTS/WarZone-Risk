@@ -22,16 +22,20 @@ import Models.Country;
 import Models.GameState;
 import Models.Map;
 import Utils.CommonUtil;
-
+/**
+ * This class contains unit tests for the MapService class.
+ */
 public class MapServiceTest {
 
 
-    MapService d_mapservice;
+    MapService d_mapservice;// Instance of MapService for testing
 
-    GameState d_state;
+    GameState d_state;// Instance of GameState for testing
 
-    Map d_map;
-
+    Map d_map; // Instance of Map for testing
+    /**
+     * Sets up the test environment by initializing objects.
+     */
     @Before
     public void setup() {
         d_mapservice = new MapService();
@@ -39,7 +43,11 @@ public class MapServiceTest {
         d_state = new GameState();
         d_map = d_mapservice.loadMap(d_state, "canada.map");
     }
-
+    /**
+     * Test method for the editMap() function in the MapService class.
+     * It tests whether the editMap() function correctly edits the map file.
+     * @throws IOException If an I/O error occurs.
+     */
     @org.junit.Test
     public void testEditMap() throws IOException {
         d_mapservice.editMap(d_state, "Trial.map");
@@ -47,7 +55,12 @@ public class MapServiceTest {
 
         assertTrue(l_file.exists());
     }
-
+    /**
+     * Test method for the addRemoveContinents() function in the MapService class, specifically testing the addition of continents.
+     * It verifies whether the addRemoveContinents() function correctly adds a continent to the map.
+     * @throws IOException If an I/O error occurs.
+     * @throws InvalidMap If the map is invalid.
+     */
     @org.junit.Test
     public void testEditContinentAdd() throws IOException, InvalidMap {
         d_state.setD_map(new Map());
@@ -57,7 +70,12 @@ public class MapServiceTest {
         assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Russia");
         assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "12");
     }
-
+    /**
+     * Test method for the addRemoveContinents() function in the MapService class, specifically testing the removal of continents.
+     * It verifies whether the addRemoveContinents() function correctly removes a continent from the map.
+     * @throws IOException If an I/O error occurs.
+     * @throws InvalidMap If the map is invalid.
+     */
     @org.junit.Test
     public void testEditContinentRemove() throws IOException, InvalidMap {
         List<Continent> l_continents = new ArrayList<>();
@@ -83,7 +101,10 @@ public class MapServiceTest {
         assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Europe");
         assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "10");
     }
-
+    /**
+     * Test method for verifying the continent IDs and values in the loaded map.
+     * It compares the actual continent IDs and values with the expected ones.
+     */
     @org.junit.Test
     public void testContinentIdAndValues() {
         List<Integer> l_actualContinentIdList = new ArrayList<Integer>();
@@ -103,7 +124,10 @@ public class MapServiceTest {
         assertEquals(l_expectedContinentIdList, l_actualContinentIdList);
         assertEquals(l_expectedContinentValueList, l_actualContinentValueList);
     }
-
+    /**
+     * Test method for verifying the country IDs and neighbor relationships in the loaded map.
+     * It compares the actual country IDs and their neighboring country IDs with the expected ones.
+     */
     @org.junit.Test
     public void testCountryIdAndNeighbors() {
         List<Integer> l_actualCountryIdList = new ArrayList<Integer>();
@@ -132,14 +156,25 @@ public class MapServiceTest {
         assertEquals(l_expectedCountryIdList, l_actualCountryIdList);
         assertEquals(l_expectedCountryNeighbors, l_actualCountryNeighbors);
     }
-
+    /**
+     * Test method for verifying the behavior of saving an invalid map.
+     * It sets up an invalid map file and attempts to save it, expecting it to throw an InvalidMap exception.
+     *
+     * @throws InvalidMap if the map being saved is invalid
+     */
     @org.junit.Test(expected = InvalidMap.class)
     public void testSaveInvalidMap() throws InvalidMap {
         d_map.setD_mapFile("europe.map");
         d_state.setD_map(d_map);
         d_mapservice.saveMap(d_state, "canada.map");
     }
-
+    /**
+     * Test method for verifying the addition of a country to the map.
+     * It loads a map, adds a country named "England" to the continent "Asia", and checks if the country was added successfully.
+     *
+     * @throws IOException  if there is an I/O error while loading the map
+     * @throws InvalidMap   if the map is invalid
+     */
     @org.junit.Test
     public void testEditCountryAdd() throws IOException, InvalidMap {
         d_mapservice.loadMap(d_state, "Trial.map");
@@ -147,13 +182,25 @@ public class MapServiceTest {
 
         assertEquals(d_state.getD_map().getCountryByName("Asia").getD_countryName(), "England");
     }
-
+    /**
+     * Test method for verifying the removal of a country from the map.
+     * It loads a map, attempts to remove a country named "England", and expects an InvalidMap exception to be thrown.
+     *
+     * @throws InvalidMap if the map is invalid or if removing the country operation fails
+     */
     @org.junit.Test(expected = InvalidMap.class)
     public void testEditCountryRemove() throws InvalidMap{
         d_mapservice.loadMap(d_state, "Trial.map");
         d_mapservice.editCountry(d_state, "remove", "England");
     }
-
+    /**
+     * Test method for verifying the addition of a neighbor country to a specified country.
+     * It loads a map, adds a continent "Northern-America", adds countries "Canada" and "Alaska" to this continent,
+     * then adds "Alaska" as a neighbor to "Canada", and checks if "Alaska" is added as a neighbor to "Canada".
+     *
+     * @throws InvalidMap if the map is invalid or if the neighbor addition operation fails
+     * @throws IOException if an I/O error occurs while loading the map
+     */
     @org.junit.Test
     public void testEditNeighborAdd() throws InvalidMap, IOException {
         d_mapservice.loadMap(d_state, "Trial.map");
@@ -164,7 +211,15 @@ public class MapServiceTest {
 
         assertEquals(d_state.getD_map().getCountryByName("Canada").getD_adjacentCountryIds().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
     }
-
+    /**
+     * Test method for verifying the removal of a neighbor country from a specified country.
+     * It edits a map, adds a continent "Asia", adds countries "Maldives" and "Singapore" to this continent,
+     * then adds "Singapore" as a neighbor to "Maldives", and attempts to remove this neighbor.
+     * The test expects an {@link InvalidMap} exception to be thrown, indicating that the neighbor removal operation failed.
+     *
+     * @throws InvalidMap if the map is invalid or if the neighbor removal operation fails
+     * @throws IOException if an I/O error occurs while editing the map
+     */
     @org.junit.Test(expected = InvalidMap.class)
     public void testEditNeighborRemove() throws InvalidMap, IOException{
         d_mapservice.editMap(d_state, "testedit.map");

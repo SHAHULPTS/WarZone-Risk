@@ -38,7 +38,11 @@ public class PlayerServiceTest {
 
     private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
-
+    /**
+     * Sets up the necessary objects and data structures before each test method execution.
+     * Initializes a new player object, a player service object, a game state object, and a list of existing players.
+     * Existing players "Jay" and "Nidhi" are added to the list.
+     */
     @Before
     public void setup() {
         d_playerInfo = new Player();
@@ -48,7 +52,12 @@ public class PlayerServiceTest {
         d_exisitingPlayerList.add(new Player("Nidhi"));
 
     }
-
+    /**
+     * Tests the addition of players using the addRemovePlayers method in the PlayerService class.
+     * It checks whether the existing player list is not empty, then adds a new player "Vinisha" to the list.
+     * Verifies if the new player "Vinisha" is successfully added to the updated player list.
+     * Additionally, it tests the scenario where attempting to add an existing player "Jay" results in no changes.
+     */
     @org.junit.Test
     public void testAddPlayers() {
         assertFalse(CommonUtil.isCollectionEmpty(d_exisitingPlayerList));
@@ -59,7 +68,11 @@ public class PlayerServiceTest {
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Jay");
         assertEquals("Player with name : Jay already Exists. Changes are not made.", d_outContent.toString());
     }
-
+    /**
+     * Tests the removal of players using the addRemovePlayers method in the PlayerService class.
+     * It removes the player "Jay" from the existing player list and verifies if the player is successfully removed.
+     * Additionally, it tests the scenario where attempting to remove a non-existing player "JaySurya" results in no changes.
+     */
     @org.junit.Test
     public void testRemovePlayers() {
         List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Jay");
@@ -69,13 +82,22 @@ public class PlayerServiceTest {
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "JaySurya");
         assertEquals("Player with name : JaySurya does not Exist. Changes are not made.", d_outContent.toString());
     }
-
+    /**
+     * Tests the checkPlayersAvailability method in the PlayerService class.
+     * It checks whether players exist in the game state and verifies that the method returns false when there are no players.
+     */
     @org.junit.Test
     public void testPlayersAvailability() {
         boolean l_playersExists = d_playerService.checkPlayersAvailability(d_gameState);
         assertFalse(l_playersExists);
     }
-
+    /**
+     * Tests the playerCountryAssignment method in the PlayerService class.
+     * It verifies that countries are assigned to players correctly.
+     * This test loads a map, sets existing players, assigns countries to players,
+     * and then checks if each player has a non-null list of countries owned and
+     * if the total number of assigned countries matches the total number of countries in the map.
+     */
     @org.junit.Test
     public void testPlayerCountryAssignment() {
         d_mapservice = new MapService();
@@ -93,7 +115,13 @@ public class PlayerServiceTest {
         assertEquals(l_assignedCountriesSize, d_gameState.getD_map().getD_countries().size());
     }
 
-
+    /**
+     * Tests the calculateArmiesForPlayer method in the PlayerService class.
+     * It verifies that the correct number of armies is calculated for a player based on owned countries and continents.
+     * This test creates a player with a list of owned countries and continents,
+     * sets the number of unallocated armies, calculates the armies for the player,
+     * and then compares the actual result with the expected result.
+     */
     @org.junit.Test
     public void testCalculateArmiesForPlayer() {
         Player l_playerInfo = new Player();
@@ -111,7 +139,14 @@ public class PlayerServiceTest {
         Integer l_expectedresult = 8;
         assertEquals(l_expectedresult, l_actualResult);
     }
-
+    /**
+     * Tests the validateDeployOrderArmies method in the PlayerService class.
+     * It verifies whether the deployment order involving a certain number of armies is valid for a player.
+     * This test sets the number of unallocated armies for a player,
+     * provides a number of armies for deployment, and then checks if the order is valid.
+     * The expected result is that the deployment order should be valid since the number of armies requested for deployment
+     * is less than or equal to the number of unallocated armies of the player.
+     */
     @org.junit.Test
     public void testValidateDeployOrderArmies() {
         d_playerInfo.setD_noOfUnallocatedArmies(10);
@@ -120,7 +155,17 @@ public class PlayerServiceTest {
         assertFalse(l_bool);
 
     }
-
+    /**
+     * Tests the createDeployOrder method in the PlayerService class.
+     * It verifies the creation of a deployment order for a player.
+     * This test sets up a player with unallocated armies and a country owned by the player.
+     * It then creates a deployment order for a specified number of armies to be deployed to a country.
+     * The test checks if the order is created correctly by verifying the player's remaining unallocated armies,
+     * the number of orders in the player's order list, the target country of the order, and the number of armies to be deployed.
+     * The expected result is that the deployment order is created successfully with the specified parameters.
+     *
+     * @throws InvalidCommand if the command provided for creating the deployment order is invalid
+     */
     @org.junit.Test
     public void testDeployOrder() throws InvalidCommand {
         Player l_player = new Player("Maze");
