@@ -84,7 +84,7 @@ public class GameEngineController {
 
         switch (l_rootCommand) {
             case "editmap": {
-                performMapEdit(l_command);
+                MapEdit(l_command);
                 break;
             }
             case "editcontinent": {
@@ -92,7 +92,7 @@ public class GameEngineController {
                     System.out.println("Can not Edit Continent, please perform `editmap` first");
                     break;
                 }
-                performEditContinent(l_command);
+                EditContinent(l_command);
                 break;
             }
             case "savemap": {
@@ -101,11 +101,11 @@ public class GameEngineController {
                     break;
                 }
 
-                performSaveMap(l_command);
+                SaveMap(l_command);
                 break;
             }
             case "loadmap": {
-                performLoadMap(l_command);
+                LoadMap(l_command);
                 break;
             }
             case "validatemap": {
@@ -113,7 +113,7 @@ public class GameEngineController {
                     System.out.println("No map found to validate, Please `loadmap` & `editmap` first");
                     break;
                 }
-                performValidateMap(l_command);
+                ValidateMap(l_command);
                 break;
             }
             case "editcountry": {
@@ -121,7 +121,7 @@ public class GameEngineController {
                     System.out.println("Can not Edit Country, please perform `editmap` first");
                     break;
                 }
-                performEditCountry(l_command);
+                EditCountry(l_command);
                 break;
             }
             case "editneighbor": {
@@ -129,7 +129,7 @@ public class GameEngineController {
                     System.out.println("Can not Edit Neighbors, please perform `editmap` first");
                     break;
                 }
-                performEditNeighbour(l_command);
+                EditNeighbour(l_command);
                 break;
             }
             case "gameplayer": {
@@ -167,7 +167,7 @@ public class GameEngineController {
      * @param p_command The command containing map loading information.
      * @throws InvalidCommand If an invalid command is encountered.
      */
-    private void performLoadMap(Command p_command) throws InvalidCommand {
+    private void LoadMap(Command p_command) throws InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -204,7 +204,7 @@ public class GameEngineController {
      * @throws InvalidCommand   If an invalid command is encountered.
      * @throws InvalidMap       If an invalid map is encountered.
      */
-    public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
+    public void EditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
@@ -229,7 +229,7 @@ public class GameEngineController {
      * @throws InvalidCommand If an invalid command is encountered.
      * @throws InvalidMap     If an invalid map is encountered.
      */
-    public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
+    public void SaveMap(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -256,7 +256,7 @@ public class GameEngineController {
      * @throws InvalidMap     If an invalid map is encountered.
      * @throws InvalidCommand If an invalid command is encountered.
      */
-    private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
+    private void ValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
             Models.Map l_currentMap = d_gameState.getD_map();
@@ -281,7 +281,7 @@ public class GameEngineController {
      * @throws InvalidCommand If an invalid command is encountered.
      * @throws InvalidMap     If an invalid map is encountered.
      */
-    public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
+    public void EditCountry(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
@@ -305,7 +305,7 @@ public class GameEngineController {
      * @throws InvalidCommand If an invalid command is encountered.
      * @throws InvalidMap     If an invalid map is encountered.
      */
-    public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
+    public void EditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
@@ -405,7 +405,7 @@ public class GameEngineController {
      * @throws IOException      If an I/O error occurs.
      * @throws InvalidCommand   If an invalid command is encountered.
      */
-    public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
+    public void MapEdit(Command p_command) throws IOException, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
         if (l_operations_list == null || l_operations_list.isEmpty()) {
