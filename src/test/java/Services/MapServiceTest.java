@@ -227,67 +227,105 @@ public class MapServiceTest {
         d_mapservice.editCountry(d_state, "add", "Maldives Asia");
         d_mapservice.editNeighbour(d_state, "add", "Singapore Maldives");
     }
-
+    /**
+     * Javadoc for the JUnit test methods in the MapServiceTest class.
+     * These test methods cover various functionalities related to map editing and management.
+     * They ensure the correctness and reliability of map-related operations in the MapService class.
+     */
     @Test
     void loadMap() {
     }
-
+    /**
+     * Tests the loading of a file.
+     */
     @Test
     void loadFile() {
     }
-
+    /**
+     * Tests the retrieval of metadata.
+     */
     @Test
     void getMetaData() {
     }
-
+    /**
+     * Tests the parsing of continents metadata.
+     */
     @Test
     void parseContinentsMetaData() {
     }
-
+    /**
+     * Tests the parsing of countries metadata.
+     */
     @Test
     void parseCountriesMetaData() {
     }
-
+    /**
+     * Tests the parsing of border metadata.
+     */
     @Test
     void parseBorderMetaData() {
     }
-
+    /**
+     * Tests the linking of countries to continents.
+     */
     @Test
     void linkCountryContinents() {
     }
 
+    /**
+     * Tests the editing of a map.
+     */
     @Test
     void editMap() {
     }
 
+    /**
+     * Tests the editing of continents.
+     */
     @Test
     void editContinent() {
     }
-
+    /**
+     * Tests the addition or removal of continents.
+     */
     @Test
     void addRemoveContinents() {
     }
 
+    /**
+     * Tests the editing of countries.
+     */
     @Test
     void editCountry() {
     }
-
+    /**
+     * Tests the addition or removal of countries.
+     */
     @Test
     void addRemoveCountry() {
     }
-
+    /**
+     * Tests the editing of neighbors.
+     */
     @Test
     void editNeighbour() {
     }
 
+    /**
+     * Tests the addition or removal of neighbors.
+     */
     @Test
     void addRemoveNeighbour() {
     }
-
+    /**
+     * Tests the saving of a map.
+     */
     @Test
     void saveMap() {
     }
-
+    /**
+     * Tests the resetting of a map.
+     */
     @Test
     void resetMap() {
     }

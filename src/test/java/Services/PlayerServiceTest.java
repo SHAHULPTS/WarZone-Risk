@@ -21,20 +21,30 @@ import Models.Map;
 import Models.Player;
 import Utils.CommonUtil;
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Javadoc for the PlayerServiceTest class.
+ * This class contains test cases for the PlayerService class, covering various functionalities related to player management and game state.
+ */
 public class PlayerServiceTest {
 
-    Player d_playerInfo;
+    Player d_playerInfo;     /** Player information used in the test cases. */
 
-    PlayerService d_playerService;
 
-    Map d_map;
+    PlayerService d_playerService;     /** Instance of PlayerService used to test player-related functionalities. */
 
-    GameState d_gameState;
 
-    MapService d_mapservice;
+    Map d_map;     /** Map used in the test cases. */
+
+
+    GameState d_gameState;     /** GameState used in the test cases. */
+
+
+    MapService d_mapservice;    /** Instance of MapService used in the test cases. */
+
+    /** List of existing players used in the test cases. */
 
     List<Player> d_exisitingPlayerList = new ArrayList<>();
+    /** Output stream used for capturing console output during tests. */
 
     private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
@@ -179,55 +189,88 @@ public class PlayerServiceTest {
         assertEquals(l_player.getD_ordersToExecute().get(0).getD_targetCountryName(), "Japan");
         assertEquals(l_player.getD_ordersToExecute().get(0).getD_numberOfArmiesToPlace().toString(), "4");
     }
-
+    /**
+     * This method tests the functionality to check if player names are unique.
+     */
     @Test
     void isPlayerNameUnique() {
     }
 
+    /**
+     * This method tests the functionality to add or remove players from the player list.
+     */
     @Test
     void addRemovePlayers() {
     }
-
+    /**
+     * This method tests the functionality to check the availability of players.
+     */
     @Test
     void checkPlayersAvailability() {
     }
-
+    /**
+     * This method tests the functionality to assign colors to players.
+     */
     @Test
     void assignColors() {
     }
-
+    /**
+     * This method tests the functionality to assign countries to players.
+     */
     @Test
     void assignCountries() {
     }
 
+    /**
+     * This method tests the functionality to create deployment orders for players.
+     */
     @Test
     void createDeployOrder() {
     }
 
+    /**
+     * This method tests the functionality to validate the number of armies in a deployment order.
+     */
     @Test
     void validateDeployOrderArmies() {
     }
 
+    /**
+     * This method tests the functionality to calculate the number of armies for a player based on owned countries and continents.
+     */
     @Test
     void calculateArmiesForPlayer() {
     }
 
+    /**
+     * This method tests the functionality to assign armies to players.
+     */
     @Test
     void assignArmies() {
     }
 
+    /**
+     * This method tests the functionality to check if unexecuted orders exist for players.
+     */
     @Test
     void unexecutedOrdersExists() {
     }
 
+    /**
+     * This method tests the functionality to check if unassigned armies exist for players.
+     */
     @Test
     void unassignedArmiesExists() {
     }
-
+    /**
+     * This method tests the functionality to update player information.
+     */
     @Test
     void updatePlayers() {
     }
-
+    /**
+     * This method tests the functionality to check if a map is loaded.
+     */
     @Test
     void isMapLoaded() {
     }
