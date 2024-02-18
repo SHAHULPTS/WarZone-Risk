@@ -18,24 +18,42 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The GameEngineController class manages the game engine and handles user commands through a Command Line Interface.
+ */
 public class GameEngineController {
 
+    /** The current state of the game. */
     GameState d_gameState = new GameState();
 
+    /** Service for managing map-related operations. */
     MapService d_mapService = new MapService();
 
+    /** Service for managing player-related operations. */
     PlayerService d_playerService = new PlayerService();
 
+    /**
+     * Gets the current game state.
+     *
+     * @return The current GameState object.
+     */
     public GameState getD_gameState() {
         return d_gameState;
     }
 
+    /**
+     * The entry point for the game engine.
+     *
+     * @param p_args Command-line arguments.
+     */
     public static void main(String[] p_args) {
         GameEngineController l_game = new GameEngineController();
         l_game.initGamePlay();
     }
 
-    //This method starts the Command Line Interface to receive commands from the user and associates them with their respective action handlers.
+    /**
+     * This method starts the Command Line Interface to receive commands from the user and associates them with their respective action handlers.
+     */
 
     private void initGamePlay() {
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
@@ -51,7 +69,14 @@ public class GameEngineController {
             }
         }
     }
-
+    /**
+     * Handles the user command.
+     *
+     * @param p_enteredCommand The command entered by the user.
+     * @throws InvalidMap       If an invalid map is encountered.
+     * @throws InvalidCommand   If an invalid command is entered.
+     * @throws IOException      If an I/O error occurs.
+     */
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
         Command l_command = new Command(p_enteredCommand);
         String l_rootCommand = l_command.getRootCommand();
@@ -136,6 +161,12 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Performs the loading of the map.
+     *
+     * @param p_command The command containing map loading information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     */
     private void performLoadMap(Command p_command) throws InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -164,6 +195,15 @@ public class GameEngineController {
         }
     }
 
+
+    /**
+     * Performs editing of continent.
+     *
+     * @param p_command The command containing continent editing information.
+     * @throws IOException      If an I/O error occurs.
+     * @throws InvalidCommand   If an invalid command is encountered.
+     * @throws InvalidMap       If an invalid map is encountered.
+     */
     public void performEditContinent(Command p_command) throws IOException, InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -182,6 +222,13 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Performs saving of the map.
+     *
+     * @param p_command The command containing map saving information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     * @throws InvalidMap     If an invalid map is encountered.
+     */
     public void performSaveMap(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -202,6 +249,13 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Performs map validation.
+     *
+     * @param p_command The command containing map validation information.
+     * @throws InvalidMap     If an invalid map is encountered.
+     * @throws InvalidCommand If an invalid command is encountered.
+     */
     private void performValidateMap(Command p_command) throws InvalidMap, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -220,6 +274,13 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Performs editing of country.
+     *
+     * @param p_command The command containing country editing information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     * @throws InvalidMap     If an invalid map is encountered.
+     */
     public void performEditCountry(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -237,6 +298,13 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Performs editing of neighbors for a country.
+     *
+     * @param p_command The command containing neighbor editing information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     * @throws InvalidMap     If an invalid map is encountered.
+     */
     public void performEditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
@@ -254,6 +322,12 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Creates players for the game.
+     *
+     * @param p_command The command containing player creation information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     */
     private void createPlayers(Command p_command) throws InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
@@ -271,6 +345,13 @@ public class GameEngineController {
         }
     }
 
+    /**
+     * Assigns countries to players and initiates the game loop.
+     *
+     * @param p_command The command containing country assignment information.
+     * @throws InvalidCommand If an invalid command is encountered.
+     * @throws IOException    If an I/O error occurs.
+     */
     void assignCountries(Command p_command) throws InvalidCommand, IOException {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
@@ -317,6 +398,13 @@ public class GameEngineController {
 
     }
 
+    /**
+     * Performs map editing.
+     *
+     * @param p_command The command containing map editing information.
+     * @throws IOException      If an I/O error occurs.
+     * @throws InvalidCommand   If an invalid command is encountered.
+     */
     public void performMapEdit(Command p_command) throws IOException, InvalidCommand {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
