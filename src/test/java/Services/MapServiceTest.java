@@ -1,0 +1,239 @@
+package Services;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Ignore;
+
+import Exceptions.InvalidMap;
+import Models.Continent;
+import Models.Country;
+import Models.GameState;
+import Models.Map;
+import Utils.CommonUtil;
+
+public class MapServiceTest {
+
+
+    MapService d_mapservice;
+
+    GameState d_state;
+
+    Map d_map;
+
+    @Before
+    public void setup() {
+        d_mapservice = new MapService();
+        d_map = new Map();
+        d_state = new GameState();
+        d_map = d_mapservice.loadMap(d_state, "canada.map");
+    }
+
+    @org.junit.Test
+    public void testEditMap() throws IOException {
+        d_mapservice.editMap(d_state, "Trial.map");
+        File l_file = new File(CommonUtil.getMapFilePath("Trial.map"));
+
+        assertTrue(l_file.exists());
+    }
+
+    @org.junit.Test
+    public void testEditContinentAdd() throws IOException, InvalidMap {
+        d_state.setD_map(new Map());
+        Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state.getD_map(), "Add", "Russia 12");
+
+        assertEquals(l_updatedContinents.getD_continents().size(), 1);
+        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Russia");
+        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "12");
+    }
+
+    @org.junit.Test
+    public void testEditContinentRemove() throws IOException, InvalidMap {
+        List<Continent> l_continents = new ArrayList<>();
+        Continent l_c1 = new Continent();
+        l_c1.setD_continentID(1);
+        l_c1.setD_continentName("Russia");
+        l_c1.setD_continentValue(10);
+
+        Continent l_c2 = new Continent();
+        l_c2.setD_continentID(2);
+        l_c2.setD_continentName("Europe");
+        l_c2.setD_continentValue(20);
+
+        l_continents.add(l_c1);
+        l_continents.add(l_c2);
+
+        Map l_map = new Map();
+        l_map.setD_continents(l_continents);
+        d_state.setD_map(l_map);
+        Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state.getD_map(), "Remove", "Russia");
+
+        assertEquals(l_updatedContinents.getD_continents().size(), 1);
+        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Europe");
+        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "10");
+    }
+
+    @org.junit.Test
+    public void testContinentIdAndValues() {
+        List<Integer> l_actualContinentIdList = new ArrayList<Integer>();
+        List<Integer> l_actualContinentValueList = new ArrayList<Integer>();
+
+        List<Integer> l_expectedContinentIdList = new ArrayList<Integer>();
+        l_expectedContinentIdList.addAll(Arrays.asList(1, 2, 3, 4));
+
+        List<Integer> l_expectedContinentValueList = new ArrayList<Integer>();
+        l_expectedContinentValueList.addAll(Arrays.asList(5, 4, 7, 2));
+
+        for (Continent l_continent : d_map.getD_continents()) {
+            l_actualContinentIdList.add(l_continent.getD_continentID());
+            l_actualContinentValueList.add(l_continent.getD_continentValue());
+        }
+
+        assertEquals(l_expectedContinentIdList, l_actualContinentIdList);
+        assertEquals(l_expectedContinentValueList, l_actualContinentValueList);
+    }
+
+    @org.junit.Test
+    public void testCountryIdAndNeighbors() {
+        List<Integer> l_actualCountryIdList = new ArrayList<Integer>();
+        LinkedHashMap<Integer, List<Integer>> l_actualCountryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
+
+        List<Integer> l_expectedCountryIdList = new ArrayList<Integer>();
+        l_expectedCountryIdList.addAll(Arrays.asList(1, 2, 3, 4, 5));
+
+        LinkedHashMap<Integer, List<Integer>> l_expectedCountryNeighbors = new LinkedHashMap<Integer, List<Integer>>() {
+            {
+                put(1, new ArrayList<Integer>(Arrays.asList(8, 21, 6, 7, 5, 2, 3, 4)));
+                put(2, new ArrayList<Integer>(Arrays.asList(8, 1, 3)));
+                put(3, new ArrayList<Integer>(Arrays.asList(1, 2)));
+                put(4, new ArrayList<Integer>(Arrays.asList(22, 1, 5)));
+                put(5, new ArrayList<Integer>(Arrays.asList(1, 4)));
+            }
+        };
+
+        for (Country l_country : d_map.getD_countries()) {
+            ArrayList<Integer> l_neighbours = new ArrayList<Integer>();
+            l_actualCountryIdList.add(l_country.getD_countryId());
+            l_neighbours.addAll(l_country.getD_adjacentCountryIds());
+            l_actualCountryNeighbors.put(l_country.getD_countryId(), l_neighbours);
+        }
+
+        assertEquals(l_expectedCountryIdList, l_actualCountryIdList);
+        assertEquals(l_expectedCountryNeighbors, l_actualCountryNeighbors);
+    }
+
+    @org.junit.Test(expected = InvalidMap.class)
+    public void testSaveInvalidMap() throws InvalidMap {
+        d_map.setD_mapFile("europe.map");
+        d_state.setD_map(d_map);
+        d_mapservice.saveMap(d_state, "canada.map");
+    }
+
+    @org.junit.Test
+    public void testEditCountryAdd() throws IOException, InvalidMap {
+        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.editCountry(d_state, "add", "Asia England");
+
+        assertEquals(d_state.getD_map().getCountryByName("Asia").getD_countryName(), "England");
+    }
+
+    @org.junit.Test(expected = InvalidMap.class)
+    public void testEditCountryRemove() throws InvalidMap{
+        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.editCountry(d_state, "remove", "England");
+    }
+
+    @org.junit.Test
+    public void testEditNeighborAdd() throws InvalidMap, IOException {
+        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.editContinent(d_state, "Northern-America 8", "add");
+        d_mapservice.editCountry(d_state, "add", "Canada Northern-America");
+        d_mapservice.editCountry(d_state, "add", "Alaska Northern-America");
+        d_mapservice.editNeighbour(d_state, "add", "Canada Alaska");
+
+        assertEquals(d_state.getD_map().getCountryByName("Canada").getD_adjacentCountryIds().get(0), d_state.getD_map().getCountryByName("Alaska").getD_countryId());
+    }
+
+    @org.junit.Test(expected = InvalidMap.class)
+    public void testEditNeighborRemove() throws InvalidMap, IOException{
+        d_mapservice.editMap(d_state, "testedit.map");
+        d_mapservice.editContinent(d_state, "Asia 9", "add");
+        d_mapservice.editCountry(d_state, "add", "Maldives Asia");
+        d_mapservice.editNeighbour(d_state, "add", "Singapore Maldives");
+    }
+
+    @Test
+    void loadMap() {
+    }
+
+    @Test
+    void loadFile() {
+    }
+
+    @Test
+    void getMetaData() {
+    }
+
+    @Test
+    void parseContinentsMetaData() {
+    }
+
+    @Test
+    void parseCountriesMetaData() {
+    }
+
+    @Test
+    void parseBorderMetaData() {
+    }
+
+    @Test
+    void linkCountryContinents() {
+    }
+
+    @Test
+    void editMap() {
+    }
+
+    @Test
+    void editContinent() {
+    }
+
+    @Test
+    void addRemoveContinents() {
+    }
+
+    @Test
+    void editCountry() {
+    }
+
+    @Test
+    void addRemoveCountry() {
+    }
+
+    @Test
+    void editNeighbour() {
+    }
+
+    @Test
+    void addRemoveNeighbour() {
+    }
+
+    @Test
+    void saveMap() {
+    }
+
+    @Test
+    void resetMap() {
+    }
+}

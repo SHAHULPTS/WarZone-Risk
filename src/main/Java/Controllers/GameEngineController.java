@@ -271,7 +271,7 @@ public class GameEngineController {
         }
     }
 
-    private void assignCountries(Command p_command) throws InvalidCommand, IOException {
+    void assignCountries(Command p_command) throws InvalidCommand, IOException {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
             d_playerService.assignCountries(d_gameState);
