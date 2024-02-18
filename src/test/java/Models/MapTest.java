@@ -56,15 +56,15 @@ public class MapTest {
 
     @org.junit.Test(expected = InvalidMap.class)
     public void testCountryConnectivity() throws InvalidMap{
-        d_map.addContinent("Australia", 8);
-        d_map.addCountry("India", "Asia");
-        d_map.addCountry("China", "Asia");
-        d_map.addCountry("Pakistan", "Asia");
+        d_map.createContinent("Australia", 8);
+        d_map.createCountry("India", "Asia");
+        d_map.createCountry("China", "Asia");
+        d_map.createCountry("Pakistan", "Asia");
         d_map.addCountryNeighbour("India", "China");
         d_map.addCountryNeighbour("China", "India");
-        d_map.addCountry("SriLanka", "Asia");
+        d_map.createCountry("SriLanka", "Asia");
         d_map.addCountryNeighbour("India", "Pakistan");
-        d_map.checkCountryConnectivity();
+        d_map.validateCountryConnectivity();
     }
 
     @Test

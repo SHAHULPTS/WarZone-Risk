@@ -75,7 +75,7 @@ public class Country {
         }
     }
 
-    public void removeNeighbour(Integer p_countryId) {
+    public void deleteNeighbour(Integer p_countryId) {
         if (d_adjacentCountryIds.contains(p_countryId)) {
             d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
         } else {

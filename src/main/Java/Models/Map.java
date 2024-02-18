@@ -41,10 +41,10 @@ public class Map {
         this.d_countries = p_countries;
     }
 
-    public void addContinent(Continent p_continent){
+    public void createContinent(Continent p_continent){
         d_continents.add(p_continent);
     }
-    public void addCountry(Country p_country){
+    public void createCountry(Country p_country){
         d_countries.add(p_country);
     }
 
@@ -68,13 +68,13 @@ public class Map {
         return l_countryIDs;
     }
 
-    public void checkContinents() {
+    public void validateContinents() {
         for(Continent c: d_continents) {
             System.out.println(c.getD_continentID());
         }
     }
 
-    public void checkCountries() {
+    public void validateCountries() {
         for (Country c: d_countries) {
             System.out.println("Country Id "+ c.getD_countryId());
             System.out.println("Continent Id "+c.getD_continentId());
@@ -86,7 +86,7 @@ public class Map {
     }
 
     public Boolean Validate() throws InvalidMap {
-        return (!checkForNullObjects() && checkContinentConnectivity() && checkCountryConnectivity());
+        return (!checkForNullObjects() && validateContinentConnectivity() && validateCountryConnectivity());
     }
 
     public Boolean checkForNullObjects() throws InvalidMap{
@@ -104,7 +104,7 @@ public class Map {
         return false;
     }
 
-    public Boolean checkContinentConnectivity() throws InvalidMap {
+    public Boolean validateContinentConnectivity() throws InvalidMap {
         boolean l_flagConnectivity=true;
         for (Continent c:d_continents){
             if (null == c.getD_countries() || c.getD_countries().size()<1){
@@ -156,7 +156,7 @@ public class Map {
         }
     }
 
-    public boolean checkCountryConnectivity() throws InvalidMap {
+    public boolean validateCountryConnectivity() throws InvalidMap {
         for (Country c : d_countries) {
             d_countryReach.put(c.getD_countryId(), false);
         }
@@ -202,7 +202,7 @@ public class Map {
         return d_continents.stream().filter(l_continent -> l_continent.getD_continentID().equals(p_continentID)).findFirst().orElse(null);
     }
 
-    public void addContinent(String p_continentName, Integer p_controlValue) throws InvalidMap{
+    public void createContinent(String p_continentName, Integer p_controlValue) throws InvalidMap{
         int l_continentId;
 
         if (d_continents!=null) {
@@ -218,14 +218,14 @@ public class Map {
         }
     }
 
-    public void removeContinent(String p_continentName) throws InvalidMap{
+    public void deleteContinent(String p_continentName) throws InvalidMap{
         if (d_continents!=null) {
             if(!CommonUtil.isNull(getContinent(p_continentName))){
 
                 // Deletes the continent and updates neighbour as well as country objects
                 if (getContinent(p_continentName).getD_countries()!=null) {
                     for(Country c: getContinent(p_continentName).getD_countries()){
-                        removeCountryNeighboursFromAll(c.getD_countryId());
+                        deleteCountryNeighbours(c.getD_countryId());
                         updateNeighboursCont(c.getD_countryId());
                         d_countries.remove(c);
                     }
@@ -239,7 +239,7 @@ public class Map {
         }
     }
 
-    public void addCountry(String p_countryName, String p_continentName) throws InvalidMap{
+    public void createCountry(String p_countryName, String p_continentName) throws InvalidMap{
         int l_countryId;
         if(d_countries==null){
             d_countries= new ArrayList<Country>();
@@ -262,15 +262,15 @@ public class Map {
         }
     }
 
-    public void removeCountry(String p_countryName) throws InvalidMap{
+    public void deleteCountry(String p_countryName) throws InvalidMap{
         if(d_countries!=null && !CommonUtil.isNull(getCountryByName(p_countryName))) {
             for(Continent c: d_continents){
                 if(c.getD_continentID().equals(getCountryByName(p_countryName).getD_continentId())){
-                    c.removeCountry(getCountryByName(p_countryName));
+                    c.deleteCountry(getCountryByName(p_countryName));
                 }
-                c.removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
+                c.deleteCountryNeighbours(getCountryByName(p_countryName).getD_countryId());
             }
-            removeCountryNeighboursFromAll(getCountryByName(p_countryName).getD_countryId());
+            deleteCountryNeighbours(getCountryByName(p_countryName).getD_countryId());
             d_countries.remove(getCountryByName(p_countryName));
 
         }else{
@@ -288,20 +288,20 @@ public class Map {
         }
     }
 
-    public void removeCountryNeighboursFromAll(Integer p_countryID){
+    public void deleteCountryNeighbours(Integer p_countryID){
         for (Country c: d_countries) {
             if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
                 if (c.getD_adjacentCountryIds().contains(p_countryID)) {
-                    c.removeNeighbour(p_countryID);
+                    c.deleteNeighbour(p_countryID);
                 }
             }
         }
     }
 
-    public void removeCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap{
+    public void deleteCountryNeighbour(String p_countryName, String p_neighbourName) throws InvalidMap{
         if(d_countries!=null){
             if(!CommonUtil.isNull(getCountryByName(p_countryName)) && !CommonUtil.isNull(getCountryByName(p_neighbourName))) {
-                d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).removeNeighbour(getCountryByName(p_neighbourName).getD_countryId());
+                d_countries.get(d_countries.indexOf(getCountryByName(p_countryName))).deleteNeighbour(getCountryByName(p_neighbourName).getD_countryId());
             } else{
                 throw new InvalidMap("Invalid Neighbour Pair! Either of the Countries Doesn't exist!");
             }
@@ -310,7 +310,7 @@ public class Map {
 
     public void updateNeighboursCont(Integer p_countryId){
         for(Continent c: d_continents){
-            c.removeCountryNeighboursFromAll(p_countryId);
+            c.deleteCountryNeighbours(p_countryId);
         }
     }
 

@@ -163,9 +163,9 @@ public class MapService {
     public Map addRemoveContinents(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
 
         if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
-            p_mapToBeUpdated.addContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
+            p_mapToBeUpdated.createContinent(p_argument.split(" ")[0], Integer.parseInt(p_argument.split(" ")[1]));
         } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 1) {
-            p_mapToBeUpdated.removeContinent(p_argument.split(" ")[0]);
+            p_mapToBeUpdated.deleteContinent(p_argument.split(" ")[0]);
         } else {
             System.out.println("The attempt to add/remove the continent was unsuccessful.The system remains unchanged.");
         }
@@ -187,9 +187,9 @@ public class MapService {
 
     public Map addRemoveCountry(Map p_mapToBeUpdated, String p_operation, String p_argument) throws InvalidMap {
         if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
-            p_mapToBeUpdated.addCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+            p_mapToBeUpdated.createCountry(p_argument.split(" ")[0], p_argument.split(" ")[1]);
         } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 1) {
-            p_mapToBeUpdated.removeCountry(p_argument.split(" ")[0]);
+            p_mapToBeUpdated.deleteCountry(p_argument.split(" ")[0]);
         } else {
             System.out.println("Your changes could not be saved.");
         }
@@ -213,7 +213,7 @@ public class MapService {
         if (p_operation.equalsIgnoreCase("add") && p_argument.split(" ").length == 2) {
             p_mapToBeUpdated.addCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
         } else if (p_operation.equalsIgnoreCase("remove") && p_argument.split(" ").length == 2) {
-            p_mapToBeUpdated.removeCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
+            p_mapToBeUpdated.deleteCountryNeighbour(p_argument.split(" ")[0], p_argument.split(" ")[1]);
         } else {
             System.out.println("Your changes could not be saved.");
         }

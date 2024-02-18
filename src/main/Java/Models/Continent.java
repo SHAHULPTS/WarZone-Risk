@@ -72,7 +72,7 @@ public class Continent {
         }
     }
 
-    public void removeCountry(Country p_country){
+    public void deleteCountry(Country p_country){
         if(d_countries==null){
             System.out.println("No such Country Exists");
         }else {
@@ -80,12 +80,12 @@ public class Continent {
         }
     }
 
-    public void removeCountryNeighboursFromAll(Integer p_countryId){
+    public void deleteCountryNeighbours(Integer p_countryId){
         if (null!=d_countries && !d_countries.isEmpty()) {
             for (Country c: d_countries){
                 if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {
                     if (c.getD_adjacentCountryIds().contains(p_countryId)){
-                        c.removeNeighbour(p_countryId);
+                        c.deleteNeighbour(p_countryId);
                     }
                 }
             }
