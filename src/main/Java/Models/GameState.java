@@ -1,45 +1,84 @@
 package Models;
 
 import java.util.List;
+
+/**
+ * Represents the state of a game including the map, players, and unexecuted orders.
+ */
 public class GameState {
 
+    /** The map of the game. */
     Map d_map;
 
+    /** Any error message associated with the game state. */
     String d_error;
 
+    /** The list of players in the game. */
     List<Player> d_players;
 
+    /** The list of unexecuted orders in the game. */
     List<Order> d_unexecutedOrders;
 
-
+    /**
+     * Retrieves the map of the game.
+     * @return The map of the game.
+     */
     public Map getD_map() {
         return d_map;
     }
 
+    /**
+     * Sets the map of the game.
+     * @param p_map The map of the game.
+     */
     public void setD_map(Map p_map) {
         this.d_map = p_map;
     }
 
+    /**
+     * Retrieves the list of players in the game.
+     * @return The list of players in the game.
+     */
     public List<Player> getD_players() {
         return d_players;
     }
 
+    /**
+     * Sets the list of players in the game.
+     * @param p_players The list of players in the game.
+     */
     public void setD_players(List<Player> p_players) {
         this.d_players = p_players;
     }
 
+    /**
+     * Retrieves the list of unexecuted orders in the game.
+     * @return The list of unexecuted orders in the game.
+     */
     public List<Order> getD_unexecutedOrders() {
         return d_unexecutedOrders;
     }
 
+    /**
+     * Sets the list of unexecuted orders in the game.
+     * @param p_unexecutedOrders The list of unexecuted orders in the game.
+     */
     public void setD_unexecutedOrders(List<Order> p_unexecutedOrders) {
         this.d_unexecutedOrders = p_unexecutedOrders;
     }
 
+    /**
+     * Retrieves the error message associated with the game state.
+     * @return The error message associated with the game state.
+     */
     public String getError() {
         return d_error;
     }
 
+    /**
+     * Sets the error message associated with the game state.
+     * @param p_error The error message associated with the game state.
+     */
     public void setError(String p_error) {
         this.d_error = p_error;
     }
