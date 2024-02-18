@@ -1,24 +1,33 @@
 package Models;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 
+/**
+ * Class contains test cases for the Player class.
+ */
 public class PlayerTest {
 
+    /**
+     * List of existing players.
+     */
     List<Player> d_exisitingPlayerList = new ArrayList<>();
 
+    /**
+     * Sets up the test environment before each test method execution.
+     */
     @Before
     public void setup() {
         d_exisitingPlayerList.add(new Player("Jay"));
         d_exisitingPlayerList.add(new Player("Nidhi"));
     }
 
+    /**
+     * Tests the functionality of the "next_order" method in the Player class.
+     */
     @org.junit.Test
     public void testNextOrder() {
 
