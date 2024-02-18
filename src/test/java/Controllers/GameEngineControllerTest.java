@@ -15,7 +15,9 @@ import Utils.Command;
 import Models.Continent;
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * This class contains unit tests for the GameEngineController class.
+ */
 public class GameEngineControllerTest {
 
 
@@ -25,6 +27,9 @@ public class GameEngineControllerTest {
 
     GameEngineController d_gameEngine;
 
+    /**
+     * Sets up the test environment before each test method runs.
+     */
     @Before
     public void setup() {
         d_map = new Map();
@@ -32,24 +37,41 @@ public class GameEngineControllerTest {
         d_state = d_gameEngine.getD_gameState();
     }
 
+    /**
+     * Tests the behavior of performMapEdit method with an invalid command.
+     * @throws IOException if an I/O error occurs.
+     * @throws InvalidCommand if the command is invalid.
+     */
     @Test(expected = InvalidCommand.class)
-    public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand {
+    public void testEditMapInvalidCommand() throws IOException, InvalidCommand {
         Command l_command = new Command("editmap");
-        d_gameEngine.performMapEdit(l_command);
+        d_gameEngine.MapEdit(l_command);
     }
 
+    /**
+     * Tests the behavior of performEditContinent method with an invalid command.
+     * @throws IOException if an I/O error occurs.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap if the map is invalid.
+     */
     @Test(expected = InvalidCommand.class)
-    public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+    public void testEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         Command l_command = new Command("editcontinent -add");
-        d_gameEngine.performEditContinent(l_command);
+        d_gameEngine.EditContinent(l_command);
     }
 
+    /**
+     * Tests the behavior of performEditContinent method with a valid command.
+     * @throws IOException if an I/O error occurs.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap if the map is invalid.
+     */
     @Test
-    public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
+    public void testEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_map.setD_mapFile("testeditmap.map");
         d_state.setD_map(d_map);
         Command l_addCommand = new Command("editcontinent -add India 6 -add Afghanistan 5");
-        d_gameEngine.performEditContinent(l_addCommand);
+        d_gameEngine.EditContinent(l_addCommand);
 
         List<Continent> l_continents = d_state.getD_map().getD_continents();
         assertEquals(l_continents.size(), 2);
@@ -59,17 +81,27 @@ public class GameEngineControllerTest {
         assertEquals(l_continents.get(1).getD_continentValue().toString(), "5");
 
         Command l_removeCommand = new Command("editcontinent -remove Afghanistan");
-        d_gameEngine.performEditContinent(l_removeCommand);
+        d_gameEngine.EditContinent(l_removeCommand);
         l_continents = d_state.getD_map().getD_continents();
         assertEquals( 1, l_continents.size());
     }
 
+    /**
+     * Tests the behavior of performSaveMap method with an invalid command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap if the map is invalid.
+     */
     @Test(expected = InvalidCommand.class)
-    public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap {
+    public void testSaveMapInvalidCommand() throws InvalidCommand, InvalidMap {
         Command l_command = new Command("savemap");
-        d_gameEngine.performSaveMap(l_command);
+        d_gameEngine.SaveMap(l_command);
     }
 
+    /**
+     * Tests the behavior of assignCountries method with an invalid command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException if an I/O error occurs.
+     */
     @Test(expected = InvalidCommand.class)
     public void testAssignCountriesInvalidCommand() throws InvalidCommand, IOException {
         Command l_command = new Command("assigncountries -add India");
@@ -89,22 +121,22 @@ public class GameEngineControllerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void performEditContinent() {
+    void EditContinent() {
     }
 
     @org.junit.jupiter.api.Test
-    void performSaveMap() {
+    void SaveMap() {
     }
 
     @org.junit.jupiter.api.Test
-    void performEditCountry() {
+    void EditCountry() {
     }
 
     @org.junit.jupiter.api.Test
-    void performEditNeighbour() {
+    void EditNeighbour() {
     }
 
     @org.junit.jupiter.api.Test
-    void performMapEdit() {
+    void MapEdit() {
     }
 }
