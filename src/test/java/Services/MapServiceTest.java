@@ -1,21 +1,15 @@
 package Services;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.junit.Before;
-import org.junit.Ignore;
-
 import Exceptions.InvalidMap;
 import Models.Continent;
 import Models.Country;
@@ -27,12 +21,12 @@ import Utils.CommonUtil;
  */
 public class MapServiceTest {
 
-
     MapService d_mapservice;// Instance of MapService for testing
 
     GameState d_state;// Instance of GameState for testing
 
     Map d_map; // Instance of Map for testing
+
     /**
      * Sets up the test environment by initializing objects.
      */

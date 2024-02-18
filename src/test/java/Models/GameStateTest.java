@@ -2,8 +2,6 @@ package Models;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * The GameStateTest class contains unit tests for the GameState class.
  */

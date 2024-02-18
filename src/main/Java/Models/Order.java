@@ -34,9 +34,8 @@ public class Order {
     /**
      * Default constructor for Order Object.
      */
-
-     public Order() {
-     }
+    public Order() {
+    }
 
      /**
      * Parameterized constructor constructs a Order with a specified action , target country name

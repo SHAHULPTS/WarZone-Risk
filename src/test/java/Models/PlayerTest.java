@@ -53,66 +53,114 @@ public class PlayerTest {
         assertEquals(d_exisitingPlayerList.get(0).getD_ordersToExecute().size(), 1);
     }
 
+    /**
+     * Test method for getting the player name.
+     */
     @Test
     void getPlayerName() {
     }
 
+    /**
+     * Test method for setting the player name.
+     */
     @Test
     void setPlayerName() {
     }
 
+    /**
+     * Test method for getting the player's color.
+     */
     @Test
     void getD_color() {
     }
 
+    /**
+     * Test method for setting the player's color.
+     */
     @Test
     void setD_color() {
     }
 
+    /**
+     * Test method for getting the countries owned by the player.
+     */
     @Test
     void getD_coutriesOwned() {
     }
 
+    /**
+     * Test method for setting the countries owned by the player.
+     */
     @Test
     void setD_coutriesOwned() {
     }
 
+    /**
+     * Test method for getting the continents owned by the player.
+     */
     @Test
     void getD_continentsOwned() {
     }
 
+    /**
+     * Test method for setting the continents owned by the player.
+     */
     @Test
     void setD_continentsOwned() {
     }
 
+    /**
+     * Test method for getting the orders to execute by the player.
+     */
     @Test
     void getD_ordersToExecute() {
     }
 
+    /**
+     * Test method for setting the orders to execute by the player.
+     */
     @Test
     void setD_ordersToExecute() {
     }
 
+    /**
+     * Test method for getting the number of unallocated armies for the player.
+     */
     @Test
     void getD_noOfUnallocatedArmies() {
     }
 
+    /**
+     * Test method for setting the number of unallocated armies for the player.
+     */
     @Test
     void setD_noOfUnallocatedArmies() {
     }
 
+    /**
+     * Test method for getting the names of countries owned by the player.
+     */
     @Test
     void getCountryNames() {
     }
 
+    /**
+     * Test method for getting the names of continents owned by the player.
+     */
     @Test
     void getContinentNames() {
     }
 
+    /**
+     * Test method for issuing an order by the player.
+     */
     @Test
     void issue_order() {
     }
 
+    /**
+     * Test method for retrieving the next order to be executed by the player.
+     */
     @Test
     void next_order() {
     }

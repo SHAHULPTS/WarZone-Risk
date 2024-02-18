@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 /**
  * The ContinentTest class contains unit tests for the Continent class.
  */
-
 class ContinentTest {
 
     /**

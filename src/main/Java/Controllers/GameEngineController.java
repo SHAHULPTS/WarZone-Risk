@@ -11,7 +11,6 @@ import Views.MapView;
 import Models.GameState;
 import Services.PlayerService;
 import Models.Order;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -308,7 +307,7 @@ public class GameEngineController {
     public void EditNeighbour(Command p_command) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         if (null == l_operations_list || l_operations_list.isEmpty()) {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITNEIGHBOUR);
         } else {
             for (Map<String, String> l_map : l_operations_list) {
                 if (p_command.hasRequiredKeys(ApplicationConstants.ARGUMENTS, l_map)
@@ -316,7 +315,7 @@ public class GameEngineController {
                     d_mapService.editNeighbour(d_gameState, l_map.get(ApplicationConstants.OPERATION),
                             l_map.get(ApplicationConstants.ARGUMENTS));
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCOUNTRY);
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITNEIGHBOUR);
                 }
             }
         }
@@ -415,7 +414,7 @@ public class GameEngineController {
                 if (p_command.hasRequiredKeys(ApplicationConstants.ARGUMENTS, l_map)) {
                     d_mapService.editMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
                 } else {
-                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITMAP);
+                    throw new InvalidCommand(ApplicationConstants.INVALID_MAP_LOADED);
                 }
             }
         }

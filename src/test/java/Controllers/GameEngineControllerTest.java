@@ -1,17 +1,13 @@
 package Controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.List;
-
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
 import Models.Map;
 import Utils.Command;
-
 import Models.Continent;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +17,19 @@ import org.junit.Test;
 public class GameEngineControllerTest {
 
 
+    /**
+     * Represents the map used in the game, containing countries and continents.
+     */
     Map d_map;
 
+    /**
+     * Represents the current state of the game, including player information, map status, and other game-related data.
+     */
     GameState d_state;
 
+    /**
+     * Represents the controller responsible for managing the game engine, including game flow, player turns, and game rules enforcement.
+     */
     GameEngineController d_gameEngine;
 
     /**
@@ -108,34 +113,58 @@ public class GameEngineControllerTest {
         d_gameEngine.assignCountries(l_command);
     }
 
+    /**
+     * Test method for getting the game state.
+     */
     @org.junit.jupiter.api.Test
     void getD_gameState() {
     }
 
+    /**
+     * Test method for the main entry point of the application.
+     */
     @org.junit.jupiter.api.Test
     void main() {
     }
 
+    /**
+     * Test method for handling a command in the game engine.
+     */
     @org.junit.jupiter.api.Test
     void handleCommand() {
     }
 
+    /**
+     * Test method for editing a continent in the map editor.
+     */
     @org.junit.jupiter.api.Test
     void EditContinent() {
     }
 
+    /**
+     * Test method for saving the map in the map editor.
+     */
     @org.junit.jupiter.api.Test
     void SaveMap() {
     }
 
+    /**
+     * Test method for editing a country in the map editor.
+     */
     @org.junit.jupiter.api.Test
     void EditCountry() {
     }
 
+    /**
+     * Test method for editing a neighbour relationship in the map editor.
+     */
     @org.junit.jupiter.api.Test
     void EditNeighbour() {
     }
 
+    /**
+     * Test method for general map editing functionality in the map editor.
+     */
     @org.junit.jupiter.api.Test
     void MapEdit() {
     }

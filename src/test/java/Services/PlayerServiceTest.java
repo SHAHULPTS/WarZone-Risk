@@ -4,15 +4,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Before;
-
 import Exceptions.InvalidCommand;
 import Models.Continent;
 import Models.Country;
@@ -20,7 +17,7 @@ import Models.GameState;
 import Models.Map;
 import Models.Player;
 import Utils.CommonUtil;
-import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Javadoc for the PlayerServiceTest class.
  * This class contains test cases for the PlayerService class, covering various functionalities related to player management and game state.
@@ -29,15 +26,11 @@ public class PlayerServiceTest {
 
     Player d_playerInfo;     /** Player information used in the test cases. */
 
-
     PlayerService d_playerService;     /** Instance of PlayerService used to test player-related functionalities. */
-
 
     Map d_map;     /** Map used in the test cases. */
 
-
     GameState d_gameState;     /** GameState used in the test cases. */
-
 
     MapService d_mapservice;    /** Instance of MapService used in the test cases. */
 

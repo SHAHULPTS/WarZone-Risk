@@ -1,28 +1,40 @@
 package Models;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 
+/**
+ * JUnit test class for the {@link Order} class.
+ */
 public class OrderTest {
 
+    /**
+     * The details of the order.
+     */
     Order d_orderDetails;
 
+    /**
+     * Information about the player associated with the order.
+     */
     Player d_playerInfo;
 
+    /**
+     * Set up method to initialize the order details and player information before each test.
+     */
     @Before
     public void setup() {
         d_orderDetails = new Order();
         d_playerInfo = new Player();
     }
 
+    /**
+     * Test method to validate the 'validateDeployOrderCountry' functionality in the Order class.
+     * It checks if the specified target country in the order belongs to the list of countries owned by the player.
+     */
     @org.junit.Test
     public void testValidateDeployOrderCountry() {
         d_orderDetails.setD_targetCountryName("India");
@@ -30,10 +42,14 @@ public class OrderTest {
         l_countryList.add(new Country("India"));
         l_countryList.add(new Country("Canada"));
         d_playerInfo.setD_coutriesOwned(l_countryList);
-        boolean l_actualBoolean = d_orderDetails.validateDeployOrderCountry(d_playerInfo, d_orderDetails);
+        boolean l_actualBoolean = d_orderDetails.checkDeployOrderCountry(d_playerInfo, d_orderDetails);
         assertTrue(l_actualBoolean);
     }
 
+    /**
+     * Test method to verify the execution of 'deploy' orders in the Order class.
+     * It checks if the 'deploy' order increases the number of armies in the target country correctly.
+     */
     @org.junit.Test
     public void testDeployOrderExecution() {
         Order l_order1 = new Order("deploy", "India", 5);
@@ -69,43 +85,73 @@ public class OrderTest {
 
     }
 
+    /**
+     * Test method for getting the order action (e.g., deploy, advance, airlift).
+     */
     @Test
     void getD_orderAction() {
     }
 
+    /**
+     * Test method for setting the order action (e.g., deploy, advance, airlift).
+     */
     @Test
     void setD_orderAction() {
     }
 
+    /**
+     * Test method for setting the order action (e.g., deploy, advance, airlift).
+     */
     @Test
     void getD_targetCountryName() {
     }
 
+    /**
+     * Test method for setting the target country name for the order.
+     */
     @Test
     void setD_targetCountryName() {
     }
 
+    /**
+     * Test method for getting the source country name for the order.
+     */
     @Test
     void getD_sourceCountryName() {
     }
 
+    /**
+     * Test method for setting the source country name for the order.
+     */
     @Test
     void setD_sourceCountryName() {
     }
 
+    /**
+     * Test method for getting the number of armies to place for the order.
+     */
     @Test
     void getD_numberOfArmiesToPlace() {
     }
 
+    /**
+     * Test method for setting the number of armies to place for the order.
+     */
     @Test
     void setD_numberOfArmiesToPlace() {
     }
 
+    /**
+     * Test method to execute the order and validate its effect.
+     */
     @Test
     void execute() {
     }
 
-//    @Test
-//    void validateDeployOrderCountry() {
-//    }
+    /**
+     * Test method to check if the deploy order country is valid based on player ownership.
+     */
+    @Test
+    void testCheckDeployOrderCountry() {
+    }
 }

@@ -4,20 +4,27 @@ import Exceptions.InvalidMap;
 import Services.MapService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The MapTest class contains unit tests for the Map class.
  */
 public class MapTest {
 
+    /**
+     * The map object used in the game.
+     */
     Map d_map;
+    /**
+     * The service responsible for map-related operations.
+     */
     MapService d_ms;
+
+    /**
+     * The current state of the game.
+     */
     GameState d_gameState;
 
     /**
