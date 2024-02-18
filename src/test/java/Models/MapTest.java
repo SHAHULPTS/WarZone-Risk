@@ -260,7 +260,7 @@ public class MapTest {
      * Test case for adding a continent.
      */
     @Test
-    void testAddContinent() {
+    void testCreateContinent() {
     }
 
     /**
@@ -274,7 +274,7 @@ public class MapTest {
      * Test case for adding a country.
      */
     @Test
-    void testAddCountry() {
+    void testCreateCountry() {
     }
 
     /**
