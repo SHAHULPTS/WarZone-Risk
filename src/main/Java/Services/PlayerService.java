@@ -228,25 +228,7 @@ public class PlayerService {
      * @param p_commandEntered The command entered by the player to deploy armies.
      * @param p_player         The player for whom the deployment order is created.
      */
-    public void createDeployOrder(String p_commandEntered, Player p_player)
-    {
-        List<Order> l_orders = CommonUtil.isCollectionEmpty(p_player.getD_ordersToExecute()) ? new ArrayList<>()
-                : p_player.getD_ordersToExecute();
-        String l_countryName = p_commandEntered.split(" ")[1];
-        String l_noOfArmies = p_commandEntered.split(" ")[2];
-        if (validateDeployOrderArmies(p_player, l_noOfArmies)) {
-            System.out.println(
-                    "Unable to execute the provided deployment order as the number of armies it involves is greater than the player’s remaining, unallocated armies.");
-        } else {
-            Order l_orderObject = new Order(p_commandEntered.split(" ")[0], l_countryName,
-                    Integer.parseInt(l_noOfArmies));
-            l_orders.add(l_orderObject);
-            p_player.setD_ordersToExecute(l_orders);
-            Integer l_unallocatedarmies = p_player.getD_noOfUnallocatedArmies() - Integer.parseInt(l_noOfArmies);
-            p_player.setD_noOfUnallocatedArmies(l_unallocatedarmies);
-            System.out.println("The order has been placed in the queue and is awaiting execution.");
-        }
-    }
+    
     /**
      * Validates if the player has sufficient unallocated armies for a deployment order.
      *
