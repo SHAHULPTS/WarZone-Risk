@@ -52,4 +52,7 @@ public final class ApplicationConstants {
     public static final String CONTINENTS = "[continents]";
     public static final String COUNTRIES = "[countries]";
     public static final String BORDERS = "[borders]";
+
+    public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
+    public static final int SIZE = CARDS.size();
 }

@@ -1,5 +1,6 @@
 package Models;
 
+import Exceptions.InvalidMap;
 import java.util.ArrayList;
 import java.util.List;
 import Utils.CommonUtil;
@@ -132,7 +133,7 @@ public class Continent {
      * Deletes a country from the continent.
      * @param p_country The country to delete.
      */
-    public void deleteCountry(Country p_country){
+    public void deleteCountry(Country p_country) throws InvalidMap{
         if(d_countries==null){
             System.out.println("No such Country Exists");
         }else {
@@ -144,7 +145,7 @@ public class Continent {
      * Deletes the neighboring relationship of a country with the specified ID within the continent.
      * @param p_countryId The ID of the country whose neighbors are to be deleted.
      */
-    public void deleteCountryNeighbours(Integer p_countryId){
+    public void deleteCountryNeighbours(Integer p_countryId) throws InvalidMap{
         if (null!=d_countries && !d_countries.isEmpty()) {
             for (Country c: d_countries){
                 if (!CommonUtil.isNull(c.d_adjacentCountryIds)) {

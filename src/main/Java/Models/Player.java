@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import Utils.CommonUtil;
+import java.util.Random;
+import Constants.ApplicationConstants;
 
 public class Player {
 
@@ -215,6 +217,17 @@ public class Player {
             return p_commandEntered.split(" ").length == 2;
         } else {
             return false;
+        }
+    }
+
+    public void assignCard() {
+        if (!d_oneCardPerTurn) {
+            Random l_random = new Random();
+            this.d_cardsOwnedByPlayer.add(ApplicationConstants.CARDS.get(l_random.nextInt(ApplicationConstants.SIZE)));
+            this.setD_playerLog("Player: "+ this.d_name+ " has earned card as reward for the successful conquest- " + this.d_cardsOwnedByPlayer.get(this.d_cardsOwnedByPlayer.size()-1), "log");
+            this.setD_oneCardPerTurn(true);
+        }else{
+            this.setD_playerLog("Player: "+this.d_name+ " has already earned maximum cards that can be allotted in a turn", "error");
         }
     }
 }
