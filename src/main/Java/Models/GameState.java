@@ -19,6 +19,10 @@ public class GameState {
     /** The list of unexecuted orders in the game. */
     List<Order> d_unexecutedOrders;
 
+    LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
+
+    Boolean d_loadCommand = false;
+
     /**
      * Retrieves the map of the game.
      * @return The map of the game.
@@ -81,5 +85,21 @@ public class GameState {
      */
     public void setError(String p_error) {
         this.d_error = p_error;
+    }
+
+    public void updateLog(String p_logMessage, String p_logType) {
+        d_logEntryBuffer.currentLog(p_logMessage, p_logType);
+    }
+
+    public String getRecentLog(){
+        return d_logEntryBuffer.getD_logMessage();
+    }
+
+    public void setD_loadCommand() {
+        this.d_loadCommand = true;
+    }
+
+    public boolean getD_loadCommand(){
+        return this.d_loadCommand;
     }
 }
