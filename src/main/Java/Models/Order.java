@@ -1,160 +1,50 @@
 package Models;
 
 /**
- * Represents an order issued by the player.
+ * Command of the Command pattern : This model class manages the orders given by
+ * the players.
  */
-public class Order {
+public interface Order {
 
     /**
-     * The actions to be performed by this order.
+     * Method that will be called by the Receiver to execute the Order.
+     *
+     * @param p_gameState current state of the game.
      */
-    String d_orderAction;
+    public void execute(GameState p_gameState);
 
     /**
-     * The name of the target country for this order.
+     * Validates order.
+     *
+     * @return boolean true or false
+     * @param p_gameState GameState Instance
      */
-    String d_targetCountryName;
+    public boolean valid(GameState p_gameState);
 
     /**
-     * The name of the source country for this order.
+     * Print order information.
      */
-    String d_sourceCountryName;
+    public void printOrder();
 
     /**
-     * The number of armies to be placed in the enemy country.
+     * Returns the Log to GameState with Execution Log.
+     *
+     * @return String containing log message
      */
-    Integer d_numberOfArmiesToPlace;
+    public String orderExecutionLog();
 
     /**
-     * An instance of Order object.
+     * Prints and Sets the order execution log.
+     *
+     * @param p_orderExecutionLog String to be set as log
+     * @param p_logType           type of log : error, default
      */
-    Order orderObj;
-
+    public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType);
 
     /**
-     * Default constructor for Order Object.
+     * Return order name.
+     *
+     * @return String
      */
-    public Order() {
-    }
-
-     /**
-     * Parameterized constructor constructs a Order with a specified action , target country name
-      * and Number of armies to place
-     * @param p_orderAction The action to be performed by this order
-     * @param p_targetCountryName The name of the target country for this order.
-     * @param p_numberOfArmiesToPlace The number of armies to be placed in the target country.
-     */
-    public Order(String p_orderAction, String p_targetCountryName, Integer p_numberOfArmiesToPlace) {
-        this.d_orderAction = p_orderAction;
-        this.d_targetCountryName = p_targetCountryName;
-        this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
-    }
-
-    /**
-     * Gets the order action.
-     * @return The order action.
-     */
-    public String getD_orderAction() {
-        return d_orderAction;
-    }
-
-    /**
-     * Sets the order action.
-     * @param p_orderAction The order action.
-     */
-    public void setD_orderAction(String p_orderAction) {
-        this.d_orderAction = p_orderAction;
-    }
-
-    /**
-     * Gets the target country name.
-     * @return The target country name.
-     */
-    public String getD_targetCountryName() {
-        return d_targetCountryName;
-    }
-
-    /**
-     * Sets the target country name.
-     * @param p_targetCountryName The target country name.
-     */
-    public void setD_targetCountryName(String p_targetCountryName) {
-        this.d_targetCountryName = p_targetCountryName;
-    }
-
-    /**
-     * Gets the source country name.
-     * @return The source country name.
-     */
-    public String getD_sourceCountryName() {
-        return d_sourceCountryName;
-    }
-
-    /**
-     * Sets the source country name.
-     * @param p_sourceCountryName The source country name.
-     */
-    public void setD_sourceCountryName(String p_sourceCountryName) {
-        this.d_sourceCountryName = p_sourceCountryName;
-    }
-
-    /**
-     * Gets the number of armies to place.
-     * @return The number of armies to place.
-     */
-    public Integer getD_numberOfArmiesToPlace() {
-        return d_numberOfArmiesToPlace;
-    }
-
-    /**
-     * Sets the number of armies to place.
-     * @param p_numberOfArmiesToPlace The number of armies to place.
-     */
-    public void setD_numberOfArmiesToPlace(Integer p_numberOfArmiesToPlace) {
-        this.d_numberOfArmiesToPlace = p_numberOfArmiesToPlace;
-    }
-
-    /**
-     * Executes the order based on the game state and player.
-     * @param p_gameState The current game state.
-     * @param p_player The player issuing the order.
-     */
-    public void execute(GameState p_gameState, Player p_player) {
-        if ("deploy".equals(this.d_orderAction) && checkDeployOrderCountry(p_player, this)) {
-            deployOrder(this,p_gameState, p_player);
-            System.out.println("\nOrder executed successfully. " + this.d_numberOfArmiesToPlace + " armies deployed to " + this.d_targetCountryName);
-        } else {
-            System.out.println("\nOrder not executed. Invalid command or target country does not belong to player: " + p_player.getPlayerName());
-        }
-
-    }
-
-    /**
-     * Deploys armies based on the specific order.
-     * @param p_order The order containing deployment details.
-     * @param p_gameState The current game state.
-     * @param p_player The player issuing the order.
-     */
-    private void deployOrder(Order p_order, GameState p_gameState, Player p_player) {
-        for (Country l_country : p_gameState.getD_map().getD_countries()) {
-            if (l_country.getD_countryName().equalsIgnoreCase(p_order.getD_targetCountryName())) {
-                Integer l_armiesToUpdate = l_country.getD_armies() == null ? p_order.getD_numberOfArmiesToPlace()
-                        : l_country.getD_armies() + p_order.getD_numberOfArmiesToPlace();
-                l_country.setD_armies(l_armiesToUpdate);
-            }
-        }
-    }
-
-    /**
-     * Checks if the specified target country belongs to the player.
-     * @param p_player The player whose countries are checked.
-     * @param d_orderDetails The order details containing the target country name.
-     * @return {@code true} if the target country belongs to the player, otherwise {@code false}.
-     */
-    public boolean checkDeployOrderCountry(Player p_player, Order d_orderDetails) {
-        return p_player.getD_coutriesOwned().stream().anyMatch(c -> c.getD_countryName().equalsIgnoreCase(this.d_targetCountryName));
-    }
-
-
-
+    public String getOrderName();
 }
