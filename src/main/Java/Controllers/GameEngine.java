@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * The GameEngineController class manages the game engine and handles user commands through a Command Line Interface.
  */
-public class GameEngineController {
+public class GameEngine {
 
     /** The current state of the game. */
     GameState d_gameState = new GameState();
@@ -46,7 +46,7 @@ public class GameEngineController {
      * @param p_args Command-line arguments.
      */
     public static void main(String[] p_args) {
-        GameEngineController l_game = new GameEngineController();
+        GameEngine l_game = new GameEngine();
         l_game.initGamePlay();
     }
 
