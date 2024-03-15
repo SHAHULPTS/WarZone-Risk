@@ -1,6 +1,7 @@
 package Models;
 
 import java.io.IOException;
+
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
@@ -11,11 +12,8 @@ import Utils.Command;
 public abstract class Phase {
     GameState d_gameState;
     GameEngine d_gameEngine;
-
     MapService d_mapService = new MapService();
-
     PlayerService d_playerService = new PlayerService();
-
     boolean l_isMapLoaded;
 
     public Phase(GameEngine p_gameEngine, GameState p_gameState){
@@ -30,6 +28,7 @@ public abstract class Phase {
     public void setD_gameState(GameState p_gameState) {
         d_gameState = p_gameState;
     }
+
     public void handleCommand(String p_enteredCommand) throws InvalidMap, InvalidCommand, IOException {
         commandHandler(p_enteredCommand, null);
     }
@@ -114,22 +113,36 @@ public abstract class Phase {
             }
         }
     }
+
     protected abstract void performCardHandle(String p_enteredCommand, Player p_player) throws IOException;
+
     protected abstract void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
+
     protected abstract void performAdvance(String p_command, Player p_player) throws IOException;
+
     public abstract void initPhase();
+
     protected abstract void performCreateDeploy(String p_command, Player p_player) throws IOException;
+
     public void printInvalidCommandInState(){
         d_gameEngine.setD_gameEngineLog("Invalid Command in Current State", "effect");
     }
-    protected abstract void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
-    protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
-    protected abstract void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
-    protected abstract void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
-    protected abstract void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException;
-    protected abstract void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
-    protected abstract void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
-    protected abstract void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
-    protected abstract void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 
+    protected abstract void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
+
+    protected abstract void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap;
+
+    protected abstract void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
+
+    protected abstract void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
+
+    protected abstract void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException;
+
+    protected abstract void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
+
+    protected abstract void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException;
+
+    protected abstract void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
+
+    protected abstract void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap;
 }
