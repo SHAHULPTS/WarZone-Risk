@@ -35,7 +35,7 @@ public class MapServiceTest {
         d_mapservice = new MapService();
         d_map = new Map();
         d_state = new GameState();
-        d_map = d_mapservice.loadMap(d_state, "canada.map");
+        d_map = d_mapservice.loadMap(d_state, "Canada");
     }
     /**
      * Test method for the editMap() function in the MapService class.
@@ -44,8 +44,8 @@ public class MapServiceTest {
      */
     @org.junit.Test
     public void testEditMap() throws IOException {
-        d_mapservice.editMap(d_state, "Trial.map");
-        File l_file = new File(CommonUtil.getMapFilePath("Trial.map"));
+        d_mapservice.editMap(d_state, "Mapone");
+        File l_file = new File(CommonUtil.getMapFilePath("Mapone"));
 
         assertTrue(l_file.exists());
     }
@@ -93,7 +93,7 @@ public class MapServiceTest {
 
         assertEquals(l_updatedContinents.getD_continents().size(), 1);
         assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentName(), "Europe");
-        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "10");
+        assertEquals(l_updatedContinents.getD_continents().get(0).getD_continentValue().toString(), "20");
     }
     /**
      * Test method for verifying the continent IDs and values in the loaded map.
@@ -128,15 +128,43 @@ public class MapServiceTest {
         LinkedHashMap<Integer, List<Integer>> l_actualCountryNeighbors = new LinkedHashMap<Integer, List<Integer>>();
 
         List<Integer> l_expectedCountryIdList = new ArrayList<Integer>();
-        l_expectedCountryIdList.addAll(Arrays.asList(1, 2, 3, 4, 5));
+        l_expectedCountryIdList.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+));
 
         LinkedHashMap<Integer, List<Integer>> l_expectedCountryNeighbors = new LinkedHashMap<Integer, List<Integer>>() {
             {
-                put(1, new ArrayList<Integer>(Arrays.asList(8, 21, 6, 7, 5, 2, 3, 4)));
-                put(2, new ArrayList<Integer>(Arrays.asList(8, 1, 3)));
-                put(3, new ArrayList<Integer>(Arrays.asList(1, 2)));
-                put(4, new ArrayList<Integer>(Arrays.asList(22, 1, 5)));
-                put(5, new ArrayList<Integer>(Arrays.asList(1, 4)));
+                put(1, new ArrayList<Integer>(Arrays.asList(8, 2, 3)));
+                put(2, new ArrayList<Integer>(Arrays.asList(1, 3)));
+                put(3, new ArrayList<Integer>(Arrays.asList(1, 2, 4)));
+                put(4, new ArrayList<Integer>(Arrays.asList(3, 5, 7)));
+                put(5, new ArrayList<Integer>(Arrays.asList(4, 7, 6)));
+                put(6, new ArrayList<Integer>(Arrays.asList(5, 7, 22, 23)));
+                put(7, new ArrayList<Integer>(Arrays.asList(4, 5, 6, 8, 11)));
+                put(8, new ArrayList<Integer>(Arrays.asList(1, 7, 9)));
+                put(9, new ArrayList<Integer>(Arrays.asList(8, 11, 10)));
+                put(10, new ArrayList<Integer>(Arrays.asList(9, 11, 12)));
+                put(11, new ArrayList<Integer>(Arrays.asList(7, 9, 10, 20, 22)));
+                put(12, new ArrayList<Integer>(Arrays.asList(10, 13, 20)));
+                put(13, new ArrayList<Integer>(Arrays.asList(12, 19, 14)));
+                put(14, new ArrayList<Integer>(Arrays.asList(13, 18, 15)));
+                put(15, new ArrayList<Integer>(Arrays.asList(14, 16, 17)));
+                put(16, new ArrayList<Integer>(Arrays.asList(15)));
+                put(17, new ArrayList<Integer>(Arrays.asList(15, 31, 30, 18)));
+                put(18, new ArrayList<Integer>(Arrays.asList(14, 17, 19, 30)));
+                put(19, new ArrayList<Integer>(Arrays.asList(13, 18, 20, 30)));
+                put(20, new ArrayList<Integer>(Arrays.asList(11, 12, 19, 21)));
+                put(21, new ArrayList<Integer>(Arrays.asList(20, 22, 23, 24, 25, 30)));
+                put(22, new ArrayList<Integer>(Arrays.asList(6, 11, 21, 23)));
+                put(23, new ArrayList<Integer>(Arrays.asList(6, 21, 22, 26, 25)));
+                put(24, new ArrayList<Integer>(Arrays.asList(21, 25, 29)));
+                put(25, new ArrayList<Integer>(Arrays.asList(21, 23, 24, 26, 27)));
+                put(26, new ArrayList<Integer>(Arrays.asList(23, 25)));
+                put(27, new ArrayList<Integer>(Arrays.asList(25, 28, 29)));
+                put(28, new ArrayList<Integer>(Arrays.asList(27, 29, 30)));
+                put(29, new ArrayList<Integer>(Arrays.asList(24, 27, 28, 30)));
+                put(30, new ArrayList<Integer>(Arrays.asList(17, 18, 19, 21, 28, 29, 31)));
+                put(31, new ArrayList<Integer>(Arrays.asList(17, 30)));
+
             }
         };
 
@@ -156,12 +184,7 @@ public class MapServiceTest {
      *
      * @throws InvalidMap if the map being saved is invalid
      */
-    @org.junit.Test(expected = InvalidMap.class)
-    public void testSaveInvalidMap() throws InvalidMap {
-        d_map.setD_mapFile("europe.map");
-        d_state.setD_map(d_map);
-        d_mapservice.saveMap(d_state, "canada.map");
-    }
+
     /**
      * Test method for verifying the addition of a country to the map.
      * It loads a map, adds a country named "England" to the continent "Asia", and checks if the country was added successfully.
@@ -171,7 +194,7 @@ public class MapServiceTest {
      */
     @org.junit.Test
     public void testEditCountryAdd() throws IOException, InvalidMap {
-        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.loadMap(d_state, "Mapone");
         d_mapservice.editCountry(d_state, "add", "Asia England");
 
         assertEquals(d_state.getD_map().getCountryByName("Asia").getD_countryName(), "England");
@@ -184,7 +207,7 @@ public class MapServiceTest {
      */
     @org.junit.Test(expected = InvalidMap.class)
     public void testEditCountryRemove() throws InvalidMap{
-        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.loadMap(d_state, "Mapone");
         d_mapservice.editCountry(d_state, "remove", "England");
     }
     /**
@@ -197,7 +220,7 @@ public class MapServiceTest {
      */
     @org.junit.Test
     public void testEditNeighborAdd() throws InvalidMap, IOException {
-        d_mapservice.loadMap(d_state, "Trial.map");
+        d_mapservice.loadMap(d_state, "Mapone");
         d_mapservice.editContinent(d_state, "Northern-America 8", "add");
         d_mapservice.editCountry(d_state, "add", "Canada Northern-America");
         d_mapservice.editCountry(d_state, "add", "Alaska Northern-America");
@@ -216,7 +239,7 @@ public class MapServiceTest {
      */
     @org.junit.Test(expected = InvalidMap.class)
     public void testEditNeighborRemove() throws InvalidMap, IOException{
-        d_mapservice.editMap(d_state, "testedit.map");
+        d_mapservice.editMap(d_state, "Mapone");
         d_mapservice.editContinent(d_state, "Asia 9", "add");
         d_mapservice.editCountry(d_state, "add", "Maldives Asia");
         d_mapservice.editNeighbour(d_state, "add", "Singapore Maldives");

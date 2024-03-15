@@ -69,7 +69,7 @@ public class PlayerServiceTest {
 
         System.setOut(new PrintStream(d_outContent));
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Jay");
-        assertEquals("Player with name : Jay already Exists. Changes are not made.", d_outContent.toString());
+        assertEquals("Player : Jay already exists. No changes made.", d_outContent.toString());
     }
     /**
      * Tests the removal of players using the addRemovePlayers method in the PlayerService class.
@@ -83,7 +83,7 @@ public class PlayerServiceTest {
 
         System.setOut(new PrintStream(d_outContent));
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "JaySurya");
-        assertEquals("Player with name : JaySurya does not Exist. Changes are not made.", d_outContent.toString());
+        assertEquals("Player : JaySurya does not Exist. No changes made so far.", d_outContent.toString());
     }
     /**
      * Tests the checkPlayersAvailability method in the PlayerService class.
@@ -105,7 +105,7 @@ public class PlayerServiceTest {
     public void testPlayerCountryAssignment() {
         d_mapservice = new MapService();
         d_map = new Map();
-        d_map = d_mapservice.loadMap(d_gameState, "canada.map");
+        d_map = d_mapservice.loadMap(d_gameState, "debrew");
         d_gameState.setD_map(d_map);
         d_gameState.setD_players(d_exisitingPlayerList);
         d_playerService.assignCountries(d_gameState);
