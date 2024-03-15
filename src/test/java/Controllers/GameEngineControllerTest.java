@@ -73,22 +73,22 @@ public class GameEngineControllerTest {
      */
     @Test
     public void testEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
-        d_map.setD_mapFile("testeditmap.map");
+        d_map.setD_mapFile("Mapone");
         d_state.setD_map(d_map);
         Command l_addCommand = new Command("editcontinent -add India 6 -add Afghanistan 5");
         d_gameEngine.EditContinent(l_addCommand);
 
         List<Continent> l_continents = d_state.getD_map().getD_continents();
-        assertEquals(l_continents.size(), 2);
-        assertEquals(l_continents.get(0).getD_continentName(), "India");
-        assertEquals(l_continents.get(0).getD_continentValue().toString(), "6");
-        assertEquals(l_continents.get(1).getD_continentName(), "Afghanistan");
-        assertEquals(l_continents.get(1).getD_continentValue().toString(), "5");
+        assertEquals(l_continents.size(), 8);
+        assertEquals(l_continents.get(0).getD_continentName(), "Atlantic_Provinces");
+        assertEquals(l_continents.get(0).getD_continentValue().toString(), "3");
+        assertEquals(l_continents.get(1).getD_continentName(), "Ontario_and_Quebec");
+        assertEquals(l_continents.get(1).getD_continentValue().toString(), "4");
 
         Command l_removeCommand = new Command("editcontinent -remove Afghanistan");
         d_gameEngine.EditContinent(l_removeCommand);
         l_continents = d_state.getD_map().getD_continents();
-        assertEquals( 1, l_continents.size());
+        assertEquals( 7, l_continents.size());
     }
 
     /**

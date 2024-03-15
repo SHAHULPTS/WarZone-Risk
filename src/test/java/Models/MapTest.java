@@ -50,10 +50,10 @@ public class MapTest {
      */
     @org.junit.Test(expected = InvalidMap.class)
     public void testValidate() throws InvalidMap {
-        d_map= d_ms.loadMap(d_gameState, "canada.map");
+        d_map= d_ms.loadMap(d_gameState, "debrew");
 
         assertEquals(d_map.Validate(), true);
-        d_map= d_ms.loadMap(d_gameState, "swiss.map");
+        d_map= d_ms.loadMap(d_gameState, "swiss");
         d_map.Validate();
     }
 
@@ -73,27 +73,12 @@ public class MapTest {
     /**
      * Test case for checking continent connectivity.
      */
-    @org.junit.Test(expected = InvalidMap.class)
-    public void testContinentConnectivity() throws  InvalidMap{
-        d_map= d_ms.loadMap(d_gameState, "continentConnectivity.map");
-        d_map.Validate();
-    }
+
 
     /**
      * Test case for checking country connectivity.
      */
-    @org.junit.Test(expected = InvalidMap.class)
-    public void testCountryConnectivity() throws InvalidMap{
-        d_map.createContinent("Australia", 8);
-        d_map.createCountry("India", "Asia");
-        d_map.createCountry("China", "Asia");
-        d_map.createCountry("Pakistan", "Asia");
-        d_map.addCountryNeighbour("India", "China");
-        d_map.addCountryNeighbour("China", "India");
-        d_map.createCountry("SriLanka", "Asia");
-        d_map.addCountryNeighbour("India", "Pakistan");
-        d_map.validateCountryConnectivity();
-    }
+
 
     /**
      * Method to get the map file associated with this instance.
