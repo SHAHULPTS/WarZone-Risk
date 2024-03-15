@@ -1,12 +1,13 @@
 package Models;
 
+import Exceptions.InvalidMap;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a country with its attributes and operations.
  */
-public class Country {
+public class  Country {
 
     /** The number of armies in the country. */
     Integer d_armies;
@@ -151,11 +152,11 @@ public class Country {
      * Deletes the neighboring relationship with the country of the specified ID.
      * @param p_countryId The ID of the neighboring country to delete.
      */
-    public void deleteNeighbour(Integer p_countryId) {
+    public void deleteNeighbour(Integer p_countryId) throws InvalidMap{
         if (d_adjacentCountryIds.contains(p_countryId)) {
             d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
         } else {
-            System.out.println("No Such Neighbour Exists");
+            throw new InvalidMap("No Such Neighbour Exists");
         }
     }
 }

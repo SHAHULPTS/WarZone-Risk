@@ -449,7 +449,7 @@ public class Map {
      *
      * @param p_countryID       The ID of the country whose neighbours will be deleted.
      */
-    public void deleteCountryNeighbours(Integer p_countryID){
+    public void deleteCountryNeighbours(Integer p_countryID) throws InvalidMap {
         for (Country c: d_countries) {
             if (!CommonUtil.isNull(c.getD_adjacentCountryIds())) {
                 if (c.getD_adjacentCountryIds().contains(p_countryID)) {
@@ -481,7 +481,7 @@ public class Map {
      *
      * @param p_countryId   The ID of the country whose neighbours will be updated.
      */
-    public void updateNeighboursCont(Integer p_countryId){
+    public void updateNeighboursCont(Integer p_countryId) throws InvalidMap {
         for(Continent c: d_continents){
             c.deleteCountryNeighbours(p_countryId);
         }
