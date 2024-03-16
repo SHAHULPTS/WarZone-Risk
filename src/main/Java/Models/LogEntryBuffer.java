@@ -36,25 +36,20 @@ public class LogEntryBuffer extends Observable {
      * @param p_messageToUpdate the message to update the log with
      * @param p_logType         the type of log message (e.g., command, order, phase, effect, start, end)
      */
-    public void currentLog(String p_messageToUpdate, String p_logType) {
-        switch (p_logType.toLowerCase()) {
-            case "command":
-                d_logMessage = "\nInput Command: " + p_messageToUpdate + "\n";
-                break;
-            case "order":
-                d_logMessage = "\nIssued Order: " + p_messageToUpdate + "\n";
-                break;
-            case "phase":
-                d_logMessage = "\n-------" + p_messageToUpdate + "-------\n\n";
-                break;
-            case "effect":
-                d_logMessage = "Log: " + p_messageToUpdate + "\n";
-                break;
-            case "start":
-            case "end":
-                d_logMessage = p_messageToUpdate + "\n";
-                break;
+    public void logEvent(String p_messageToUpdate, String p_logType) {
+        String log = p_logType.toLowerCase();
+        if(log == "command") {
+            d_logMessage = "\nInput Command: " + p_messageToUpdate + "\n";
+        } else if (log == "order") {
+            d_logMessage = "\nIssued Order: " + p_messageToUpdate + "\n";
+        } else if (log == "phase") {
+            d_logMessage = "\n-------" + p_messageToUpdate + "-------\n\n";
+        } else if (log == "effect") {
+            d_logMessage = "Log: " + p_messageToUpdate + "\n";
+        } else if (log == "start" || log == "end") {
+            d_logMessage = p_messageToUpdate + System.lineSeparator();
         }
+
         setChanged();
         notifyObservers();
     }
