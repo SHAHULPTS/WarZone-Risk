@@ -7,7 +7,7 @@ import java.util.List;
  *
  */
 public final class ApplicationConstants {
-    // Error messages for invalid commands
+
     public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Please provide the command in the following format: editmap filename";
     public static final String INVALID_COMMAND_ERROR_EDITCONTINENT = "Invalid command. Please provide the command in the following format: editcontinent -add continentID continentvalue -remove continentID";
     public static final String INVALID_COMMAND_ERROR_EDITCOUNTRY = "Invalid command. Please provide the command in the following format: editcountry -add countryID continentID -remove countryID";
@@ -52,6 +52,8 @@ public final class ApplicationConstants {
     public static final String CONTINENTS = "[continents]";
     public static final String COUNTRIES = "[countries]";
     public static final String BORDERS = "[borders]";
+    public static final List<String> BLOCKADEVALIDATION = Arrays.asList("bomb", "advance", "airlift", "negotiate");
+
 
     public static final List<String> CARDS = Arrays.asList("bomb", "blockade", "airlift", "negotiate");
     public static final int SIZE = CARDS.size();
