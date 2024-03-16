@@ -1,5 +1,8 @@
 package Models;
 
+/**
+ * Airlift class represents a card for executing Airlift operation in the game.
+ */
 public class Airlift implements Card {
     Player d_player;
     String d_sourceCountryName;
@@ -7,6 +10,14 @@ public class Airlift implements Card {
     Integer d_numberOfArmies;
     String d_orderExecutionLog;
 
+    /**
+     * Constructor for Airlift card.
+     *
+     * @param p_sourceCountryName The name of the source country.
+     * @param p_targetCountryName The name of the target country.
+     * @param p_noOfArmies        Number of armies to be airlifted.
+     * @param p_player            The player owning the card.
+     */
     public Airlift(String p_sourceCountryName, String p_targetCountryName, Integer p_noOfArmies, Player p_player) {
         this.d_numberOfArmies = p_noOfArmies;
         this.d_targetCountryName = p_targetCountryName;
@@ -14,6 +25,11 @@ public class Airlift implements Card {
         this.d_player = p_player;
     }
 
+    /**
+     * Executes the Airlift operation.
+     *
+     * @param p_gameState The current game state.
+     */
     @Override
     public void execute(GameState p_gameState) {
         if (valid(p_gameState)) {
@@ -32,6 +48,12 @@ public class Airlift implements Card {
         }
     }
 
+    /**
+     * Checks if the Airlift operation is valid.
+     *
+     * @param p_gameState The current game state.
+     * @return true if the operation is valid, false otherwise.
+     */
     @Override
     public boolean valid(GameState p_gameState) {
         Country l_sourceCountry = d_player.getD_coutriesOwned().stream()
@@ -66,6 +88,9 @@ public class Airlift implements Card {
         return true;
     }
 
+    /**
+     * Prints the Airlift order.
+     */
     @Override
     public void printOrder() {
         this.d_orderExecutionLog = "----------Airlift order issued by player " + this.d_player.getPlayerName()
@@ -74,11 +99,22 @@ public class Airlift implements Card {
         System.out.println(System.lineSeparator()+this.d_orderExecutionLog);
     }
 
+    /**
+     * Returns the order execution log.
+     *
+     * @return The order execution log.
+     */
     @Override
     public String orderExecutionLog() {
         return this.d_orderExecutionLog;
     }
 
+    /**
+     * Sets the order execution log and prints it.
+     *
+     * @param p_orderExecutionLog The order execution log message.
+     * @param p_logType           The type of log.
+     */
     public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
         this.d_orderExecutionLog = p_orderExecutionLog;
         if (p_logType.equals("error")) {
@@ -88,11 +124,22 @@ public class Airlift implements Card {
         }
     }
 
+    /**
+     * Retrieves the current order information.
+     *
+     * @return The current order information.
+     */
     private String currentOrder() {
         return "Airlift Order : " + "airlift" + " " + this.d_sourceCountryName + " " + this.d_targetCountryName + " "
                 + this.d_numberOfArmies;
     }
 
+    /**
+     * Checks if the Airlift order is valid.
+     *
+     * @param p_GameState The current game state.
+     * @return true if the order is valid, false otherwise.
+     */
     @Override
     public Boolean checkValidOrder(GameState p_GameState) {
         Country l_sourceCountry = p_GameState.getD_map().getCountryByName(d_sourceCountryName);
@@ -110,6 +157,11 @@ public class Airlift implements Card {
         return true;
     }
 
+    /**
+     * Retrieves the name of the order.
+     *
+     * @return The name of the order.
+     */
     @Override
     public String getOrderName() {
         return "airlift";
