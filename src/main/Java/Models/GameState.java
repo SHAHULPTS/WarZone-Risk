@@ -19,8 +19,10 @@ public class GameState {
     /** The list of unexecuted orders in the game. */
     List<Order> d_unexecutedOrders;
 
+    /** The buffer for logging game events. */
     LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 
+    /** A flag indicating whether the load command has been executed. */
     Boolean d_loadCommand = false;
 
     /**
@@ -87,18 +89,34 @@ public class GameState {
         this.d_error = p_error;
     }
 
+    /**
+     * Updates the log with a new message and its type.
+     * @param p_logMessage The log message to be added.
+     * @param p_logType    The type of the log message.
+     */
     public void updateLog(String p_logMessage, String p_logType) {
         d_logEntryBuffer.currentLog(p_logMessage, p_logType);
     }
 
+    /**
+     * Retrieves the most recent log message.
+     * @return The most recent log message.
+     */
     public String getRecentLog(){
         return d_logEntryBuffer.getD_logMessage();
     }
 
+    /**
+     * Sets the load command flag to indicate that the load command has been executed.
+     */
     public void setD_loadCommand() {
         this.d_loadCommand = true;
     }
 
+    /**
+     * Retrieves the value of the load command flag.
+     * @return true if the load command has been executed, false otherwise.
+     */
     public boolean getD_loadCommand(){
         return this.d_loadCommand;
     }
