@@ -9,7 +9,10 @@ import java.util.List;
 
 public class PlayerService {
 
+    /** The log message for player operations. */
     String d_playerLog;
+
+    /** The log message for country/continent assignment. */
     String d_assignmentLog = "Country/Continent Assignment:";
 
 
@@ -341,6 +344,12 @@ public class PlayerService {
         return !CommonUtil.isNull(p_gameState.getD_map()) ? true : false;
     }
 
+    /**
+     * Checks if there are more orders to execute for any player in the given list of players.
+     *
+     * @param p_playersList The list of players to check for more orders.
+     * @return true if there are more orders to execute for any player, false otherwise.
+     */
     public boolean checkForMoreOrders(List<Player> p_playersList) {
         for (Player l_player : p_playersList) {
             if(l_player.getD_moreOrders())
@@ -349,6 +358,11 @@ public class PlayerService {
         return false;
     }
 
+    /**
+     * Resets certain flags and states for all players in the given list of players.
+     *
+     * @param p_playersList The list of players to reset flags for.
+     */
     public void resetPlayersFlag(List<Player> p_playersList) {
         for (Player l_player : p_playersList) {
             if (!l_player.getPlayerName().equalsIgnoreCase("Neutral"))
@@ -358,11 +372,23 @@ public class PlayerService {
         }
     }
 
+    /**
+     * Sets the player log message.
+     *
+     * @param p_playerLog The player log message to be set.
+     */
     public void setD_playerLog(String p_playerLog) {
         this.d_playerLog = p_playerLog;
         System.out.println(p_playerLog);
     }
 
+    /**
+     * Finds and returns a player by their name from the given game state.
+     *
+     * @param p_playerName The name of the player to find.
+     * @param p_gameState  The game state containing the list of players.
+     * @return The player object if found, null otherwise.
+     */
     public Player findPlayerByName(String p_playerName, GameState p_gameState) {
         return p_gameState.getD_players().stream().filter(l_player -> l_player.getPlayerName().equals(p_playerName)).findFirst().orElse(null);
     }

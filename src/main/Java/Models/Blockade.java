@@ -2,19 +2,36 @@ package Models;
 
 import Utils.CommonUtil;
 
+/**
+ * The Blockade class represents a Blockade card in the game, which can be used to execute a defensive blockade on a target country.
+ */
 public class Blockade implements Card {
 
+    /** The player initiating the blockade. */
     Player d_playerInitiator;
 
+    /** The player initiating the blockade. */
     String d_targetCountryID;
 
+    /** Log message for the order execution. */
     String d_orderExecutionLog;
 
+    /**
+     * Constructs a Blockade card with the specified initiator player and target country ID.
+     *
+     * @param p_playerInitiator the player initiating the blockade
+     * @param p_targetCountry  the ID of the target country for the blockade
+     */
     public Blockade(Player p_playerInitiator, String p_targetCountry) {
         this.d_playerInitiator = p_playerInitiator;
         this.d_targetCountryID = p_targetCountry;
     }
 
+    /**
+     * Executes the blockade card action in the game state.
+     *
+     * @param p_gameState the current game state
+     */
     @Override
     public void execute(GameState p_gameState) {
         if (valid(p_gameState)) {
@@ -41,6 +58,12 @@ public class Blockade implements Card {
         }
     }
 
+    /**
+     * Checks if the blockade card action is valid in the current game state.
+     *
+     * @param p_gameState the current game state
+     * @return true if the blockade action is valid, false otherwise
+     */
     @Override
     public boolean valid(GameState p_gameState) {
 
@@ -59,6 +82,9 @@ public class Blockade implements Card {
         return true;
     }
 
+    /**
+     * Prints the order details of the blockade card.
+     */
     @Override
     public void printOrder() {
         this.d_orderExecutionLog = "----------Blockade card order issued by player "
@@ -68,6 +94,12 @@ public class Blockade implements Card {
 
     }
 
+    /**
+     * Sets the order execution log with the provided message and log type.
+     *
+     * @param p_orderExecutionLog the order execution log message
+     * @param p_logType           the type of log (error or default)
+     */
     public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
         this.d_orderExecutionLog = p_orderExecutionLog;
         if (p_logType.equals("error")) {
@@ -77,6 +109,12 @@ public class Blockade implements Card {
         }
     }
 
+    /**
+     * Checks if the blockade card order is valid in the current game state.
+     *
+     * @param p_gameState the current game state
+     * @return true if the order is valid, false otherwise
+     */
     @Override
     public Boolean checkValidOrder(GameState p_gameState) {
         Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryID);
@@ -87,15 +125,30 @@ public class Blockade implements Card {
         return true;
     }
 
+    /**
+     * Gets the name of the blockade card order.
+     *
+     * @return the name of the blockade card order
+     */
     @Override
     public String getOrderName() {
         return "blockade";
     }
 
+    /**
+     * Generates the current blockade card order.
+     *
+     * @return the current blockade card order
+     */
     private String currentOrder() {
         return "Blockade card order : " + "blockade" + " " + this.d_targetCountryID;
     }
 
+    /**
+     * Gets the order execution log.
+     *
+     * @return the order execution log
+     */
     public String orderExecutionLog() {
         return this.d_orderExecutionLog;
     }
