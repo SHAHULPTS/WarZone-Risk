@@ -130,6 +130,48 @@ public class OrderExecutionPhase extends Phase {
         printInvalidCommandInState();
     }
 
+    protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand {
+        printInvalidCommandInState();
+    }
+
+
+    @Override
+    protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
+
+    @Override
+    protected void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
+
+    @Override
+    protected void performEditContinent(Command p_command, Player p_player)
+            throws IOException, InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
+
+    @Override
+    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+        printInvalidCommandInState();
+    }
+
+
+    protected Boolean checkEndOftheGame(GameState p_gameState) {
+        Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
+        for (Player l_player : p_gameState.getD_players()) {
+            if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
+                d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
+                        + " has won the Game by conquering all countries. Exiting the Game .....", "end");
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }
