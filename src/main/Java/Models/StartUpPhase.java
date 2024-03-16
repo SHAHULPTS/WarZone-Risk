@@ -63,6 +63,38 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    public void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+        boolean l_flagValidate = false;
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+        if (null == l_operations_list || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                    // Loads the map if it is valid or resets the game state
+                    Models.Map l_mapToLoad = d_mapService.loadMap(d_gameState,
+                            l_map.get(ApplicationConstants.ARGUMENTS));
+                    if (l_mapToLoad.Validate()) {
+                        l_flagValidate = true;
+                        d_gameState.setD_loadCommand();
+                        d_gameEngine.setD_gameEngineLog(l_map.get(ApplicationConstants.ARGUMENTS)+ " has been loaded to start the game", "effect" );
+                    } else {
+                        d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+                    }
+                    if(!l_flagValidate){
+                        d_mapService.resetMap(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS));
+                    }
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADMAP);
+                }
+            }
+        }
+    }
+
+
+
     public void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", "effect");
