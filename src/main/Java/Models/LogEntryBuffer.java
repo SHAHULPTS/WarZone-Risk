@@ -10,7 +10,7 @@ import java.util.Observable;
 public class LogEntryBuffer extends Observable {
 
     /** The log message stored in the buffer. */
-    private String d_logMessage;
+   private String d_logMessage;
 
     /**
      * Constructs a new LogEntryBuffer and adds a LogWriter observer to it.
