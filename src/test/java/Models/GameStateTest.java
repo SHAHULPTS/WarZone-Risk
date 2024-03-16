@@ -62,4 +62,32 @@ class GameStateTest {
     @Test
     void setError() {
     }
+
+    /**
+     * Test case for updating the log.
+     */
+    @Test
+    void updateLog() {
+    }
+
+    /**
+     * Test case for getting the recent log.
+     */
+    @Test
+    void getRecentLog() {
+    }
+
+    /**
+     * Test case for setting the load command.
+     */
+    @Test
+    void setD_loadCommand() {
+    }
+
+    /**
+     * Test case for getting the load command.
+     */
+    @Test
+    void getD_loadCommand() {
+    }
 }
