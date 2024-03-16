@@ -48,5 +48,11 @@ public class OrderExecutionPhaseTest {
         d_gameState.setD_players(Arrays.asList(d_player1, d_player2));
     }
 
+    @Test
+    public void testEndOfTheGame() {
+        OrderExecutionPhase l_orderExec = new OrderExecutionPhase(new GameEngine(), d_gameState);
+        assertTrue(l_orderExec.checkEndOftheGame(d_gameState));
+    }
+
 
 }
