@@ -10,9 +10,18 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * This class is used to test the functionality of the Advance class.
+ */
 public class AdvanceTest {
+    /**
+     * Recent GameState.
+     */
     GameState d_gameState = new GameState();
 
+    /**
+     * Test method to validate an invalid advance order.
+     */
     @Test
     public void testInvalidAdvanceOrder() {
         Player l_player = new Player("Zalak");
@@ -29,6 +38,9 @@ public class AdvanceTest {
         assertTrue(new Advance(l_player, "India", "France", 10).valid(d_gameState));
     }
 
+    /**
+     * Test method to verify if the attacker wins the battle and countries and armies are updated correctly.
+     */
     @Test
     public void testAttackersWin() {
         Player l_sourcePlayer = new Player("Zalak");
@@ -53,6 +65,9 @@ public class AdvanceTest {
         assertEquals(l_sourcePlayer.getD_coutriesOwned().get(1).getD_armies().toString(), "5");
     }
 
+    /**
+     * Test method to verify if the defender wins the battle and countries and armies are updated correctly.
+     */
     @Test
     public void testDefendersWin() {
         Player l_sourcePlayer = new Player("Zalak");
@@ -78,6 +93,9 @@ public class AdvanceTest {
         assertEquals(l_targetPlayer.getD_coutriesOwned().get(0).getD_armies().toString(), "2");
     }
 
+    /**
+     * Test method to verify if armies are deployed to the target country.
+     */
     @Test
     public void testDeployToTarget() {
         Player l_sourcePlayer = new Player("Zalak");

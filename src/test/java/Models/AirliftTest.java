@@ -10,12 +10,35 @@ import org.junit.Test;
 
 import Exceptions.InvalidMap;
 
+/**
+ * This class is used to test the functionality of the Airlift class.
+ */
 public class AirliftTest {
+    /**
+     * First Player.
+     */
     Player d_player1;
+
+    /**
+     * Airlift Order.
+     */
     Airlift d_airliftOrder;
+
+    /**
+     * Invalid Airlift Order.
+     */
     Airlift d_invalidAirLift1;
+
+    /**
+     * Game State.
+     */
     GameState d_gameState;
 
+    /**
+     * Setup method to initialize test objects before each test case.
+     *
+     * @throws InvalidMap If an invalid map is encountered.
+     */
     @Before
     public void initialize() throws InvalidMap {
         d_gameState = new GameState();
@@ -45,6 +68,9 @@ public class AirliftTest {
         d_airliftOrder = new Airlift("France", "Spain", 2, d_player1);
     }
 
+    /**
+     * Test method to verify the execution of the Airlift order.
+     */
     @Test
     public void testAirliftExecution() {
         d_airliftOrder.execute(d_gameState);
@@ -52,6 +78,9 @@ public class AirliftTest {
         assertEquals("17", l_countrySpain.getD_armies().toString());
     }
 
+    /**
+     * Test method to verify the validation of an invalid Airlift order.
+     */
     @Test
     public void testInvalidAirLift() {
         d_invalidAirLift1 = new Airlift("France", "India", 1, d_player1);
