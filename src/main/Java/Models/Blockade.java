@@ -36,9 +36,7 @@ public class Blockade implements Card {
     public void execute(GameState p_gameState) {
         if (valid(p_gameState)) {
             Country l_targetCountryID = p_gameState.getD_map().getCountryByName(d_targetCountryID);
-            Integer l_noOfArmiesOnTargetCountry = l_targetCountryID.getD_armies() == 0 ? 1
-                    : l_targetCountryID.getD_armies();
-            l_targetCountryID.setD_armies(l_noOfArmiesOnTargetCountry * 3);
+            l_targetCountryID.setD_armies((l_targetCountryID.getD_armies() == 0) ? 3 : l_targetCountryID.getD_armies() * 3);
 
             d_playerInitiator.getD_coutriesOwned().remove(l_targetCountryID);
 
@@ -50,11 +48,10 @@ public class Blockade implements Card {
                 System.out.println("Neutral territory: " + l_targetCountryID.getD_countryName() + "assigned to the Neutral Player.");
             }
 
-            d_playerInitiator.removeCard("blockade");
-            this.setD_orderExecutionLog("\nPlayer : " + this.d_playerInitiator.getPlayerName()
-                    + " is executing defensive blockade on Country :  " + l_targetCountryID.getD_countryName()
-                    + " with armies :  " + l_targetCountryID.getD_armies(), "default");
-            p_gameState.updateLog(orderExecutionLog(), "effect");
+            d_playerInitiator.removeCard(getOrderName());
+            this.setD_orderExecutionLog("Executing defensive blockade on Country : " + l_targetCountryID.getD_countryName()
+                    + " with armies : " + l_targetCountryID.getD_armies() + " by Player : " + this.d_playerInitiator.getPlayerName(), "default");
+            p_gameState.updateLog(orderExecutionLog() , "effect");
         }
     }
 
@@ -87,8 +84,8 @@ public class Blockade implements Card {
      */
     @Override
     public void printOrder() {
-        this.d_orderExecutionLog = "----------Blockade card order issued by player "
-                + this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
+        this.d_orderExecutionLog = "----------Player issued Blockade card order "
+                + this.d_playerInitiator.getPlayerName() + "----------\n"
                 + "Creating a defensive blockade with armies = " + "on country ID: " + this.d_targetCountryID;
         System.out.println(System.lineSeparator() + this.d_orderExecutionLog);
 
@@ -119,11 +116,12 @@ public class Blockade implements Card {
     public Boolean checkValidOrder(GameState p_gameState) {
         Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryID);
         if (l_targetCountry == null) {
-            this.setD_orderExecutionLog("Invalid Target Country! Doesn't exist on the map!", "error");
+            this.setD_orderExecutionLog("Target Country is not valid! Doesn't exist on map!", "error");
             return false;
         }
         return true;
     }
+
 
     /**
      * Gets the name of the blockade card order.
@@ -141,7 +139,7 @@ public class Blockade implements Card {
      * @return the current blockade card order
      */
     private String currentOrder() {
-        return "Blockade card order : " + "blockade" + " " + this.d_targetCountryID;
+        return "Blockade card order : " + getOrderName() + " " + this.d_targetCountryID;
     }
 
     /**
