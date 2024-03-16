@@ -71,16 +71,6 @@ public class MapTest {
     }
 
     /**
-     * Test case for checking continent connectivity.
-     */
-
-
-    /**
-     * Test case for checking country connectivity.
-     */
-
-
-    /**
      * Method to get the map file associated with this instance.
      */
     @Test
