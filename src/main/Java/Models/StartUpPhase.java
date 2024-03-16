@@ -17,6 +17,7 @@ public class StartUpPhase {
         super(p_gameEngine, p_gameState);
     }
 
+
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         printInvalidCommandInState();
