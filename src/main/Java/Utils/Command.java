@@ -21,8 +21,7 @@ public class Command {
      *
      * @param p_command the command string to be processed
      */
-    public Command(String p_command) {
-        // Trim and reduce multiple spaces to a single space for uniformity.
+    public Command(String p_command){
         this.d_command = p_command.trim().replaceAll(" +", " ");
     }
 
@@ -31,9 +30,11 @@ public class Command {
      *
      * @return the root command
      */
-    public String getRootCommand() {
+    public String getRootCommand(){
         return d_command.split(" ")[0];
     }
+
+
 
 
     /**
@@ -41,28 +42,30 @@ public class Command {
      *
      * @return a list of maps containing operations and their arguments
      */
-    public List<Map<String, String>> getOperationsAndArguments() {
+    public List<Map<String , String>> getOperationsAndArguments(){
         String l_rootCommand = getRootCommand();
-        String l_operationsString = d_command.replaceFirst(Pattern.quote(l_rootCommand), "").trim();
+        String l_operationsString =  d_command.replace(l_rootCommand, "").trim();
 
-        if (l_operationsString.isEmpty()) {
+        if(null == l_operationsString || l_operationsString.isEmpty()) {
             return new ArrayList<Map<String , String>>();
         }
+        boolean l_isFlagLessCommand = !l_operationsString.contains("-") && !l_operationsString.contains(" ");
 
-
-        boolean isFlaglessCommand = !l_operationsString.contains("-") && l_operationsString.matches("[^-\\s]+");
-
-        if (isFlaglessCommand){
-            l_operationsString = "-filename " + l_operationsString;
+        // handle commands to load files, ex: loadmap filename
+        if(l_isFlagLessCommand){
+            l_operationsString = "-filename "+l_operationsString;
         }
-        List<Map<String, String>> l_operationsList = new ArrayList<>();
+
+        List<Map<String , String>> l_operations_list  = new ArrayList<Map<String,String>>();
         String[] l_operations = l_operationsString.split("-");
 
-        Arrays.stream(l_operations).filter(operation -> operation.length() > 1).forEach(operation -> {
-            l_operationsList.add(getOperationAndArgumentsMap(operation));
+        Arrays.stream(l_operations).forEach((operation) -> {
+            if(operation.length() > 1) {
+                l_operations_list.add(getOperationAndArgumentsMap(operation));
+            }
         });
 
-        return l_operationsList;
+        return l_operations_list;
     }
 
     /**
@@ -71,25 +74,33 @@ public class Command {
      * @param p_operation the operation string
      * @return a map containing the operation and its arguments
      */
-    private Map<String, String> getOperationAndArgumentsMap(String p_operation) {
-        Map<String, String> l_operationMap = new HashMap<>();
-        String[] l_parts = p_operation.trim().split(" ", 2);
+    private Map<String, String> getOperationAndArgumentsMap(String p_operation){
+        Map<String, String> l_operationMap = new HashMap<String, String>();
 
-        l_operationMap.put("operation", l_parts[0]);
-        l_operationMap.put("arguments", l_parts.length > 1 ? l_parts[1] : "");
+        String[] l_split_operation = p_operation.split(" ");
+        String l_arguments = "";
+
+        l_operationMap.put("operation", l_split_operation[0]);
+
+        if(l_split_operation.length > 1){
+            String[] l_arguments_values = Arrays.copyOfRange(l_split_operation, 1, l_split_operation.length);
+            l_arguments = String.join(" ",l_arguments_values);
+        }
+
+        l_operationMap.put("arguments", l_arguments);
 
         return l_operationMap;
     }
 
-    /**
-     * Checks if a required key is present in a map and its value is not empty.
-     *
-     * @param key the key to be checked
-     * @param inputMap the map to be checked
-     * @return {@code true} if the key is present and its value is not empty, otherwise {@code false}
-     */
-    public boolean hasRequiredKeys(String key, Map<String, String> inputMap) {
-        return inputMap.containsKey(key) && !inputMap.get(key).isEmpty();
+    public boolean checkRequiredKeysPresent(String p_key, Map<String, String> p_inputMap) {
+        if(p_inputMap.containsKey(p_key) && null != p_inputMap.get(p_key)
+                && !p_inputMap.get(p_key).isEmpty())
+            return true;
+        return false;
+    }
+
+    public String getD_command() {
+        return d_command;
     }
 
 
