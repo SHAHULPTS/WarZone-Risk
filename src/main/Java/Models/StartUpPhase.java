@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
-public class StartUpPhase {
+public class StartUpPhase extends Phase{
     public StartUpPhase(GameEngine p_gameEngine, GameState p_gameState){
         super(p_gameEngine, p_gameState);
     }
