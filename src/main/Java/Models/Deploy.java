@@ -1,5 +1,7 @@
 package Models;
 
+import static java.lang.StringTemplate.STR;
+
 public class Deploy implements Order {
     String d_targetCountryName;
 

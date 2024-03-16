@@ -8,9 +8,13 @@ Contra 4
 2 Kidrar 1
 3 Opering 2
 4 Jindre 2
+5 Kimber 2
+6 Loner 1
 
 [borders]
-1 2
-2 1 3
-3 4 2
-4 3
+1 2 4 5 6
+2 1 3 4 5 6
+3 4 2 5 6
+4 3 1 2 5 6
+5 1 2 3 4 6
+6 1 2 3 4 5
