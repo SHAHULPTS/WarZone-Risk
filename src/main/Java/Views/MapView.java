@@ -202,7 +202,7 @@ public class MapView {
      * @param p_player Player Object
      */
     private void renderPlayerInfo(Integer p_index, Player p_player){
-        String l_playerInfo = String.format("%02d. %s %-10s %s", p_index,p_player.getPlayerName(), getPlayerArmies(p_player), " -> "+ getColorizedString(p_player.getD_color(), " COLOR "));
+        String l_playerInfo = String.format("%02d. %s %-10s %s", p_index,p_player.getPlayerName(), getPlayerArmies(p_player), " -> "+ getColorizedString(p_player.getD_color(),"⏺"));
         System.out.println(l_playerInfo);
     }
 
