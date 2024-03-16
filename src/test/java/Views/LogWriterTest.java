@@ -21,13 +21,13 @@ public class LogWriterTest {
         logEntryBuffer.addObserver(logWriter);
 
         // Simulate some changes in the LogEntryBuffer
-        logEntryBuffer.currentLog("Initializing the Game ......", "start");
+        logEntryBuffer.logEvent("Initializing the Game ......", "start");
         logEntryBuffer.notifyObservers();
 
-        logEntryBuffer.currentLog("This is a test log message.", "effect");
+        logEntryBuffer.logEvent("This is a test log message.", "effect");
         logEntryBuffer.notifyObservers();
 
-        logEntryBuffer.currentLog("Another test log message.", "effect");
+        logEntryBuffer.logEvent("Another test log message.", "effect");
         logEntryBuffer.notifyObservers();
     }
 }

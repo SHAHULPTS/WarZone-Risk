@@ -95,7 +95,7 @@ public class GameState {
      * @param p_logType    The type of the log message.
      */
     public void updateLog(String p_logMessage, String p_logType) {
-        d_logEntryBuffer.currentLog(p_logMessage, p_logType);
+        d_logEntryBuffer.logEvent(p_logMessage, p_logType);
     }
 
     /**
