@@ -59,4 +59,30 @@ public class StartUpPhase {
             }
         }
     }
+
+    public void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+        if (!l_isMapLoaded) {
+            d_gameEngine.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", "effect");
+            return;
+        }
+
+        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+        } else {
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+                    d_mapService.editFunctions(d_gameState, l_map.get(ApplicationConstants.ARGUMENTS),
+                            l_map.get(ApplicationConstants.OPERATION), 1);
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_EDITCONTINENT);
+                }
+            }
+        }
+    }
+
+
 }
