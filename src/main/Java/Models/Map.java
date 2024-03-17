@@ -16,7 +16,7 @@ public class Map {
     /**
      * File path of the map.
      */
-    String d_mapFile;
+    String d_mapFilePath;
 
     /**
      * List of continents in the map.
@@ -38,7 +38,7 @@ public class Map {
      * @return The file path of the map.
      */
     public String getD_mapFile() {
-        return d_mapFile;
+        return d_mapFilePath;
     }
 
     /**
@@ -46,7 +46,7 @@ public class Map {
      * @param p_mapFile The file path of the map.
      */
     public void setD_mapFile(String p_mapFile) {
-        this.d_mapFile = p_mapFile;
+        this.d_mapFilePath = p_mapFile;
     }
 
     /**
