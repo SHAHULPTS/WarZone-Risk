@@ -102,7 +102,7 @@ public final class ApplicationConstants {
     public static final int CONSOLE_WIDTH = 80;
 
     /** List of ANSI color codes. */
-    public static final List<String> COLORS = Arrays.asList(RED, GREEN, YELLOW, BLUE, PURPLE, CYAN);
+    public static final List<String> COLORS = Arrays.asList(YELLOW, RED, PURPLE, BLUE, GREEN, CYAN);
 
     /** List of valid commands for blockade validation. */
     public static final List<String> BLOCKADEVALIDATION = Arrays.asList("bomb", "advance", "airlift", "negotiate");

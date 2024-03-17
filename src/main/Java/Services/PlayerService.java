@@ -50,8 +50,7 @@ public class PlayerService {
      * @param p_existingPlayerList The list of existing players.
      * @param p_operation          The operation to perform: "add" to add a player, "remove" to remove a player.
      * @param p_argument           The argument specifying the player name to be added or removed.
-     *                             For "add" operation: "<player_name>"
-     *                             For "remove" operation: "<player_name>"
+     *
      * @return                     The updated list of players after performing the add or remove operation.
      */
     public List<Player> addRemovePlayers(List<Player> p_existingPlayerList, String p_operation, String p_argument)
