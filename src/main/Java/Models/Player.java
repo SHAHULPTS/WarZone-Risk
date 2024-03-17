@@ -386,7 +386,7 @@ public class Player {
     private Boolean checkCountryExists(String p_countryName, GameState p_gameState) {
         if (p_gameState.getD_map().getCountryByName(p_countryName) == null) {
             this.setD_playerLog("Country : " + p_countryName
-                    + " given in advance order doesnt exists in map. Order given is ignored.", "error");
+                    + " given in advance order does not exists in map. Order given is ignored.", "error");
             return false;
         }
         return true;
