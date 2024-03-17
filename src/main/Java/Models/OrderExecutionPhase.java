@@ -68,16 +68,20 @@ public class OrderExecutionPhase extends Phase {
                 System.out.println("Press Y/y if you want to continue for next turn or else press N/n");
                 BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
-                try {
-                    String l_continue = l_reader.readLine();
 
-                    if (l_continue.equalsIgnoreCase("N")) {
-                        break;
-                    } else if(l_continue.equalsIgnoreCase("Y")){
-                        d_playerService.assignArmies(d_gameState);
-                        d_gameEngine.setIssueOrderPhase();
-                    } else {
-                        System.out.println("Invalid Input");
+                try {
+                    String l_continue = l_reader.readLine().toLowerCase();;
+
+                    switch (l_continue) {
+                        case "n":
+                            break;
+                        case "y":
+                            d_playerService.assignArmies(d_gameState);
+                            d_gameEngine.setIssueOrderPhase();
+                            break;
+                        default:
+                            System.out.println("Invalid Input");
+                            break;
                     }
                 } catch (IOException l_e) {
                     System.out.println("Invalid Input");
