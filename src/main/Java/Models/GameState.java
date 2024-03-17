@@ -23,7 +23,7 @@ public class GameState {
     LogEntryBuffer d_logEntryBuffer = new LogEntryBuffer();
 
     /** A flag indicating whether the load command has been executed. */
-    Boolean d_loadCommand = false;
+    Boolean d_loadCmd = false;
 
     /**
      * Retrieves the map of the game.
@@ -110,7 +110,7 @@ public class GameState {
      * Sets the load command flag to indicate that the load command has been executed.
      */
     public void setD_loadCommand() {
-        this.d_loadCommand = true;
+        this.d_loadCmd = true;
     }
 
     /**
@@ -118,6 +118,6 @@ public class GameState {
      * @return true if the load command has been executed, false otherwise.
      */
     public boolean getD_loadCommand(){
-        return this.d_loadCommand;
+        return this.d_loadCmd;
     }
 }

@@ -10,11 +10,11 @@ public class Blockade implements Card {
     /** The player initiating the blockade. */
     Player d_playerInitiator;
 
-    /** The player initiating the blockade. */
+    /** name of the target country. */
     String d_targetCountryID;
 
     /** Log message for the order execution. */
-    String d_orderExecutionLog;
+    String d_orderLog;
 
     /**
      * Constructs a Blockade card with the specified initiator player and target country ID.
@@ -87,10 +87,10 @@ public class Blockade implements Card {
      */
     @Override
     public void printOrder() {
-        this.d_orderExecutionLog = "----------Blockade card order issued by player "
-                + this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
+        this.d_orderLog = "----------Player "+this.d_playerInitiator.getPlayerName()+
+                " issued Blockade card order----------\n"
                 + "Creating a defensive blockade with armies = " + "on country ID: " + this.d_targetCountryID;
-        System.out.println(System.lineSeparator() + this.d_orderExecutionLog);
+        System.out.println(System.lineSeparator() + this.d_orderLog);
 
     }
 
@@ -101,7 +101,7 @@ public class Blockade implements Card {
      * @param p_logType           the type of log (error or default)
      */
     public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
-        this.d_orderExecutionLog = p_orderExecutionLog;
+        this.d_orderLog = p_orderExecutionLog;
         if (p_logType.equals("error")) {
             System.err.println(p_orderExecutionLog);
         } else {
@@ -141,7 +141,7 @@ public class Blockade implements Card {
      * @return the current blockade card order
      */
     private String currentOrder() {
-        return "Blockade card order : " + "blockade" + " " + this.d_targetCountryID;
+        return "Blockade card order : " + getOrderName() + " " + this.d_targetCountryID;
     }
 
     /**
@@ -150,7 +150,7 @@ public class Blockade implements Card {
      * @return the order execution log
      */
     public String orderExecutionLog() {
-        return this.d_orderExecutionLog;
+        return this.d_orderLog;
     }
 
 }

@@ -14,7 +14,7 @@ public class Bomb implements Card {
     String d_targetCountryID;
 
     /** Log message for the order execution. */
-    String d_orderExecutionLog;
+    String d_orderLog;
 
     /**
      * Constructs a Bomb card with the specified initiator player and target country ID.
@@ -92,10 +92,9 @@ public class Bomb implements Card {
      */
     @Override
     public void printOrder() {
-        this.d_orderExecutionLog = "----------Bomb card order issued by player "
-                + this.d_playerInitiator.getPlayerName() + "----------" + System.lineSeparator()
+        this.d_orderLog = "----------Player "+this.d_playerInitiator.getPlayerName() + " issued Bomb card order----------\n"
                 + "Creating a bomb order = " + "on country ID. " + this.d_targetCountryID;
-        System.out.println(System.lineSeparator() + this.d_orderExecutionLog);
+        System.out.println(System.lineSeparator() + this.d_orderLog);
 
     }
 
@@ -105,7 +104,7 @@ public class Bomb implements Card {
      * @return the order execution log
      */
     public String orderExecutionLog() {
-        return this.d_orderExecutionLog;
+        return this.d_orderLog;
     }
 
     /**
@@ -115,7 +114,7 @@ public class Bomb implements Card {
      * @param p_logType           the type of log (error or default)
      */
     public void setD_orderExecutionLog(String p_orderExecutionLog, String p_logType) {
-        this.d_orderExecutionLog = p_orderExecutionLog;
+        this.d_orderLog = p_orderExecutionLog;
         if (p_logType.equals("error")) {
             System.err.println(p_orderExecutionLog);
         } else {
@@ -133,7 +132,7 @@ public class Bomb implements Card {
     public Boolean checkValidOrder(GameState p_gameState) {
         Country l_targetCountry = p_gameState.getD_map().getCountryByName(d_targetCountryID);
         if (l_targetCountry == null) {
-            this.setD_orderExecutionLog("Invalid Target Country! Doesn't exist on the map!", "error");
+            this.setD_orderExecutionLog("Target Country doesn't exist on the map, it is not valid! !", "error");
             return false;
         }
         return true;
