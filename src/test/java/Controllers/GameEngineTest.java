@@ -17,17 +17,25 @@ import Models.Map;
 import Models.Phase;
 import Models.StartUpPhase;
 
-
+/**
+ * The GameEngineTest class provides unit tests for the GameEngine class.
+ */
 public class GameEngineTest {
 
 
+    /** The map used for testing. */
     Map d_map;
 
+    /** The current phase of the game. */
     Phase d_currentPhase;
 
+    /** The game engine instance being tested. */
     GameEngine d_gameEngine;
 
 
+    /**
+     * Sets up the test environment before each test case.
+     */
     @Before
     public void setup() {
         d_map = new Map();
@@ -35,26 +43,46 @@ public class GameEngineTest {
         d_currentPhase = d_gameEngine.getD_CurrentPhase();
     }
 
-
+    /**
+     * Tests the behavior of the performEditMap method when an invalid command is given.
+     *
+     * @throws IOException      If an I/O error occurs.
+     * @throws InvalidCommand  If the command is invalid.
+     * @throws InvalidMap      If the map is invalid.
+     */
     @Test(expected = InvalidCommand.class)
     public void testPerformEditMapInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_currentPhase.handleCommand("editmap");
     }
 
-
+    /**
+     * Tests the behavior of the performEditContinent method when an invalid command is given.
+     * It checks if the log message indicates that continent editing is not possible without editing the map first.
+     *
+     * @throws InvalidCommand  If the command is invalid.
+     * @throws IOException     If an I/O error occurs.
+     * @throws InvalidMap      If the map is invalid.
+     */
     @Test
     public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
         d_currentPhase.handleCommand("editcontinent");
         GameState l_state = d_currentPhase.getD_gameState();
+        String actualLog = l_state.getRecentLog().trim();
+        assertEquals("Log: Can not Edit Continent, please perform `editmap` first", actualLog);
 
-        assertEquals("Log: Can not Edit Continent, please perform `editmap` first" + System.lineSeparator(),
-                l_state.getRecentLog());
     }
 
-
+    /**
+     * Tests the behavior of the performEditContinent method when valid commands are given.
+     * It verifies if continents can be added and removed successfully, and if the state is updated accordingly.
+     *
+     * @throws IOException      If an I/O error occurs.
+     * @throws InvalidCommand  If the command is invalid.
+     * @throws InvalidMap      If the map is invalid.
+     */
     @Test
     public void testPerformEditContinentValidCommand() throws IOException, InvalidCommand, InvalidMap {
-        d_map.setD_mapFile("testeditmap.map");
+        d_map.setD_mapFile("testedit");
         GameState l_state = d_currentPhase.getD_gameState();
 
         l_state.setD_map(d_map);
@@ -79,17 +107,33 @@ public class GameEngineTest {
     }
 
 
+    /**
+     * Tests the behavior of the performSaveMap method when an invalid command is given.
+     * It checks if the log message indicates that no map was found to save.
+     *
+     * @throws InvalidCommand  If the command is invalid.
+     * @throws InvalidMap      If the map is invalid.
+     * @throws IOException     If an I/O error occurs.
+     */
     @Test
     public void testPerformSaveMapInvalidCommand() throws InvalidCommand, InvalidMap, IOException {
         d_currentPhase.handleCommand("savemap");
         GameState l_state = d_currentPhase.getD_gameState();
 
-        assertEquals("Log: No map found to save, Please `editmap` first" + System.lineSeparator(),
-                l_state.getRecentLog());
+        String actualLog = l_state.getRecentLog().trim();
+        assertEquals("Log: No map found to save, Please `editmap` first", actualLog);
 
     }
 
 
+    /**
+     * Tests the behavior of the assignCountries method when an invalid command is given.
+     * It expects an InvalidCommand exception to be thrown.
+     *
+     * @throws InvalidCommand  If the command is invalid.
+     * @throws InvalidMap      If the map is invalid.
+     * @throws IOException     If an I/O error occurs.
+     */
     @Test(expected = InvalidCommand.class)
     public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
         d_currentPhase.handleCommand("assigncountries -add india");
@@ -97,6 +141,9 @@ public class GameEngineTest {
     }
 
 
+    /**
+     * Tests if the current phase of the game is StartUpPhase.
+     */
     @Test
     public void testCorrectStartupPhase() {
         assertTrue(d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase);

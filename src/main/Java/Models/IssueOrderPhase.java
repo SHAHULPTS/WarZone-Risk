@@ -9,12 +9,28 @@ import Exceptions.InvalidMap;
 import Utils.Command;
 import Views.MapView;
 
-public class IssueOrderPhase extends Phase{
+/**
+ * Represents the phase where players issue orders.
+ */
+public class IssueOrderPhase extends Phase {
 
+    /**
+     * Initializes a new instance of the IssueOrderPhase class.
+     *
+     * @param p_gameEngine The game engine associated with the phase.
+     * @param p_gameState  The current game state.
+     */
     public IssueOrderPhase(GameEngine p_gameEngine, GameState p_gameState) {
         super(p_gameEngine, p_gameState);
     }
 
+    /**
+     * Performs handling of card commands for a player.
+     *
+     * @param p_enteredCommand The entered command by the player.
+     * @param p_player         The player issuing the command.
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         if(p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
@@ -24,14 +40,29 @@ public class IssueOrderPhase extends Phase{
         p_player.checkForMoreOrders();
     }
 
+    /**
+     * Performs showing of the map.
+     *
+     * @param p_command The command to perform.
+     * @param p_player  The player performing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidMap     if the map is invalid.
+     */
     @Override
     protected void performShowMap(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
-
         askForOrder(p_player);
     }
 
+    /**
+     * Performs the advance order for a player.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     protected void performAdvance(String p_command, Player p_player) throws IOException {
         p_player.createAdvanceOrder(p_command, d_gameState);
@@ -39,6 +70,9 @@ public class IssueOrderPhase extends Phase{
         p_player.checkForMoreOrders();
     }
 
+    /**
+     * Initializes the phase.
+     */
     @Override
     public void initPhase(){
         while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
@@ -46,6 +80,13 @@ public class IssueOrderPhase extends Phase{
         }
     }
 
+    /**
+     * Performs the creation of a deploy order for a player.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     protected void performCreateDeploy(String p_command, Player p_player) throws IOException {
         p_player.createDeployOrder(p_command);
@@ -53,6 +94,9 @@ public class IssueOrderPhase extends Phase{
         p_player.checkForMoreOrders();
     }
 
+    /**
+     * Performs the issuance of orders for players in the game.
+     */
     protected void issueOrders(){
         // issue orders for each player
         do {
@@ -70,6 +114,14 @@ public class IssueOrderPhase extends Phase{
         d_gameEngine.setOrderExecutionPhase();
     }
 
+    /**
+     * Asks for a command from the player.
+     *
+     * @param p_player The player for whom the command is requested.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidMap     if the map is invalid.
+     */
     public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
@@ -80,54 +132,136 @@ public class IssueOrderPhase extends Phase{
 
         handleCommand(l_commandEntered, p_player);
     }
+
+    /**
+     * Performs assignment of countries for a player.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidMap     if the map is invalid.
+     */
     @Override
     protected void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Creates players in the game.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidMap     if the map is invalid.
+     */
     @Override
     protected void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Performs editing of neighbors for a player.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     * @throws IOException    if an I/O error occurs.
+     */
     @Override
     protected void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Performs editing of countries for a player.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     * @throws IOException    if an I/O error occurs.
+     */
     @Override
     protected void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Performs validation of the map.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidMap     if the map is invalid.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws IOException    if an I/O error occurs.
+     */
     @Override
     protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Loads the map.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     * @throws IOException    if an I/O error occurs.
+     */
     @Override
     protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Saves the map.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     * @throws IOException    if an I/O error occurs.
+     */
     @Override
     protected void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Edits a continent.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     */
     @Override
     protected void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
+    /**
+     * Performs map editing.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player issuing the command.
+     * @throws IOException    if an I/O error occurs.
+     * @throws InvalidCommand if the command is invalid.
+     * @throws InvalidMap     if the map is invalid.
+     */
     @Override
     protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();

@@ -7,6 +7,11 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The PlayerService class provides services related to players in the game.
+ * It includes operations such as adding or removing players, assigning colors, countries, and continents,
+ * calculating armies, checking for unexecuted orders or unassigned armies, and updating player information.
+ */
 public class PlayerService {
 
     /** The log message for player operations. */

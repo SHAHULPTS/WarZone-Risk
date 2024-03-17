@@ -16,7 +16,9 @@ import static org.junit.Assert.*;
  */
 public class CommandTest {
 
-
+    /**
+     * Tests the getRootCommand method with a valid command.
+     */
     @Test
     public void test_validCommand_getRootCommand(){
         Command l_command = new Command("editcontinent -add continentID continentvalue");
@@ -25,7 +27,9 @@ public class CommandTest {
         assertEquals("editcontinent",l_rootCommand);
     }
 
-
+    /**
+     * Tests the getRootCommand method with an empty command.
+     */
     @Test
     public void test_inValidCommand_getRootCommand(){
         Command l_command = new Command("");
@@ -34,6 +38,9 @@ public class CommandTest {
         assertEquals("", l_rootCommand);
     }
 
+    /**
+     * Tests the getRootCommand method with a single word command.
+     */
     @Test
     public void test_singleWord_getRootCommand(){
         Command l_command = new Command("validatemap");
@@ -42,6 +49,10 @@ public class CommandTest {
         assertEquals("validatemap", l_rootCommand);
     }
 
+
+    /**
+     * Tests the getRootCommand method with a command without flags.
+     */
     @Test
     public void test_noFlagCommand_getRootCommand(){
         Command l_command = new Command("loadmap abc.txt");
@@ -50,6 +61,9 @@ public class CommandTest {
         assertEquals("loadmap", l_rootCommand);
     }
 
+    /**
+     * Tests the getOperationsAndArguments method with a single command.
+     */
     @Test
     public void test_singleCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -remove continentID");
@@ -67,8 +81,10 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
-
-
+    /**
+     * Tests the getOperationsAndArguments method with a single command containing extra spaces.
+     * It ensures that the command is parsed correctly and returns the expected operations and arguments.
+     */
     @Test
     public void test_singleCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent      -remove continentID");
@@ -86,6 +102,10 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * Tests the getOperationsAndArguments method with multiple commands.
+     * It ensures that each command is parsed correctly and returns the expected operations and arguments.
+     */
     @Test
     public void test_multiCommand_getOperationsAndArguments(){
         Command l_command = new Command("editcontinent -add continentID continentValue  -remove continentID");
@@ -108,7 +128,10 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
-
+    /**
+     * Tests the getOperationsAndArguments method with a command without flags.
+     * It ensures that the command is parsed correctly and returns the expected operation and filename argument.
+     */
     @Test
     public void test_noFlagCommand_getOperationsAndArguments(){
         Command l_command = new Command("loadmap abc.txt");
@@ -126,6 +149,10 @@ public class CommandTest {
         assertEquals(l_expectedOperationsAndValues, l_actualOperationsAndValues);
     }
 
+    /**
+     * Tests the getOperationsAndArguments method with a command without flags but containing extra spaces.
+     * It ensures that the command is parsed correctly and returns the expected operation and filename argument.
+     */
     @Test
     public void test_noFlagCommandWithExtraSpaces_getOperationsAndArguments(){
         Command l_command = new Command("loadmap         abc.txt");

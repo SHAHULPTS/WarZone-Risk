@@ -99,6 +99,6 @@ public class DiplomacyTest {
     public void NegotiationWorking(){
         d_diplomacyOrder.execute(d_gameState);
         d_bombOrder.execute(d_gameState);
-        assertEquals(d_gameState.getRecentLog().trim(), "Log: Bomb card order : bomb France is not executed as b has negotiation pact with the target country's player!");
+        assertEquals(d_gameState.getRecentLog().trim(), "Log: Bomb card order : bomb France is not executed as q has negotiation pact with the target country's player!");
     }
 }

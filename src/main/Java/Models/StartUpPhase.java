@@ -15,35 +15,76 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the startup phase of the game.
+ * This phase includes actions such as loading or editing the map, assigning countries to players, and initializing the game.
+ */
 public class StartUpPhase extends Phase{
+
+    /**
+     * Constructor for the StartUpPhase class.
+     *
+     * @param p_gameEngine The game engine managing the game.
+     * @param p_gameState  The current state of the game.
+     */
     public StartUpPhase(GameEngine p_gameEngine, GameState p_gameState){
         super(p_gameEngine, p_gameState);
     }
 
-
+    /**
+     * Performs handling of card-related commands during the startup phase.
+     *
+     * @param p_enteredCommand The command entered by the player.
+     * @param p_player         The player executing the command.
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     */
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         printInvalidCommandInState();
     }
 
+    /**
+     * Displays the map during the startup phase.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player executing the command.
+     */
     @Override
     protected void performShowMap(Command p_command, Player p_player) {
         MapView l_mapView = new MapView(d_gameState);
         l_mapView.showMap();
     }
 
+    /**
+     * Prints an invalid command message for the advance command during the startup phase.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player executing the command.
+     */
     @Override
     protected void performAdvance(String p_command, Player p_player) {
         printInvalidCommandInState();
     }
 
+    /**
+     * Prints an invalid command message for the create deploy command during the startup phase.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player executing the command.
+     */
     @Override
     protected void performCreateDeploy(String p_command, Player p_player) {
         printInvalidCommandInState();
     }
 
     /**
-     * {@inheritDoc}
+     * Performs map editing based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing map editing operations.
+     * @param p_player  The player executing the command.
+     * @throws IOException       Signals that an I/O exception has occurred.
+     * @throws InvalidCommand   Thrown to indicate that a method has been passed an illegal or inappropriate argument during map editing.
+     * @throws InvalidMap       Thrown to indicate that an error occurred while validating or loading the map.
      */
     public void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
@@ -63,6 +104,14 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs map loading based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing map loading operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during map loading.
+     * @throws InvalidMap     Thrown to indicate that an error occurred while validating or loading the map.
+     */
     public void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
         boolean l_flagValidate = false;
@@ -93,8 +142,15 @@ public class StartUpPhase extends Phase{
         }
     }
 
-
-
+    /**
+     * Performs editing of continents based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing continent editing operations.
+     * @param p_player  The player executing the command.
+     * @throws IOException       Signals that an I/O exception has occurred.
+     * @throws InvalidCommand   Thrown to indicate that a method has been passed an illegal or inappropriate argument during continent editing.
+     * @throws InvalidMap       Thrown to indicate that an error occurred while validating or loading the map.
+     */
     public void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Continent, please perform `editmap` first", "effect");
@@ -119,6 +175,14 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs saving of the map based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing map saving operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during map saving.
+     * @throws InvalidMap     Thrown to indicate that an error occurred while validating or loading the map.
+     */
     public void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("No map found to save, Please `editmap` first", "effect");
@@ -146,6 +210,14 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs validation of the map based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing map validation operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidMap       Thrown to indicate that the map is invalid.
+     * @throws InvalidCommand   Thrown to indicate that a method has been passed an illegal or inappropriate argument during map validation.
+     */
     public void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("No map found to validate, Please `loadmap` & `editmap` first", "effect");
@@ -171,6 +243,15 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs editing of countries based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing country editing operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during country editing.
+     * @throws InvalidMap     Thrown to indicate that an error occurred while validating or loading the map.
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
     public void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Country, please perform `editmap` first", "effect");
@@ -195,6 +276,15 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs editing of neighbors based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing neighbor editing operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during neighbor editing.
+     * @throws InvalidMap     Thrown to indicate that an error occurred while validating or loading the map.
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
     public void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("Can not Edit Neighbors, please perform `editmap` first", "effect");
@@ -219,6 +309,13 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Creates players based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing player creation operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during player creation.
+     */
     public void createPlayers(Command p_command, Player p_player) throws InvalidCommand {
         if (!l_isMapLoaded) {
             d_gameEngine.setD_gameEngineLog("No map found, Please `loadmap` before adding game players", "effect");
@@ -247,6 +344,10 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Initializes the startup phase of the game engine.
+     * Allows players to enter commands until the startup phase is completed.
+     */
     public void initPhase()  {
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -262,6 +363,13 @@ public class StartUpPhase extends Phase{
         }
     }
 
+    /**
+     * Performs the assignment of countries to players based on the provided command during the startup phase.
+     *
+     * @param p_command The command containing country assignment operations.
+     * @param p_player  The player executing the command.
+     * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during country assignment.
+     */
     public void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand{
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -275,18 +383,4 @@ public class StartUpPhase extends Phase{
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

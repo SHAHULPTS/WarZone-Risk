@@ -65,7 +65,7 @@ public class PlayerServiceTest {
         d_playerService = new PlayerService();
         d_gameState = new GameState();
         d_exisitingPlayerList.add(new Player("Vinisha"));
-        d_exisitingPlayerList.add(new Player("Nidhi"));
+        d_exisitingPlayerList.add(new Player("Shahul"));
 
     }
 
@@ -80,8 +80,8 @@ public class PlayerServiceTest {
         assertEquals("Nidhi", l_updatedPlayers.get(2).getPlayerName());
 
         System.setOut(new PrintStream(d_outContent));
-        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Nidhi");
-        assertEquals("Player with name : Shahul already Exists. Changes are not made.", d_outContent.toString().trim());
+        d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Vinisha");
+        assertEquals("Player : Vinisha already exists. No changes made.", d_outContent.toString().trim());
     }
 
     /**
@@ -90,12 +90,12 @@ public class PlayerServiceTest {
      */
     @Test
     public void testRemovePlayers() {
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Nidhi");
+        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Vinisha");
         assertEquals(1, l_updatedPlayers.size());
 
         System.setOut(new PrintStream(d_outContent));
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Jay");
-        assertEquals("Player with name : Jay does not Exist. Changes are not made.", d_outContent.toString().trim());
+        assertEquals("Player : Jay does not Exist. No changes made so far.", d_outContent.toString().trim());
     }
 
     /**
@@ -135,10 +135,10 @@ public class PlayerServiceTest {
     public void testCalculateArmiesForPlayer() {
         Player l_playerInfo = new Player();
         List<Country> l_countryList = new ArrayList<Country>();
-        l_countryList.add(new Country("Waadt"));
-        l_countryList.add(new Country("Neuenburg"));
-        l_countryList.add(new Country("Fribourg"));
-        l_countryList.add(new Country("Geneve"));
+        l_countryList.add(new Country("Haat"));
+        l_countryList.add(new Country("Gaatur"));
+        l_countryList.add(new Country("Ramborg"));
+        l_countryList.add(new Country("Nemises"));
         l_playerInfo.setD_coutriesOwned(l_countryList);
         List<Continent> l_continentList = new ArrayList<Continent>();
         l_continentList.add(new Continent(1, "Asia", 5));

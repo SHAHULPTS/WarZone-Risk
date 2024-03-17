@@ -74,6 +74,15 @@ public abstract class Phase {
         commandHandler(p_enteredCommand, p_player);
     }
 
+    /**
+     * Handles the command entered during the phase.
+     *
+     * @param p_enteredCommand The command entered by the player.
+     * @param p_player         The player who entered the command.
+     * @throws InvalidMap     If the map is invalid.
+     * @throws InvalidCommand If the command is invalid.
+     * @throws IOException    If an I/O error occurs.
+     */
     private void commandHandler(String p_enteredCommand, Player p_player) throws InvalidMap, InvalidCommand, IOException {
         Command l_command = new Command(p_enteredCommand);
         String l_rootCommand = l_command.getRootCommand();

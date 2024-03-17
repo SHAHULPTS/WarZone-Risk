@@ -39,14 +39,14 @@ public class MapServiceTest {
     GameState d_state;
 
     /**
-     * Initializes the test environment by loading a specific map ("europe.map") into the game state
+     * Initializes the test environment by loading a specific map ("europe") into the game state
      * before each test runs. This setup process involves creating a new instance of MapService and GameState,
-     * and then using the MapService to load the "europe.map" file into the Map object within the GameState.
+     * and then using the MapService to load the "europe" file into the Map object within the GameState.
      *
      * This method ensures that all tests have a consistently initialized state with a loaded map, allowing
      * for consistent testing conditions across tests that rely on map data.
      *
-     * @throws InvalidMap If the specified map file ("europe.map") is not valid or cannot be found, indicating
+     * @throws InvalidMap If the specified map file ("europe") is not valid or cannot be found, indicating
      *                    an issue with the map loading process.
      */
 
@@ -55,16 +55,16 @@ public class MapServiceTest {
         d_mapservice = new MapService();
         d_map = new Map();
         d_state = new GameState();
-        d_map = d_mapservice.loadMap(d_state, "europe.map");
+        d_map = d_mapservice.loadMap(d_state, "europe");
     }
 
     /**
      * Tests the editMap functionality of the MapService class to ensure it properly handles the creation
-     * or loading of a map file for editing. This test attempts to edit a map named "test.map" within the
+     * or loading of a map file for editing. This test attempts to edit a map named "test" within the
      * game state. It verifies that the map file either already exists or is successfully created as part
      * of the map editing process.
      *
-     * The method first calls the editMap function with the "test.map" filename. It then checks if a file
+     * The method first calls the editMap function with the "test" filename. It then checks if a file
      * with that name exists in the expected directory. The existence of the file after the call to editMap
      * serves as confirmation that the map editing process is functioning correctly, either by recognizing
      * an existing map or initiating the creation of a new one.
@@ -77,8 +77,8 @@ public class MapServiceTest {
 
     @Test
     public void testEditMap() throws IOException, InvalidMap {
-        d_mapservice.editMap(d_state, "test.map");
-        File l_file = new File(CommonUtil.getMapFilePath("test.map"));
+        d_mapservice.editMap(d_state, "test");
+        File l_file = new File(CommonUtil.getMapFilePath("test"));
 
         assertTrue(l_file.exists());
     }
@@ -210,10 +210,11 @@ public class MapServiceTest {
      */
     @Test
     public void testSaveInvalidMap() throws InvalidMap {
-        d_map.setD_mapFile("europe.map");
+        d_map.setD_mapFile("europe");
         d_state.setD_map(d_map);
-        d_mapservice.saveMap(d_state, "europe.map");
-        assertEquals("Log: Couldn't save the changes in map file!"+System.lineSeparator(), d_state.getRecentLog());
+        d_mapservice.saveMap(d_state, "europe");
+        String actualLog = d_state.getRecentLog().trim();
+        assertEquals("Log: Couldn't save the changes in map file", actualLog);
     }
 
     /**
@@ -224,7 +225,7 @@ public class MapServiceTest {
      */
     @Test
     public void testEditCountryAdd() throws IOException, InvalidMap, InvalidCommand {
-        d_mapservice.loadMap(d_state, "test.map");
+        d_mapservice.loadMap(d_state, "test");
         d_mapservice.editFunctions(d_state, "add", "China Asia", 2);
 
         assertEquals(d_state.getD_map().getCountryByName("China").getD_countryName(), "China");
@@ -238,9 +239,10 @@ public class MapServiceTest {
      */
     @Test
     public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
-        d_mapservice.loadMap(d_state, "test.map");
+        d_mapservice.loadMap(d_state, "test");
         d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
-        assertEquals("Log: Country: Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
+        String actualLog=d_state.getRecentLog().trim();
+        assertEquals("Log: Country:  Ukraine does not exist!",actualLog);
     }
 
     /**
@@ -251,7 +253,7 @@ public class MapServiceTest {
      */
     @Test
     public void testEditNeighborAdd() throws InvalidMap, IOException, InvalidCommand {
-        d_mapservice.loadMap(d_state, "test.map");
+        d_mapservice.loadMap(d_state, "test");
         d_mapservice.editFunctions(d_state, "Northern-America 10", "add", 1 );
         d_mapservice.editFunctions(d_state, "add", "Canada Northern-America",  2);
         d_mapservice.editFunctions(d_state, "add","Alaska Northern-America", 2);
@@ -268,12 +270,14 @@ public class MapServiceTest {
      */
     @Test
     public void testEditNeighborRemove() throws InvalidMap, IOException, InvalidCommand{
-        d_mapservice.editMap(d_state, "testedit.map");
+        d_mapservice.editMap(d_state, "testedit");
         d_mapservice.editFunctions(d_state, "Asia 9", "add",   1);
         d_mapservice.editFunctions(d_state, "add", "Maldives Asia", 2);
         d_mapservice.editFunctions(d_state, "add", "Singapore Asia", 2);
         d_mapservice.editFunctions(d_state, "add", "Singapore Maldives", 3);
         d_mapservice.editFunctions(d_state, "remove", "Maldives Singapore", 3);
-        assertEquals("Log: No Such Neighbour Exists"+System.lineSeparator(), d_state.getRecentLog());
+
+        String actualLog = d_state.getRecentLog().trim();
+        assertEquals("Log: No Such Neighbour Exists", actualLog);
     }
 }

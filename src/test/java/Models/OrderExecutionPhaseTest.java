@@ -11,16 +11,26 @@ import org.junit.Test;
 
 import Controllers.GameEngine;
 import Exceptions.InvalidMap;
+
+/**
+ * The OrderExecutionPhaseTest class provides unit tests for the methods of the OrderExecutionPhase class.
+ */
 public class OrderExecutionPhaseTest {
+
+    /** The first player for testing. */
     Player d_player1;
 
-
+    /** The second player for testing. */
     Player d_player2;
 
-
+    /** The game state for testing. */
     GameState d_gameState;
 
-
+    /**
+     * Sets up the test environment before each test case.
+     *
+     * @throws InvalidMap if the map is invalid.
+     */
     @Before
     public void setup() throws InvalidMap {
         d_gameState = new GameState();
@@ -48,11 +58,12 @@ public class OrderExecutionPhaseTest {
         d_gameState.setD_players(Arrays.asList(d_player1, d_player2));
     }
 
+    /**
+     * Tests the endOfTheGame method of the OrderExecutionPhase class.
+     */
     @Test
     public void testEndOfTheGame() {
         OrderExecutionPhase l_orderExec = new OrderExecutionPhase(new GameEngine(), d_gameState);
         assertTrue(l_orderExec.checkEndOftheGame(d_gameState));
     }
-
-
 }

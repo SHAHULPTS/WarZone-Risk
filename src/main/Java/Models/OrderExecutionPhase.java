@@ -28,18 +28,6 @@ public class OrderExecutionPhase extends Phase {
     }
 
     /**
-     * Performs advance operation.
-     *
-     * @param p_command The command entered by the player.
-     * @param p_player  The player who entered the command.
-     */
-
-    @Override
-    protected void performAdvance(String p_command, Player p_player) {
-        printInvalidCommandInState();
-    }
-
-    /**
      * Performs card handling operation.
      *
      * @param p_enteredCommand The entered command.
@@ -50,7 +38,17 @@ public class OrderExecutionPhase extends Phase {
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         printInvalidCommandInState();
     }
+    /**
+     * Performs advance operation.
+     *
+     * @param p_command The command entered by the player.
+     * @param p_player  The player who entered the command.
+     */
 
+    @Override
+    protected void performAdvance(String p_command, Player p_player) {
+        printInvalidCommandInState();
+    }
 
     /**
      * Initializes the order execution phase.
@@ -71,18 +69,15 @@ public class OrderExecutionPhase extends Phase {
                 BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
                 try {
-                    String l_continue = l_reader.readLine().toLowerCase();
+                    String l_continue = l_reader.readLine();
 
-                    switch (l_continue) {
-                        case "n":
-                            break;
-                        case "y":
-                            d_playerService.assignArmies(d_gameState);
-                            d_gameEngine.setIssueOrderPhase();
-                            break;
-                        default:
-                            System.out.println("Invalid Input");
-                            break;
+                    if (l_continue.equalsIgnoreCase("N")) {
+                        break;
+                    } else if(l_continue.equalsIgnoreCase("Y")){
+                        d_playerService.assignArmies(d_gameState);
+                        d_gameEngine.setIssueOrderPhase();
+                    } else {
+                        System.out.println("Invalid Input");
                     }
                 } catch (IOException l_e) {
                     System.out.println("Invalid Input");
@@ -92,7 +87,25 @@ public class OrderExecutionPhase extends Phase {
     }
 
 
-
+    /**
+     * Executes the orders of the players.
+     */
+    protected void executeOrders() {
+        addNeutralPlayer(d_gameState);
+        // Executing orders
+        d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Orders.....", "start");
+        while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
+            for (Player l_player : d_gameState.getD_players()) {
+                Order l_order = l_player.next_order();
+                if (l_order != null) {
+                    l_order.printOrder();
+                    d_gameState.updateLog(l_order.orderExecutionLog(), "effect");
+                    l_order.execute(d_gameState);
+                }
+            }
+        }
+        d_playerService.resetPlayersFlag(d_gameState.getD_players());
+    }
 
     /**
      * Adds a neutral player if not already present in the game state.
@@ -109,26 +122,6 @@ public class OrderExecutionPhase extends Phase {
         } else {
             return;
         }
-    }
-
-    /**
-     * Executes the orders of the players.
-     */
-    protected void executeOrders() {
-        addNeutralPlayer(d_gameState);
-        // Executing orders
-        d_gameEngine.setD_gameEngineLog("\nStarting Order Execution.......", "start");
-        while (d_playerService.unexecutedOrdersExists(d_gameState.getD_players())) {
-            for (Player l_player : d_gameState.getD_players()) {
-                Order l_order = l_player.next_order();
-                if (l_order != null) {
-                    l_order.printOrder();
-                    d_gameState.updateLog(l_order.orderExecutionLog(), "effect");
-                    l_order.execute(d_gameState);
-                }
-            }
-        }
-        d_playerService.resetPlayersFlag(d_gameState.getD_players());
     }
 
     /**
@@ -185,19 +178,17 @@ public class OrderExecutionPhase extends Phase {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
+    protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand {
         printInvalidCommandInState();
     }
 
     /**
      * {@inheritDoc}
      */
-    protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand {
+    @Override
+    protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -211,7 +202,8 @@ public class OrderExecutionPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
+    protected void performEditContinent(Command p_command, Player p_player)
+            throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
 
@@ -219,12 +211,9 @@ public class OrderExecutionPhase extends Phase {
      * {@inheritDoc}
      */
     @Override
-    protected void performEditContinent(Command p_command, Player p_player)
-            throws IOException, InvalidCommand, InvalidMap {
+    protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
     }
-
-
 
     /**
      * Checks if the game has reached its end condition.
@@ -237,7 +226,7 @@ public class OrderExecutionPhase extends Phase {
         for (Player l_player : p_gameState.getD_players()) {
             if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
                 d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
-                        + " won by conquering all countries. Game over.....", "end");
+                        + " has won the Game by conquering all countries. Exiting the Game .....", "end");
                 return true;
             }
         }

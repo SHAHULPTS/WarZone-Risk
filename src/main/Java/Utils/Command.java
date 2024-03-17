@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * The {@code Command} class represents a command parsed from user input.
@@ -33,9 +32,6 @@ public class Command {
     public String getRootCommand(){
         return d_command.split(" ")[0];
     }
-
-
-
 
     /**
      * Extracts operations and their arguments from the command string.
@@ -92,6 +88,13 @@ public class Command {
         return l_operationMap;
     }
 
+    /**
+     * Checks if the specified key is present in the input map and its corresponding value is not null or empty.
+     *
+     * @param p_key       The key to check for in the input map.
+     * @param p_inputMap  The input map to check for the presence of the key.
+     * @return            true if the key is present and its corresponding value is not null or empty, false otherwise.
+     */
     public boolean checkRequiredKeysPresent(String p_key, Map<String, String> p_inputMap) {
         if(p_inputMap.containsKey(p_key) && null != p_inputMap.get(p_key)
                 && !p_inputMap.get(p_key).isEmpty())
@@ -99,10 +102,14 @@ public class Command {
         return false;
     }
 
+    /**
+     * Retrieves the value of the command attribute.
+     *
+     * @return The value of the command attribute.
+     */
     public String getD_command() {
         return d_command;
     }
-
 
     }
 

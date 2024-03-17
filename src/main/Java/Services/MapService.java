@@ -21,6 +21,11 @@ import Models.Map;
 import Utils.CommonUtil;
 
 
+/**
+ * The MapService class provides services related to maps.
+ * This class can be used to perform various CRUD operations and
+ * show maps with continents, country and it's neighbours
+ */
 public class MapService {
     /**
      * Loads a map from a specified file, parsing continent, country, and border data to create a complete
@@ -174,7 +179,6 @@ public class MapService {
 
                     // Proceeds to save the map if it passes the validation check
                     this.setD_MapServiceLog("Authenticating Map......", p_gameState);
-                    //boolean l_mapValidationStatus = l_currentMap.Validate();
                     if (l_currentMap.Validate()) {
                         Files.deleteIfExists(Paths.get(CommonUtil.getMapFilePath(p_fileName)));
                         FileWriter l_writer = new FileWriter(CommonUtil.getMapFilePath(p_fileName));
@@ -199,7 +203,7 @@ public class MapService {
             return true;
         } catch (IOException | InvalidMap l_e) {
             this.setD_MapServiceLog(l_e.getMessage(), p_gameState);
-            p_gameState.updateLog("Unable to make changes in the Map File!", "effect");
+            p_gameState.updateLog("Couldn't save the changes in map file", "effect");
             p_gameState.setError("There was an issue while saving the Map File");
             return false;
         }
@@ -644,7 +648,6 @@ public class MapService {
      *                    maintains a record of all significant events or operations, allowing for
      *                    auditing or debugging.
      */
-
     public void setD_MapServiceLog(String p_MapServiceLog, GameState p_gameState){
         System.out.println(p_MapServiceLog);
         p_gameState.updateLog(p_MapServiceLog, "effect");
