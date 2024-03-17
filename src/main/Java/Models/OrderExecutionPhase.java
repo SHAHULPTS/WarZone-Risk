@@ -133,8 +133,8 @@ public class OrderExecutionPhase extends Phase {
      */
     @Override
     protected void performShowMap(Command p_command, Player p_player) {
-        MapView l_mapView = new MapView(d_gameState);
-        l_mapView.showMap();
+        MapView l_mview = new MapView(d_gameState);
+        l_mview.showMap();
     }
 
     /**
@@ -226,9 +226,9 @@ public class OrderExecutionPhase extends Phase {
      * @return True if the game has ended, false otherwise.
      */
     protected Boolean checkEndOftheGame(GameState p_gameState) {
-        Integer l_totalCountries = p_gameState.getD_map().getD_countries().size();
+        Integer l_countryCount = p_gameState.getD_map().getD_countries().size();
         for (Player l_player : p_gameState.getD_players()) {
-            if (l_player.getD_coutriesOwned().size() == l_totalCountries) {
+            if (l_player.getD_coutriesOwned().size() == l_countryCount) {
                 d_gameEngine.setD_gameEngineLog("Player : " + l_player.getPlayerName()
                         + " has won the Game by conquering all countries. Exiting the Game .....", "end");
                 return true;
