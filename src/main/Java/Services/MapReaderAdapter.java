@@ -3,7 +3,7 @@ import java.util.List;
 import Models.GameState;
 import Models.Map;
 
-public class MapReaderAdapter {
+public class MapReaderAdapter extends MapFileReader{
     private ConquestMapFileReader l_conquestMapFileReader;
     public MapReaderAdapter(ConquestMapFileReader p_conquestMapFileReader) {
         this.l_conquestMapFileReader = p_conquestMapFileReader;
