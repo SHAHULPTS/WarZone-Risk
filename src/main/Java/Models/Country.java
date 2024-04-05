@@ -3,11 +3,12 @@ package Models;
 import Exceptions.InvalidMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * Represents a country with its attributes and operations.
  */
-public class  Country {
+public class  Country implements Serializable {
 
     /** The number of armies in the country. */
     Integer d_armies;
@@ -34,6 +35,8 @@ public class  Country {
         d_countryId = p_countryId;
         d_countryName = p_countryName;
         d_continentId = p_continentId;
+        d_adjacentCountryIds = new ArrayList<>();
+        d_armies = 0;
     }
 
     /**
@@ -156,7 +159,7 @@ public class  Country {
         if (d_adjacentCountryIds.contains(p_countryId)) {
             d_adjacentCountryIds.remove(d_adjacentCountryIds.indexOf(p_countryId));
         } else {
-            throw new InvalidMap("No Such Neighbour Exists");
+            throw new InvalidMap("No Such Neighbor Exists");
         }
     }
 }
