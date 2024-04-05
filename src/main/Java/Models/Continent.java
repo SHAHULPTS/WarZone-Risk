@@ -4,11 +4,12 @@ import Exceptions.InvalidMap;
 import java.util.ArrayList;
 import java.util.List;
 import Utils.CommonUtil;
+import java.io.Serializable;
 
 /**
  * Represents a continent with its attributes and operations.
  */
-public class Continent {
+public class Continent implements Serializable {
 
     /** The ID of the continent. */
     Integer d_continentID;
@@ -48,7 +49,6 @@ public class Continent {
      */
     public Continent(String p_continentName) {
         this.d_continentName = p_continentName;
-        this.d_countries = new ArrayList<>();
     }
 
     /**
