@@ -21,10 +21,6 @@ public interface Order {
      */
     public boolean valid(GameState p_gameState);
 
-    /**
-     * Print order information.
-     */
-    public void printOrder();
 
     /**
      * Returns the Log to GameState with Execution Log.
@@ -32,6 +28,11 @@ public interface Order {
      * @return String containing log message
      */
     public String orderExecutionLog();
+
+    /**
+     * Print order information.
+     */
+    public void printOrder();
 
     /**
      * Prints and Sets the order execution log.
