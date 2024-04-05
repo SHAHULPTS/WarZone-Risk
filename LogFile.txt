@@ -4,29 +4,5 @@ Initializing the Game ......
 -------Game Startup Phase-------
 
 
-Input Command: loadmap debrew
-Log: debrew has been loaded to start the game
-
-Input Command: gameplayer -add J -add S
-Log: Player : J has been added to the list successfully.
-Log: Player : S has been added to the list successfully.
-
-Input Command: assigncountries
-Log: Country/Continent Assignment:
- Player : J is assigned with country : Kimber
- Player : J is assigned with country : Opering
- Player : J is assigned with country : Jindre
- Player : S is assigned with country : Loner
- Player : S is assigned with country : Kidrar
- Player : S is assigned with country : Hundra
- Player : J is assigned with continent : Contra
- Player : S is assigned with continent : Froing
-Log: Player : J has been assigned with 7 armies
-Log: Player : S has been assigned with 10 armies
-
--------Issue Order Phase-------
-
-
-Issued Order: (Player: J) showmap
-
-Input Command: showmap
+Input Command: exit
+Log: Exit Command Entered, Game Ends!
