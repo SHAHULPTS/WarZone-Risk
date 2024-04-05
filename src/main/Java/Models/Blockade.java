@@ -2,10 +2,12 @@ package Models;
 
 import Utils.CommonUtil;
 
+import java.io.Serializable;
+
 /**
  * The Blockade class represents a Blockade card in the game, which can be used to execute a defensive blockade on a target country.
  */
-public class Blockade implements Card {
+public class Blockade implements Card, Serializable {
 
     /** The player initiating the blockade. */
     Player d_playerInitiator;
