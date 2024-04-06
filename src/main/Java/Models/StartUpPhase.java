@@ -1,20 +1,20 @@
 package Models;
 
-import Constants.ApplicationConstants;
-import Controllers.GameEngine;
-import Exceptions.InvalidCommand;
-import Exceptions.InvalidMap;
-import Utils.Command;
-import Utils.CommonUtil;
-import Utils.ExceptionLogHandler;
-import Views.MapView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
-
+import Constants.ApplicationConstants;
+import Controllers.GameEngine;
+import Exceptions.InvalidCommand;
+import Exceptions.InvalidMap;
+import Services.GameService;
+import Utils.Command;
+import Utils.CommonUtil;
+import Utils.ExceptionLogHandler;
+import Views.MapView;
+import Views.TournamentView;
 /**
  * Represents the startup phase of the game.
  * This phase includes actions such as loading or editing the map, assigning countries to players, and initializing the game.
@@ -43,6 +43,49 @@ public class StartUpPhase extends Phase{
         printInvalidCommandInState();
     }
 
+    protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_LOADGAME);
+        }
+
+        for (Map<String, String> l_map : l_operations_list) {
+            if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
+
+                try{
+                    Phase l_phase= GameService.loadGame(l_filename);
+                    this.d_gameEngine.setD_gameEngineLog("Map has been loaded to play the game.", "effect");
+                    this.d_gameEngine.loadPhase(l_phase);
+                } catch (ClassNotFoundException l_e) {
+                    l_e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+        }
+
+        for (Map<String, String> l_map : l_operations_list) {
+            if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
+                GameService.saveGame(this, l_filename);
+                d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
+            } else {
+                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+            }
+        }
+    }
     /**
      * Displays the map during the startup phase.
      *
@@ -381,6 +424,50 @@ public class StartUpPhase extends Phase{
             d_gameEngine.setIssueOrderPhase();
         } else {
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+        }
+    }
+    protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
+
+        if (d_gameState.getD_players() != null && d_gameState.getD_players().size() > 1) {
+            List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+            boolean l_parsingSuccessful = false;
+            Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+            if (CommonUtil.isCollectionEmpty(l_operations_list)
+                    && !d_tournament.requiredTournamentArgPresent(l_operations_list, p_command)) {
+                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+            } else {
+                for (Map<String, String> l_map : l_operations_list) {
+                    if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+                            && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+                        l_parsingSuccessful = d_tournament.parseTournamentCommand(d_gameState,
+                                l_map.get(ApplicationConstants.OPERATION), l_map.get(ApplicationConstants.ARGUMENTS),
+                                d_gameEngine);
+                        if (!l_parsingSuccessful)
+                            break;
+
+                    } else {
+                        throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_TOURNAMENT_MODE);
+                    }
+                }
+            }
+            if (l_parsingSuccessful) {
+                for (GameState l_gameState : d_tournament.getD_gameStateList()) {
+                    d_gameEngine.setD_gameEngineLog(
+                            "\nStarting New Game on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
+                            "effect");
+                    performAssignCountries(new Command("assigncountries"), null, true, l_gameState);
+
+                    d_gameEngine.setD_gameEngineLog(
+                            "\nGame Completed on map : " + l_gameState.getD_map().getD_mapFile() + " .........\n",
+                            "effect");
+                }
+                d_gameEngine.setD_gameEngineLog("************ Tournament Completed ************", "effect");
+                TournamentView l_tournamentView = new TournamentView(d_tournament);
+                l_tournamentView.viewTournament();
+                d_tournament = new Tournament();
+            }
+        } else {
+            d_gameEngine.setD_gameEngineLog("Please add 2 or more players first in the game.", "effect");
         }
     }
 }

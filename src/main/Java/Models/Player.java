@@ -3,8 +3,10 @@ package Models;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 import Constants.ApplicationConstants;
 import Exceptions.InvalidCommand;
@@ -16,7 +18,7 @@ import Utils.CommonUtil;
  * a list of orders, number of unallocated armies, card ownership, negotiation states, and more.
  * This class provides functionalities for managing player actions, orders issuance, card usage, and game state interactions.
  */
-public class Player {
+public class Player implements Serializable {
     private String d_color;
     private String d_name;
     List<Country> d_coutriesOwned;
@@ -28,7 +30,8 @@ public class Player {
     String d_playerLog;
     List<String> d_cardsOwnedByPlayer = new ArrayList<String>();
     List<Player> d_negotiatedWith = new ArrayList<Player>();
-
+    PlayerBehaviorStrategy d_playerBehaviorStrategy;
+    Boolean d_playerFlag;
     /**
      * Constructs a Player with a specified name. Initializes the player with no allocated armies,
      * empty lists for countries owned, continents owned, orders, and cards. Sets the flag for more orders to true.
@@ -184,6 +187,14 @@ public class Player {
         this.d_moreOrders = p_moreOrders;
     }
 
+    public String getPlayerOrder(GameState p_gameState) throws IOException {
+        String l_stringOrder = this.d_playerBehaviorStrategy.createOrder(this, p_gameState);
+        return l_stringOrder;
+    }
+    public PlayerBehaviorStrategy getD_playerBehaviorStrategy() {
+        return d_playerBehaviorStrategy;
+    }
+
     /**
      * Retrieves the list of cards owned by the player.
      *
@@ -251,6 +262,11 @@ public class Player {
      */
     public String getD_playerLog(){
         return this.d_playerLog;
+    }
+
+
+    public void setStrategy(PlayerBehaviorStrategy p_playerBehaviorStrategy) {
+        d_playerBehaviorStrategy = p_playerBehaviorStrategy;
     }
 
     /**

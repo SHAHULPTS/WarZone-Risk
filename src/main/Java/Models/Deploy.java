@@ -1,9 +1,10 @@
 package Models;
+import java.io.Serializable;
 
 /**
  * Represents a deploy order in the game.
  */
-public class Deploy implements Order {
+public class Deploy implements Order,Serializable {
     String d_targetCountryName;
     Integer d_numberOfArmiesToPlace;
     Player d_playerInitiator;
