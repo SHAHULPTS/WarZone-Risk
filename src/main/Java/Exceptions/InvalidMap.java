@@ -1,8 +1,11 @@
 package Exceptions;
+
+import java.io.Serializable;
+
 /**
  * This class represents exceptions related to invalid maps.
  */
-public class InvalidMap extends Exception {
+public class InvalidMap extends Exception implements Serializable {
 
     /**
      * Constructs a new InvalidMap with the given error message.

@@ -1,9 +1,11 @@
 package Exceptions;
 
+import java.io.Serializable;
+
 /**
  * Handles exceptions related to invalid commands.
  */
-public class InvalidCommand extends Exception {
+public class InvalidCommand extends Exception implements Serializable {
 
     /**
      * Constructs a new InvalidCommand with the given error message.
