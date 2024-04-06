@@ -1,15 +1,17 @@
 package Services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import java.io.IOException;
-import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
 import Models.Map;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test class for parsing conquest map file.
@@ -52,7 +54,7 @@ public class ConquestMapFileReaderTest {
 		d_mapservice = new MapService();
 		d_map = new Map();
 		d_state = new GameState();
-		d_mapLines = d_mapservice.loadFile("testconquest.map");
+		d_mapLines = d_mapservice.loadFile("testmap");
 	}
 
 	/**
