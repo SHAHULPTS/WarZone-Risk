@@ -1,11 +1,12 @@
 package Utils;
 import Models.GameState;
+import java.io.Serializable;
 
 /**
  * The ExceptionLogHandler class implements the Thread.UncaughtExceptionHandler interface.
  * It handles uncaught exceptions by updating the log in the game state with the exception message.
  */
-public class ExceptionLogHandler implements Thread.UncaughtExceptionHandler{
+public class ExceptionLogHandler implements Thread.UncaughtExceptionHandler, Serializable {
 
     /** The game state to update the log with exception messages. */
     GameState d_gameState;
