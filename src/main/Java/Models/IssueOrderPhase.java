@@ -1,12 +1,15 @@
 package Models;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
+import Constants.ApplicationConstants;
 import Controllers.GameEngine;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
+import Services.GameService;
 import Utils.Command;
+import Utils.ExceptionLogHandler;
 import Views.MapView;
 
 /**
@@ -25,19 +28,46 @@ public class IssueOrderPhase extends Phase {
     }
 
     /**
-     * Performs handling of card commands for a player.
-     *
-     * @param p_enteredCommand The entered command by the player.
-     * @param p_player         The player issuing the command.
-     * @throws IOException if an I/O error occurs.
+     * {@inheritDoc}
      */
+    @Override
+    protected void performLoadGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        printInvalidCommandInState();
+        askForOrder(p_player);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void performSaveGame(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+        List<java.util.Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+
+        if (l_operations_list == null || l_operations_list.isEmpty()) {
+            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+        }
+
+        for (Map<String, String> l_map : l_operations_list) {
+            if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)) {
+                String l_filename = l_map.get(ApplicationConstants.ARGUMENTS);
+                GameService.saveGame(this, l_filename);
+                d_gameEngine.setD_gameEngineLog("Game Saved Successfully to "+l_filename, "effect");
+
+            } else {
+                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_SAVEGAME);
+            }
+        }
+    }
+
     @Override
     protected void performCardHandle(String p_enteredCommand, Player p_player) throws IOException {
         if(p_player.getD_cardsOwnedByPlayer().contains(p_enteredCommand.split(" ")[0])) {
             p_player.handleCardCommands(p_enteredCommand, d_gameState);
-            d_gameEngine.setD_gameEngineLog(p_player.d_playerLog, "effect");
         }
-        p_player.checkForMoreOrders();
+
     }
 
     /**
@@ -67,16 +97,16 @@ public class IssueOrderPhase extends Phase {
     protected void performAdvance(String p_command, Player p_player) throws IOException {
         p_player.createAdvanceOrder(p_command, d_gameState);
         d_gameState.updateLog(p_player.getD_playerLog(), "effect");
-        p_player.checkForMoreOrders();
+
     }
 
     /**
      * Initializes the phase.
      */
     @Override
-    public void initPhase(){
+    public void initPhase(boolean p_isTournamentMode){
         while (d_gameEngine.getD_CurrentPhase() instanceof IssueOrderPhase) {
-            issueOrders();
+            issueOrders(p_isTournamentMode);
         }
     }
 
@@ -91,19 +121,23 @@ public class IssueOrderPhase extends Phase {
     protected void performCreateDeploy(String p_command, Player p_player) throws IOException {
         p_player.createDeployOrder(p_command);
         d_gameState.updateLog(p_player.getD_playerLog(), "effect");
-        p_player.checkForMoreOrders();
+
     }
 
     /**
      * Performs the issuance of orders for players in the game.
      */
-    protected void issueOrders(){
+    protected void issueOrders(boolean p_isTournamentMode){
         // issue orders for each player
         do {
             for (Player l_player : d_gameState.getD_players()) {
+                if(l_player.getD_coutriesOwned().size()==0){
+                    l_player.setD_moreOrders(false);
+                }
                 if (l_player.getD_moreOrders() && !l_player.getPlayerName().equals("Neutral")) {
                     try {
                         l_player.issue_order(this);
+                        l_player.checkForMoreOrders(p_isTournamentMode);
                     } catch (InvalidCommand | IOException | InvalidMap l_exception) {
                         d_gameEngine.setD_gameEngineLog(l_exception.getMessage(), "effect");
                     }
@@ -123,10 +157,10 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidMap     if the map is invalid.
      */
     public void askForOrder(Player p_player) throws InvalidCommand, IOException, InvalidMap{
-        BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\nPlease enter command to issue order for player : " + p_player.getPlayerName()
-                + " or give showmap command to view current state of the game.");
-        String l_commandEntered = l_reader.readLine();
+
+        String l_commandEntered = p_player.getPlayerOrder(d_gameState);
+
+        if(l_commandEntered == null) return;
 
         d_gameState.updateLog("(Player: "+p_player.getPlayerName()+") "+ l_commandEntered, "order");
 
@@ -134,28 +168,17 @@ public class IssueOrderPhase extends Phase {
     }
 
     /**
-     * Performs assignment of countries for a player.
-     *
-     * @param p_command The command entered by the player.
-     * @param p_player  The player issuing the command.
-     * @throws InvalidCommand if the command is invalid.
-     * @throws IOException    if an I/O error occurs.
-     * @throws InvalidMap     if the map is invalid.
+     * {@inheritDoc}
      */
     @Override
-    protected void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
+    protected void performAssignCountries(Command p_command, Player p_player, boolean isTournamentMode, GameState p_gameState)
+            throws InvalidCommand, IOException, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
     /**
-     * Creates players in the game.
-     *
-     * @param p_command The command entered by the player.
-     * @param p_player  The player issuing the command.
-     * @throws InvalidCommand if the command is invalid.
-     * @throws IOException    if an I/O error occurs.
-     * @throws InvalidMap     if the map is invalid.
+     * {@inheritDoc}
      */
     @Override
     protected void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException, InvalidMap {
@@ -164,31 +187,21 @@ public class IssueOrderPhase extends Phase {
     }
 
     /**
-     * Performs editing of neighbors for a player.
-     *
-     * @param p_command The command entered by the player.
-     * @param p_player  The player issuing the command.
-     * @throws InvalidCommand if the command is invalid.
-     * @throws InvalidMap     if the map is invalid.
-     * @throws IOException    if an I/O error occurs.
+     * {@inheritDoc}
      */
     @Override
-    protected void performEditNeighbour(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+    protected void performEditNeighbour(Command p_command, Player p_player)
+            throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
 
     /**
-     * Performs editing of countries for a player.
-     *
-     * @param p_command The command entered by the player.
-     * @param p_player  The player issuing the command.
-     * @throws InvalidCommand if the command is invalid.
-     * @throws InvalidMap     if the map is invalid.
-     * @throws IOException    if an I/O error occurs.
+     * {@inheritDoc}
      */
     @Override
-    protected void performEditCountry(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
+    protected void performEditCountry(Command p_command, Player p_player)
+            throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
         askForOrder(p_player);
     }
@@ -201,6 +214,9 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidMap     if the map is invalid.
      * @throws InvalidCommand if the command is invalid.
      * @throws IOException    if an I/O error occurs.
+     */
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void performValidateMap(Command p_command, Player p_player) throws InvalidMap, InvalidCommand, IOException {
@@ -217,6 +233,9 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidMap     if the map is invalid.
      * @throws IOException    if an I/O error occurs.
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performLoadMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
         printInvalidCommandInState();
@@ -231,6 +250,9 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidCommand if the command is invalid.
      * @throws InvalidMap     if the map is invalid.
      * @throws IOException    if an I/O error occurs.
+     */
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void performSaveMap(Command p_command, Player p_player) throws InvalidCommand, InvalidMap, IOException {
@@ -247,6 +269,9 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidCommand if the command is invalid.
      * @throws InvalidMap     if the map is invalid.
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performEditContinent(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
@@ -262,9 +287,16 @@ public class IssueOrderPhase extends Phase {
      * @throws InvalidCommand if the command is invalid.
      * @throws InvalidMap     if the map is invalid.
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performMapEdit(Command p_command, Player p_player) throws IOException, InvalidCommand, InvalidMap {
         printInvalidCommandInState();
         askForOrder(p_player);
+    }
+    @Override
+    protected void tournamentGamePlay(Command p_enteredCommand) {
+        // printInvalidCommandInState();
     }
 }
