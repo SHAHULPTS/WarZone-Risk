@@ -359,11 +359,7 @@ public class StartUpPhase extends Phase{
      * @param p_player  The player executing the command.
      * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during player creation.
      */
-    public void createPlayers(Command p_command, Player p_player) throws InvalidCommand {
-        if (!l_isMapLoaded) {
-            d_gameEngine.setD_gameEngineLog("No map found, Please `loadmap` before adding game players", "effect");
-            return;
-        }
+    public void createPlayers(Command p_command, Player p_player) throws InvalidCommand, IOException {
 
         List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
 
@@ -371,27 +367,19 @@ public class StartUpPhase extends Phase{
         if (CommonUtil.isCollectionEmpty(l_operations_list)) {
             throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
         } else {
-            if (d_gameState.getD_loadCommand()) {
-                for (Map<String, String> l_map : l_operations_list) {
-                    if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
-                            && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
-                        d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
-                                l_map.get(ApplicationConstants.ARGUMENTS));
-                    } else {
-                        throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
-                    }
+            for (Map<String, String> l_map : l_operations_list) {
+                if (p_command.checkRequiredKeysPresent(ApplicationConstants.ARGUMENTS, l_map)
+                        && p_command.checkRequiredKeysPresent(ApplicationConstants.OPERATION, l_map)) {
+                    d_playerService.updatePlayers(d_gameState, l_map.get(ApplicationConstants.OPERATION),
+                            l_map.get(ApplicationConstants.ARGUMENTS));
+                } else {
+                    throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_GAMEPLAYER);
                 }
-            } else {
-                d_gameEngine.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
             }
         }
     }
 
-    /**
-     * Initializes the startup phase of the game engine.
-     * Allows players to enter commands until the startup phase is completed.
-     */
-    public void initPhase()  {
+    public void initPhase(boolean isTournamentMode) {
         BufferedReader l_reader = new BufferedReader(new InputStreamReader(System.in));
 
         while (d_gameEngine.getD_CurrentPhase() instanceof StartUpPhase) {
@@ -413,17 +401,24 @@ public class StartUpPhase extends Phase{
      * @param p_player  The player executing the command.
      * @throws InvalidCommand Thrown to indicate that a method has been passed an illegal or inappropriate argument during country assignment.
      */
-    public void performAssignCountries(Command p_command, Player p_player) throws InvalidCommand{
-        List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
-
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
-        if (CommonUtil.isCollectionEmpty(l_operations_list)) {
-            d_playerService.assignCountries(d_gameState);
-            d_playerService.assignColors(d_gameState);
-            d_playerService.assignArmies(d_gameState);
-            d_gameEngine.setIssueOrderPhase();
+    public void performAssignCountries(Command p_command, Player p_player, boolean p_istournamentmode,
+                                       GameState p_gameState) throws InvalidCommand {
+        if (p_gameState.getD_loadCommand()) {
+            List<Map<String, String>> l_operations_list = p_command.getOperationsAndArguments();
+            Thread.setDefaultUncaughtExceptionHandler(new ExceptionLogHandler(d_gameState));
+            if (CommonUtil.isCollectionEmpty(l_operations_list) || p_istournamentmode) {
+                d_gameEngine.setD_gameState(p_gameState);
+                d_gameEngine.setD_isTournamentMode(p_istournamentmode);
+                if(d_playerService.assignCountries(p_gameState)) {
+                    d_playerService.assignColors(p_gameState);
+                    d_playerService.assignArmies(p_gameState);
+                    d_gameEngine.setIssueOrderPhase(p_istournamentmode);
+                }
+            } else {
+                throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+            }
         } else {
-            throw new InvalidCommand(ApplicationConstants.INVALID_COMMAND_ERROR_ASSIGNCOUNTRIES);
+            d_gameEngine.setD_gameEngineLog("Please load a valid map first via loadmap command!", "effect");
         }
     }
     protected void tournamentGamePlay(Command p_command) throws InvalidCommand, InvalidMap {
