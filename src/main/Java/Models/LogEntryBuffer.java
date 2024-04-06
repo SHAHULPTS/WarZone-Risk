@@ -1,16 +1,18 @@
 package Models;
 
 import Views.LogWriter;
+
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * The LogEntryBuffer class extends Observable and represents a buffer for log messages.
  * It notifies observers (such as LogWriter) when a new log message is added.
  */
-public class LogEntryBuffer extends Observable {
+public class LogEntryBuffer extends Observable implements Serializable {
 
     /** The log message stored in the buffer. */
-   private String d_logMessage;
+    String d_logMessage;
 
     /**
      * Constructs a new LogEntryBuffer and adds a LogWriter observer to it.
