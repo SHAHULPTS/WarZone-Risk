@@ -2,6 +2,7 @@ package Utils;
 
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
  * The {@code CommandTest} class contains test cases for the {@code Command} class.
  * It ensures that the command parsing and extraction methods work correctly.
  */
-public class CommandTest {
+public class CommandTest implements Serializable {
 
     /**
      * Tests the getRootCommand method with a valid command.
