@@ -1,9 +1,11 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * Airlift class represents a card for executing Airlift operation in the game.
  */
-public class Airlift implements Card {
+public class Airlift implements Card, Serializable {
     Player d_player;
     String d_sourceCountryName;
     String d_targetCountryName;

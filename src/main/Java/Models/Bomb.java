@@ -2,10 +2,12 @@ package Models;
 
 import Utils.CommonUtil;
 
+import java.io.Serializable;
+
 /**
  * The Bomb class represents a Bomb card in the game, which can be used to execute a bomb action on a target country.
  */
-public class Bomb implements Card {
+public class Bomb implements Card, Serializable {
 
     /** The player initiating the bomb action. */
     Player d_playerInitiator;

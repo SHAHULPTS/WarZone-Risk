@@ -5,12 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * The {@code Command} class represents a command parsed from user input.
  * It provides methods to process and extract information from the command string.
  */
-public class Command {
+public class Command implements Serializable{
 
     /** The original command string. */
     public String d_command;
