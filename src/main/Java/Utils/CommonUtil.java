@@ -4,12 +4,13 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 import Constants.ApplicationConstants;
+import java.io.Serializable;
 
 
 /**
  * Utility class providing common methods for various operations.
  */
-public class CommonUtil {
+public class CommonUtil implements Serializable{
 
     /**
      * Checks if a string is empty (null or contains only whitespace characters).
