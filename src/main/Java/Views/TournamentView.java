@@ -6,6 +6,10 @@ import Models.Tournament;
 import org.davidmoten.text.utils.WordWrap;
 
 import java.util.List;
+
+/**
+ *  The TournamentView class represents the view for the tournament objects.
+ */
 public class TournamentView {
     /**
      * Tournament object representing the current tournament.
