@@ -2,10 +2,12 @@ package Utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.Serializable;
+
 /**
  * Test class for verifying the behavior of CommonUtil methods.
  */
-class CommonUtilTest {
+class CommonUtilTest implements Serializable {
 
     /**
      * Test method to verify the behavior of the isEmpty() method.
