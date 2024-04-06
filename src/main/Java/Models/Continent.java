@@ -33,14 +33,13 @@ public class Continent implements Serializable {
         this.d_continentID = p_continentID;
         this.d_continentName = p_continentName;
         this.d_continentValue = p_continentValue;
-        this.d_countries = new ArrayList<>();
     }
 
     /**
      * Constructs a new continent with default values.
      */
     public Continent() {
-        this.d_countries = new ArrayList<>();
+
     }
 
     /**
