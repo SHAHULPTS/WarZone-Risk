@@ -8,6 +8,12 @@ import java.util.List;
  */
 public final class ApplicationConstants {
 
+    /** Error message for invalid command format in savegame. */
+    public static final String INVALID_COMMAND_ERROR_SAVEGAME = "Invalid command. Kindly provide command in Format of : savegame filename";
+
+    /** Error message for invalid command format in loadgame. */
+    public static final String INVALID_COMMAND_ERROR_LOADGAME = "Invalid command. Kindly provide command in Format of : loadgame filename";
+
     /** Error message for invalid command format in editing map. */
     public static final String INVALID_COMMAND_ERROR_EDITMAP = "Invalid command. Kindly provide command in Format of : editmap filename";
 
@@ -22,6 +28,9 @@ public final class ApplicationConstants {
 
     /** Error message for invalid command format in saving map. */
     public static final String INVALID_COMMAND_ERROR_SAVEMAP = "Invalid command. Kindly provide command in Format of : savemap filename";
+
+    /** Error message for invalid command format in tournament mode. */
+    public static final String INVALID_COMMAND_TOURNAMENT_MODE = "Invalid Command. Kindly provide command in format of : tournament -M listofmapfiles -P listofplayerstrategies -G numberofgames -D maxnumberofturns";
 
     /** Error message for empty map. */
     public static final String INVALID_MAP_ERROR_EMPTY = "No Map found! Please load a valid map to check!";
@@ -103,6 +112,12 @@ public final class ApplicationConstants {
 
     /** List of ANSI color codes. */
     public static final List<String> COLORS = Arrays.asList(YELLOW, RED, PURPLE, BLUE, GREEN, CYAN);
+
+    public static final String CONQUEST_CONTINENTS = "[Continents]";
+    public static final String CONQUEST_TERRITORIES = "[Territories]";
+
+    public static final List<String> PLAYER_BEHAVIORS = Arrays.asList("Human", "Aggressive", "Random", "Benevolent", "Cheater");
+    public static final List<String> TOURNAMENT_PLAYER_BEHAVIORS = Arrays.asList("Aggressive", "Random", "Benevolent", "Cheater");
 
     /** List of valid commands for blockade validation. */
     public static final List<String> BLOCKADEVALIDATION = Arrays.asList("bomb", "advance", "airlift", "negotiate");
