@@ -1,11 +1,12 @@
 package Models;
 
 import Services.PlayerService;
+import java.io.Serializable;
 
 /**
  * Represents a diplomacy card in the game.
  */
-public class Diplomacy implements Card {
+public class Diplomacy implements Card , Serializable{
 
     Player d_IssuingPlayer;
     String d_targetPlayer;
