@@ -20,6 +20,8 @@ import Models.Map;
 import Models.Player;
 import Utils.CommonUtil;
 
+import java.io.IOException;
+
 /**
  * This class is used to test functionality of PlayerService class functions.
  */
@@ -54,6 +56,9 @@ public class PlayerServiceTest {
      */
     List<Player> d_exisitingPlayerList = new ArrayList<>();
 
+    /**
+     * ByteArrayOutputStream for capturing console output.
+     */
     private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
     /**
@@ -72,9 +77,11 @@ public class PlayerServiceTest {
     /**
      * The testAddPlayers is used to test the add functionality of addRemovePlayers
      * function.
+     *
+     * @throws IOException if an I/O error occurs
      */
     @Test
-    public void testAddPlayers() {
+    public void testAddPlayers() throws IOException {
         assertFalse(CommonUtil.isCollectionEmpty(d_exisitingPlayerList));
         List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Nidhi");
         assertEquals("Nidhi", l_updatedPlayers.get(2).getPlayerName());
@@ -87,9 +94,11 @@ public class PlayerServiceTest {
     /**
      * The testRemovePlayers is used to t est the remove functionality of
      * addRemovePlayers function.
+     *
+     * @throws IOException if an I/O error occurs
      */
     @Test
-    public void testRemovePlayers() {
+    public void testRemovePlayers() throws IOException {
         List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "remove", "Vinisha");
         assertEquals(1, l_updatedPlayers.size());
 
@@ -109,6 +118,8 @@ public class PlayerServiceTest {
 
     /**
      * Used for checking whether players have been assigned with countries
+     *
+     * @throws InvalidMap if the map is invalid
      */
     @Test
     public void testPlayerCountryAssignment() throws InvalidMap {
