@@ -3,6 +3,7 @@ package Controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -67,9 +68,9 @@ public class GameEngineTest {
     public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
         d_currentPhase.handleCommand("editcontinent");
         GameState l_state = d_currentPhase.getD_gameState();
-        String actualLog = l_state.getRecentLog().trim();
-        assertEquals("Log: Can not Edit Continent, please perform `editmap` first", actualLog);
 
+        assertEquals("Log: Can not Edit Continent, please perform `editmap` first" + System.lineSeparator(),
+                l_state.getRecentLog());
     }
 
     /**
@@ -125,6 +126,34 @@ public class GameEngineTest {
 
     }
 
+    /**
+     * Tests savegame command.
+     *
+     * @throws InvalidCommand Exception
+     * @throws InvalidMap     Exception
+     * @throws IOException Exception
+     */
+    @Test
+    public void testPerformSaveGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
+        d_currentPhase.handleCommand("savegame hello.txt");
+        GameState l_state = d_currentPhase.getD_gameState();
+
+        assertEquals("Log: Game Saved Successfully to hello.txt" + System.lineSeparator(),
+                l_state.getRecentLog());
+
+    }
+
+    /**
+     * Tests loadgame command.
+     *
+     * @throws InvalidCommand Exception
+     * @throws InvalidMap     Exception
+     * @throws IOException Exception
+     */
+    @Test(expected = FileNotFoundException.class)
+    public void testPerformLoadGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
+        d_currentPhase.handleCommand("loadgame abc.txt");
+    }
 
     /**
      * Tests the behavior of the assignCountries method when an invalid command is given.
