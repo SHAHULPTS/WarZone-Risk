@@ -7,11 +7,11 @@ import Exceptions.InvalidMap;
 import Utils.CommonUtil;
 import java.util.Collections;
 import java.util.Map.Entry;
-
+import java.io.Serializable;
 /**
  * Represents a map consisting of continents and countries.
  */
-public class Map {
+public class Map implements Serializable{
 
     /**
      * File path of the map.
@@ -326,6 +326,15 @@ public class Map {
      */
     public Continent getContinentByID(Integer p_continentID){
         return d_continents.stream().filter(l_continent -> l_continent.getD_continentID().equals(p_continentID)).findFirst().orElse(null);
+    }
+    /**
+     * Retrieves the Country Object based on its country ID.
+     *
+     * @param p_countryID The Id of the Country to be found
+     * @return The country object corresponding to the given Id, or null if not found.
+     */
+    public Country getCountryByID(Integer p_countryID){
+        return d_countries.stream().filter(l_country -> l_country.getD_countryId().equals(p_countryID)).findFirst().orElse(null);
     }
 
     /**
