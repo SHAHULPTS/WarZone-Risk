@@ -92,7 +92,7 @@ public class PlayerServiceTest {
     }
 
     /**
-     * The testRemovePlayers is used to t est the remove functionality of
+     * The testRemovePlayers is used to test the remove functionality of
      * addRemovePlayers function.
      *
      * @throws IOException if an I/O error occurs

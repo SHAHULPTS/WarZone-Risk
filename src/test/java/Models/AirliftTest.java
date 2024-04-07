@@ -11,7 +11,7 @@ import org.junit.Test;
 import Exceptions.InvalidMap;
 
 /**
- * This class is used to test the functionality of the Airlift class.
+ * This class is used to test functionality of Airlift class functions.
  */
 public class AirliftTest {
     /**
@@ -25,7 +25,7 @@ public class AirliftTest {
     Airlift d_airliftOrder;
 
     /**
-     * Invalid Airlift Order.
+     * country to shift armies from.
      */
     Airlift d_invalidAirLift1;
 
@@ -35,12 +35,12 @@ public class AirliftTest {
     GameState d_gameState;
 
     /**
-     * Setup method to initialize test objects before each test case.
+     * Setup before each test case.
      *
-     * @throws InvalidMap If an invalid map is encountered.
+     * @throws InvalidMap Invalid Map
      */
     @Before
-    public void initialize() throws InvalidMap {
+    public void setup() throws InvalidMap {
         d_gameState = new GameState();
         d_player1 = new Player();
         d_player1.setPlayerName("a");
@@ -69,23 +69,23 @@ public class AirliftTest {
     }
 
     /**
-     * Test method to verify the execution of the Airlift order.
+     * Test Airlift execution.
      */
     @Test
     public void testAirliftExecution() {
         d_airliftOrder.execute(d_gameState);
-        Country l_countrySpain = d_gameState.getD_map().getCountryByName("Spain");
-        assertEquals("17", l_countrySpain.getD_armies().toString());
+        Country l_countryIndia = d_gameState.getD_map().getCountryByName("Spain");
+        assertEquals("17", l_countryIndia.getD_armies().toString());
     }
 
     /**
-     * Test method to verify the validation of an invalid Airlift order.
+     * Test validation of airlift order.
      */
     @Test
     public void testInvalidAirLift() {
         d_invalidAirLift1 = new Airlift("France", "India", 1, d_player1);
         d_invalidAirLift1.checkValidOrder(d_gameState);
-        String actualLog = d_gameState.getRecentLog().trim();
-        assertEquals("Log: Invalid Target Country! Doesn't exist on the map!", actualLog);
+        assertEquals(d_gameState.getRecentLog(),
+                "Log: Invalid Target Country! Doesn't exist on the map!" + System.lineSeparator());
     }
 }
