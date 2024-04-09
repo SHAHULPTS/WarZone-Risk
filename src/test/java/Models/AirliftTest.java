@@ -43,7 +43,7 @@ public class AirliftTest {
     public void setup() throws InvalidMap {
         d_gameState = new GameState();
         d_player1 = new Player();
-        d_player1.setPlayerName("a");
+        d_player1.setPlayerName("Jay");
 
         List<Country> l_countryList = new ArrayList<Country>();
         Country l_country = new Country(0, "France", 1);
@@ -85,7 +85,7 @@ public class AirliftTest {
     public void testInvalidAirLift() {
         d_invalidAirLift1 = new Airlift("France", "India", 1, d_player1);
         d_invalidAirLift1.checkValidOrder(d_gameState);
-        assertEquals(d_gameState.getRecentLog(),
-                "Log: Invalid Target Country! Doesn't exist on the map!" + System.lineSeparator());
+        String actualLog = d_gameState.getRecentLog().trim();
+        assertEquals("Log: Invalid Target Country! Doesn't exist on the map!", actualLog );
     }
 }

@@ -38,8 +38,8 @@ public class PlayerTest {
 	 */
 	@Before
 	public void setup() {
-		d_exisitingPlayerList.add(new Player("Avneet"));
-		d_exisitingPlayerList.add(new Player("Zalak"));
+		d_exisitingPlayerList.add(new Player("Vinisha"));
+		d_exisitingPlayerList.add(new Player("Nidhi"));
 		
 		Map l_map = new Map();
 		Country l_c1 = new Country(1, "Finland", 10);
@@ -91,7 +91,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testCreateDeployOrder() {
-		Player l_pl = new Player("abc");
+		Player l_pl = new Player("Jay");
 		l_pl.setD_noOfUnallocatedArmies(20);
 		l_pl.createDeployOrder("Deploy India 5");
 		assertEquals(l_pl.getD_noOfUnallocatedArmies().toString(), "15");
@@ -103,7 +103,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testCountryExists() {		
-		Player l_player = new Player("abc");
+		Player l_player = new Player("Jay");
 		assertTrue(l_player.checkAdjacency(l_gs, "Finland", "France"));
 		assertFalse(l_player.checkAdjacency(l_gs, "France", "Finland"));
 	}
@@ -113,7 +113,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testCreateAdvanceOrder() {
-		Player l_player = new Player("xyz");
+		Player l_player = new Player("Shahul");
 		l_player.createAdvanceOrder("advance Finland France 10", l_gs);
 		assertEquals(l_player.getD_ordersToExecute().size(), 1);
 	}
@@ -122,7 +122,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testCreateAdvanceOrderFailure() {
-		Player l_player = new Player("xyz");
+		Player l_player = new Player("Shahul");
 		l_player.createAdvanceOrder("advance Finland France 0", l_gs);
 		assertEquals(l_player.getD_ordersToExecute().size(), 0);
 	}

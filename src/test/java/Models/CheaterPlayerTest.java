@@ -53,12 +53,12 @@ public class CheaterPlayerTest {
         l_ownedCountriesPlayerTwo.add(l_country3);
 
         d_playerBehaviorStrategy = new CheaterPlayer();
-        d_player = new Player("DummyPlayer");
+        d_player = new Player("Trent");
         d_player.setD_noOfUnallocatedArmies(10);
         d_player.setD_coutriesOwned(l_ownedCountriesPlayerOne);
         d_player.setStrategy(d_playerBehaviorStrategy);
 
-        d_randomPlayer = new Player("Opponent");
+        d_randomPlayer = new Player("Boult");
         RandomPlayer l_randomPlayerBehaviorStrategy = new RandomPlayer();
         d_randomPlayer.setStrategy(l_randomPlayerBehaviorStrategy);
         d_randomPlayer.setD_coutriesOwned(l_ownedCountriesPlayerTwo);

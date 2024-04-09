@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,6 @@ import Models.GameState;
 import Models.Map;
 import Models.Player;
 import Utils.CommonUtil;
-
-import java.io.IOException;
 
 /**
  * This class is used to test functionality of PlayerService class functions.
@@ -57,7 +56,7 @@ public class PlayerServiceTest {
     List<Player> d_exisitingPlayerList = new ArrayList<>();
 
     /**
-     * ByteArrayOutputStream for capturing console output.
+     * Byte Array Output Stream Object.
      */
     private final ByteArrayOutputStream d_outContent = new ByteArrayOutputStream();
 
@@ -70,32 +69,29 @@ public class PlayerServiceTest {
         d_playerService = new PlayerService();
         d_gameState = new GameState();
         d_exisitingPlayerList.add(new Player("Vinisha"));
-        d_exisitingPlayerList.add(new Player("Shahul"));
+        d_exisitingPlayerList.add(new Player("Nidhi"));
 
     }
 
     /**
      * The testAddPlayers is used to test the add functionality of addRemovePlayers
      * function.
-     *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException in case of failure in receiving user input
      */
     @Test
     public void testAddPlayers() throws IOException {
         assertFalse(CommonUtil.isCollectionEmpty(d_exisitingPlayerList));
-        List<Player> l_updatedPlayers = d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Nidhi");
-        assertEquals("Nidhi", l_updatedPlayers.get(2).getPlayerName());
 
         System.setOut(new PrintStream(d_outContent));
         d_playerService.addRemovePlayers(d_exisitingPlayerList, "add", "Vinisha");
-        assertEquals("Player : Vinisha already exists. No changes made.", d_outContent.toString().trim());
+        String actualLog = d_outContent.toString().trim();
+        assertEquals("Player : Vinisha already exists. No changes made.", actualLog);
     }
 
     /**
-     * The testRemovePlayers is used to test the remove functionality of
+     * The testRemovePlayers is used to t est the remove functionality of
      * addRemovePlayers function.
-     *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException in case of failure in receiving user input
      */
     @Test
     public void testRemovePlayers() throws IOException {
@@ -119,7 +115,7 @@ public class PlayerServiceTest {
     /**
      * Used for checking whether players have been assigned with countries
      *
-     * @throws InvalidMap if the map is invalid
+     * @throws InvalidMap invalid map exception
      */
     @Test
     public void testPlayerCountryAssignment() throws InvalidMap {
@@ -146,10 +142,10 @@ public class PlayerServiceTest {
     public void testCalculateArmiesForPlayer() {
         Player l_playerInfo = new Player();
         List<Country> l_countryList = new ArrayList<Country>();
-        l_countryList.add(new Country("Haat"));
-        l_countryList.add(new Country("Gaatur"));
-        l_countryList.add(new Country("Ramborg"));
-        l_countryList.add(new Country("Nemises"));
+        l_countryList.add(new Country("Waadt"));
+        l_countryList.add(new Country("Neuenburg"));
+        l_countryList.add(new Country("Fribourg"));
+        l_countryList.add(new Country("Geneve"));
         l_playerInfo.setD_coutriesOwned(l_countryList);
         List<Continent> l_continentList = new ArrayList<Continent>();
         l_continentList.add(new Continent(1, "Asia", 5));

@@ -218,8 +218,7 @@ public class OrderExecutionPhase extends Phase {
 
     @Override
     protected void tournamentGamePlay(Command p_enteredCommand) {
-//		d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Tournament Mode.....", "start");
-//		d_tournament.executeTournamentMode();
-//		d_tournament.printTournamentModeResult();
+    d_gameEngine.setD_gameEngineLog("\nStarting Execution Of Tournament Mode.....", "start");
+
     }
 }
