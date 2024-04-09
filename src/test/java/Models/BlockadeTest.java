@@ -68,9 +68,9 @@ public class BlockadeTest {
         d_gameState = new GameState();
         d_order_list = new ArrayList<Order>();
         d_player1 = new Player();
-        d_player1.setPlayerName("player1");
+        d_player1.setPlayerName("Vini");
         d_player2 = new Player();
-        d_player2.setPlayerName("player2");
+        d_player2.setPlayerName("Shuv");
         d_neutralPlayer = new Player();
         d_neutralPlayer.setPlayerName("Neutral");
 

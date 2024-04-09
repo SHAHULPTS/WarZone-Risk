@@ -111,7 +111,7 @@ public final class ApplicationConstants {
     public static final int CONSOLE_WIDTH = 80;
 
     /** List of ANSI color codes. */
-    public static final List<String> COLORS = Arrays.asList(YELLOW, RED, PURPLE, BLUE, GREEN, CYAN);
+    public static final List<String> COLORS = Arrays.asList(YELLOW, PURPLE, RED, BLUE, GREEN, CYAN);
 
     public static final String CONQUEST_CONTINENTS = "[Continents]";
     public static final String CONQUEST_TERRITORIES = "[Territories]";

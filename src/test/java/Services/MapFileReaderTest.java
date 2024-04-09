@@ -54,7 +54,7 @@ public class MapFileReaderTest {
         d_mapservice = new MapService();
         d_map = new Map();
         d_state = new GameState();
-        d_mapLines = d_mapservice.loadFile("canada.map");
+        d_mapLines = d_mapservice.loadFile("canada");
     }
 
     /**

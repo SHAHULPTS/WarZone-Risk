@@ -43,7 +43,7 @@ public class AggressivePlayerTest {
         l_list.add(l_country3);
 
         d_playerBehaviorStrategy = new AggressivePlayer();
-        d_player = new Player("Vinisha");
+        d_player = new Player("Nidhi");
         d_player.setD_coutriesOwned(l_list);
         d_player.setStrategy(d_playerBehaviorStrategy);
         d_player.setD_noOfUnallocatedArmies(8);

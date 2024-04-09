@@ -110,7 +110,7 @@ public class DeployTest {
 	 */
 	@Test
 	public void testDeployOrder() throws InvalidCommand {
-		Player l_player = new Player("Maze");
+		Player l_player = new Player("Maxwell");
 		l_player.setD_noOfUnallocatedArmies(10);
 		Country l_country = new Country(1, "Japan", 1);
 		l_player.setD_coutriesOwned(Arrays.asList(l_country));

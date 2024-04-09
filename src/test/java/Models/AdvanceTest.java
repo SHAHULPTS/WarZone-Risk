@@ -24,7 +24,7 @@ public class AdvanceTest {
      */
     @Test
     public void testInvalidAdvanceOrder() {
-        Player l_player = new Player("Zalak");
+        Player l_player = new Player("Vinisha");
         Country l_country1 = new Country("India");
         l_country1.setD_armies(12);
         Country l_country2 = new Country("Canada");
@@ -43,14 +43,14 @@ public class AdvanceTest {
      */
     @Test
     public void testAttackersWin() {
-        Player l_sourcePlayer = new Player("Zalak");
+        Player l_sourcePlayer = new Player("Vinisha");
         Country l_country1 = new Country("India");
         l_country1.setD_armies(7);
         List<Country> l_s1 = new ArrayList<>();
         l_s1.add(l_country1);
         l_sourcePlayer.setD_coutriesOwned(l_s1);
 
-        Player l_targetPlayer = new Player("Mike");
+        Player l_targetPlayer = new Player("Shahul");
         Country l_country2 = new Country("Canada");
         l_country2.setD_armies(4);
         List<Country> l_s2 = new ArrayList<>();
@@ -70,14 +70,14 @@ public class AdvanceTest {
      */
     @Test
     public void testDefendersWin() {
-        Player l_sourcePlayer = new Player("Zalak");
+        Player l_sourcePlayer = new Player("Vinisha");
         Country l_country1 = new Country("India");
         l_country1.setD_armies(2);
         List<Country> l_s1 = new ArrayList<>();
         l_s1.add(l_country1);
         l_sourcePlayer.setD_coutriesOwned(l_s1);
 
-        Player l_targetPlayer = new Player("Mike");
+        Player l_targetPlayer = new Player("Shahul");
         Country l_country2 = new Country("Canada");
         l_country2.setD_armies(4);
         List<Country> l_s2 = new ArrayList<>();
@@ -98,7 +98,7 @@ public class AdvanceTest {
      */
     @Test
     public void testDeployToTarget() {
-        Player l_sourcePlayer = new Player("Zalak");
+        Player l_sourcePlayer = new Player("Vinisha");
         List<Country> l_s1 = new ArrayList<>();
 
         Country l_country1 = new Country("India");

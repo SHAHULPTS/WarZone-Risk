@@ -1,17 +1,15 @@
 package Services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import java.io.IOException;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 import Exceptions.InvalidCommand;
 import Exceptions.InvalidMap;
 import Models.GameState;
 import Models.Map;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Test class for parsing conquest map file.
@@ -27,7 +25,7 @@ public class ConquestMapFileReaderTest {
 	 * Map reference to store its lines.
 	 */
 	List<String> d_mapLines;
-	
+
 	/**
 	 * Map reference to store its context.
 	 */
@@ -37,7 +35,7 @@ public class ConquestMapFileReaderTest {
 	 * GameState reference to store its object.
 	 */
 	GameState d_state;
-	
+
 	/**
 	 * Conquest file reader to parse the map file.
 	 */
@@ -45,7 +43,7 @@ public class ConquestMapFileReaderTest {
 
 	/**
 	 * Setup before each MapService Operations
-	 * 
+	 *
 	 * @throws InvalidMap Invalid map exception
 	 */
 	@Before
@@ -67,7 +65,7 @@ public class ConquestMapFileReaderTest {
 	@Test
 	public void testReadConquestFile() throws IOException, InvalidMap {
 		d_conquestMapFileReader.readConquestFile(d_state, d_map, d_mapLines);
-		
+
 		assertNotNull(d_state.getD_map());
 		assertEquals(d_state.getD_map().getD_continents().size(), 8);
 		assertEquals(d_state.getD_map().getD_countries().size(), 99);
@@ -83,18 +81,18 @@ public class ConquestMapFileReaderTest {
 		d_conquestMapFileReader.readConquestFile(d_state, d_map, d_mapLines);
 		Map l_updatedContinents = d_mapservice.addRemoveContinents(d_state, d_state.getD_map(), "Add", "Asia 10");
 		l_updatedContinents = d_mapservice.addRemoveContinents(d_state, d_state.getD_map(), "Add", "Europe 20");
-		
+
 		assertEquals(l_updatedContinents.getD_continents().size(), 10);
 		assertEquals(l_updatedContinents.getD_continents().get(8).getD_continentName(), "Asia");
 		assertEquals(l_updatedContinents.getD_continents().get(8).getD_continentValue().toString(), "10");
-		
+
 		l_updatedContinents = d_mapservice.addRemoveContinents(d_state, d_state.getD_map(), "Remove", "Asia");
 		assertEquals(l_updatedContinents.getD_continents().size(), 9);
-		
+
 		d_mapservice.editFunctions(d_state, "add", "Swiss Europe", 2);
 		d_mapservice.editFunctions(d_state, "add", "Norway Europe", 2);
 		assertEquals(d_state.getD_map().getD_countries().size(), 101);
-		
+
 		d_mapservice.editFunctions(d_state, "remove", "Swiss", 2);
 		assertEquals(d_state.getD_map().getD_countries().size(), 100);
 	}

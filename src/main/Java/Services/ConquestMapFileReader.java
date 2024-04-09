@@ -12,7 +12,6 @@ import Models.Map;
 public class ConquestMapFileReader implements Serializable {
 
 
-
     public List<String> getMetaData(List<String> p_fileLines, String p_switchParameter) {
         switch (p_switchParameter) {
             case "continent":

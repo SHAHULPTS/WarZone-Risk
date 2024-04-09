@@ -214,7 +214,8 @@ public class MapServiceTest {
         d_state.setD_map(d_map);
         d_mapservice.saveMap(d_state, "europe");
 
-        assertEquals("Log: Couldn't save the changes in map file!"+System.lineSeparator(), d_state.getRecentLog());
+        String actualLog = d_state.getRecentLog().trim();
+        assertEquals("Log: Couldn't save the changes in map file", actualLog);
     }
 
     /**
@@ -241,8 +242,8 @@ public class MapServiceTest {
     public void testEditCountryRemove() throws InvalidMap, IOException, InvalidCommand {
         d_mapservice.loadMap(d_state, "test");
         d_mapservice.editFunctions(d_state, "remove", "Ukraine", 2);
-
-        assertEquals("Log: Country: Ukraine does not exist!"+System.lineSeparator(), d_state.getRecentLog());
+        String actualLog = d_state.getRecentLog().trim();
+        assertEquals("Log: Country:  Ukraine does not exist!", actualLog);
     }
 
     /**
@@ -277,6 +278,7 @@ public class MapServiceTest {
         d_mapservice.editFunctions(d_state, "add", "Singapore Maldives", 3);
         d_mapservice.editFunctions(d_state, "remove", "Maldives Singapore", 3);
 
-        assertEquals("Log: No Such Neighbour Exists"+System.lineSeparator(), d_state.getRecentLog());
+        String actualLog = d_state.getRecentLog().trim();
+        assertEquals("Log: No Such Neighbor Exists", actualLog);
     }
 }

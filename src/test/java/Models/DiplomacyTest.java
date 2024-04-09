@@ -49,8 +49,8 @@ public class DiplomacyTest {
     public void setup() throws InvalidMap {
         d_gameState = new GameState();
         d_player1 = new Player();
-        d_player1.setPlayerName("p");
-        d_player2 = new Player("q");
+        d_player1.setPlayerName("ABD");
+        d_player2 = new Player("Gayle");
 
 
         List<Country> l_countryList = new ArrayList<Country>();
@@ -99,6 +99,6 @@ public class DiplomacyTest {
     public void NegotiationWorking(){
         d_diplomacyOrder.execute(d_gameState);
         d_bombOrder.execute(d_gameState);
-        assertEquals(d_gameState.getRecentLog().trim(), "Log: Bomb card order : bomb France is not executed as q has negotiation pact with the target country's player!");
+        assertEquals(d_gameState.getRecentLog().trim(), "Log: Bomb card order : bomb France is not executed as Gayle has negotiation pact with the target country's player!");
     }
 }

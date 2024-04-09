@@ -13,31 +13,37 @@ import Controllers.GameEngine;
 import Exceptions.InvalidMap;
 
 /**
- * The OrderExecutionPhaseTest class provides unit tests for the methods of the OrderExecutionPhase class.
+ * This class is used to test functionalities of order execution phase.
+ *
  */
 public class OrderExecutionPhaseTest {
-
-    /** The first player for testing. */
+    /**
+     * First Player.
+     */
     Player d_player1;
 
-    /** The second player for testing. */
+    /**
+     * Second Player.
+     */
     Player d_player2;
 
-    /** The game state for testing. */
+    /**
+     * Game State.
+     */
     GameState d_gameState;
 
     /**
-     * Sets up the test environment before each test case.
+     * Setup before each test case.
      *
-     * @throws InvalidMap if the map is invalid.
+     * @throws InvalidMap Invalid Map
      */
     @Before
     public void setup() throws InvalidMap {
         d_gameState = new GameState();
         d_player1 = new Player();
-        d_player1.setPlayerName("a");
+        d_player1.setPlayerName("Vini");
         d_player2 = new Player();
-        d_player2.setPlayerName("b");
+        d_player2.setPlayerName("Shiv");
 
         List<Country> l_countryList = new ArrayList<Country>();
         Country l_country = new Country(0, "France", 1);
@@ -51,6 +57,7 @@ public class OrderExecutionPhaseTest {
         l_countryList.add(l_countryNeighbour);
 
         d_player1.setD_coutriesOwned(l_countryList);
+        d_player2.setD_coutriesOwned(new ArrayList<Country>());
 
         Map l_map = new Map();
         l_map.setD_countries(l_countryList);
@@ -59,7 +66,7 @@ public class OrderExecutionPhaseTest {
     }
 
     /**
-     * Tests the endOfTheGame method of the OrderExecutionPhase class.
+     * Checks if one of the player has conquered all countries to end the game.
      */
     @Test
     public void testEndOfTheGame() {

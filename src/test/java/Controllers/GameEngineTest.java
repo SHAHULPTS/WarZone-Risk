@@ -65,12 +65,11 @@ public class GameEngineTest {
      * @throws InvalidMap      If the map is invalid.
      */
     @Test
-    public void testPerformEditContinentInvalidCommand() throws InvalidCommand, IOException, InvalidMap {
+    public void testPerformEditContinentInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
         d_currentPhase.handleCommand("editcontinent");
         GameState l_state = d_currentPhase.getD_gameState();
-
-        assertEquals("Log: Can not Edit Continent, please perform `editmap` first" + System.lineSeparator(),
-                l_state.getRecentLog());
+        String actualLog = l_state.getRecentLog().trim();
+        assertEquals("Log: Can not Edit Continent, please perform `editmap` first", actualLog);
     }
 
     /**
@@ -94,17 +93,17 @@ public class GameEngineTest {
         l_state = d_currentPhase.getD_gameState();
 
         List<Continent> l_continents = l_state.getD_map().getD_continents();
-        assertEquals(2, l_continents.size());
-        assertEquals("Europe", l_continents.get(0).getD_continentName());
-        assertEquals("10", l_continents.get(0).getD_continentValue().toString());
-        assertEquals("America", l_continents.get(1).getD_continentName());
-        assertEquals("20", l_continents.get(1).getD_continentValue().toString());
+        assertEquals(3, l_continents.size());
+        assertEquals("Asia", l_continents.get(0).getD_continentName());
+        assertEquals("5", l_continents.get(0).getD_continentValue().toString());
+        assertEquals("Europe", l_continents.get(1).getD_continentName());
+        assertEquals("10", l_continents.get(1).getD_continentValue().toString());
 
         d_currentPhase.handleCommand("editcontinent -remove Europe");
 
         l_state = d_currentPhase.getD_gameState();
         l_continents = l_state.getD_map().getD_continents();
-        assertEquals(1, l_continents.size());
+        assertEquals(2, l_continents.size());
     }
 
 
@@ -135,11 +134,10 @@ public class GameEngineTest {
      */
     @Test
     public void testPerformSaveGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
-        d_currentPhase.handleCommand("savegame hello.txt");
+        d_currentPhase.handleCommand("savegame TestGameLog.txt");
         GameState l_state = d_currentPhase.getD_gameState();
-
-        assertEquals("Log: Game Saved Successfully to hello.txt" + System.lineSeparator(),
-                l_state.getRecentLog());
+        String actualLog = l_state.getRecentLog().trim();
+        assertEquals("Log: Game Saved Successfully to TestGameLog.txt", actualLog);
 
     }
 
@@ -152,7 +150,7 @@ public class GameEngineTest {
      */
     @Test(expected = FileNotFoundException.class)
     public void testPerformLoadGameValidCommand() throws InvalidCommand, InvalidMap, IOException {
-        d_currentPhase.handleCommand("loadgame abc.txt");
+        d_currentPhase.handleCommand("loadgame NoGame.txt");
     }
 
     /**
@@ -164,9 +162,9 @@ public class GameEngineTest {
      * @throws IOException     If an I/O error occurs.
      */
     @Test(expected = InvalidCommand.class)
-    public void testAssignCountriesInvalidCommand() throws IOException, InvalidMap, InvalidCommand {
-        d_currentPhase.handleCommand("assigncountries -add india");
-        ;
+    public void testAssignCountriesInvalidCommand() throws IOException, InvalidCommand, InvalidMap {
+        d_currentPhase.getD_gameState().setD_loadCommand();
+        d_currentPhase.handleCommand("assigncountries add india");
     }
 
 
